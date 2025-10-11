@@ -4,6 +4,9 @@
  */
 package frame;
 
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 /**
  *
  * @author user
@@ -15,6 +18,9 @@ public class dashboard extends javax.swing.JFrame {
      */
     public dashboard() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
+        execute();
     }
 
     /**
@@ -26,20 +32,77 @@ public class dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pn_navbar = new javax.swing.JPanel();
+        pn_sidebar = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pn_menu = new javax.swing.JPanel();
+        pn_content = new javax.swing.JPanel();
+        pn_utama = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pn_navbar.setBackground(new java.awt.Color(0, 153, 0));
+        pn_navbar.setMinimumSize(new java.awt.Dimension(100, 80));
+        pn_navbar.setPreferredSize(new java.awt.Dimension(1300, 70));
+
+        javax.swing.GroupLayout pn_navbarLayout = new javax.swing.GroupLayout(pn_navbar);
+        pn_navbar.setLayout(pn_navbarLayout);
+        pn_navbarLayout.setHorizontalGroup(
+            pn_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1300, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+        pn_navbarLayout.setVerticalGroup(
+            pn_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
         );
 
+        getContentPane().add(pn_navbar, java.awt.BorderLayout.PAGE_START);
+
+        pn_sidebar.setBackground(new java.awt.Color(255, 255, 255));
+        pn_sidebar.setPreferredSize(new java.awt.Dimension(250, 580));
+        pn_sidebar.setVerifyInputWhenFocusTarget(false);
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(null);
+
+        pn_menu.setBackground(new java.awt.Color(255, 255, 255));
+        pn_menu.setLayout(new javax.swing.BoxLayout(pn_menu, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(pn_menu);
+
+        javax.swing.GroupLayout pn_sidebarLayout = new javax.swing.GroupLayout(pn_sidebar);
+        pn_sidebar.setLayout(pn_sidebarLayout);
+        pn_sidebarLayout.setHorizontalGroup(
+            pn_sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        pn_sidebarLayout.setVerticalGroup(
+            pn_sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+
+        getContentPane().add(pn_sidebar, java.awt.BorderLayout.LINE_START);
+
+        pn_content.setBackground(new java.awt.Color(255, 255, 255));
+        pn_content.setPreferredSize(new java.awt.Dimension(1200, 80));
+
+        pn_utama.setBackground(new java.awt.Color(255, 255, 255));
+        pn_utama.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout pn_contentLayout = new javax.swing.GroupLayout(pn_content);
+        pn_content.setLayout(pn_contentLayout);
+        pn_contentLayout.setHorizontalGroup(
+            pn_contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_utama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        pn_contentLayout.setVerticalGroup(
+            pn_contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_utama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(pn_content, java.awt.BorderLayout.CENTER);
+
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -78,5 +141,45 @@ public class dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel pn_content;
+    private javax.swing.JPanel pn_menu;
+    private javax.swing.JPanel pn_navbar;
+    private javax.swing.JPanel pn_sidebar;
+    private javax.swing.JPanel pn_utama;
     // End of variables declaration//GEN-END:variables
+
+    private void execute() {
+        ImageIcon iconBox = new ImageIcon(getClass().getResource("/img/box.png"));
+        ImageIcon iconBarang = new ImageIcon(getClass().getResource("/img/barang.png"));
+        
+        MenuItem menuBarang1 = new MenuItem(null, true, iconBarang, "barang1", null );
+        MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "barang2", null );
+        MenuItem menuBarang3 = new MenuItem(null, true, iconBarang, "barang3", null );
+        
+        MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "barang1", null );
+        MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "barang2", null );
+        MenuItem menuKelola3 = new MenuItem(null, true, iconBarang, "barang3", null );
+        
+        MenuItem menuBox = new MenuItem(iconBox, false, null, "barang", null, menuBarang1,menuBarang2,menuBarang3);
+        MenuItem menuKelola = new MenuItem(iconBarang, false, null, "Kelola", null, menuKelola1, menuKelola2, menuKelola3);
+        MenuItem menuLaporan = new MenuItem(iconBox, false, null, "Laporan", null);
+        MenuItem menuAbout = new MenuItem(iconBox, false, null, "barang", null);
+        MenuItem menuLogout = new MenuItem(iconBox, false, null, "barang", null);
+
+        addMenu(menuBox, menuKelola, menuLaporan);
+        
+        
+    }
+    
+    private void addMenu(MenuItem... menu) {
+        for (int i = 0; i < menu.length; i++) {
+            pn_menu.add(menu[i]);
+            ArrayList<MenuItem> subMenu = menu[i].getSubMenu();
+            for (MenuItem m : subMenu) {
+                addMenu(m);
+            }
+        }
+        pn_menu.revalidate();
+    }
 }
