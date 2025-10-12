@@ -155,7 +155,6 @@ public class dashboard extends javax.swing.JFrame {
         
         MenuItem menuBarang1 = new MenuItem(null, true, iconBarang, "barang1", null );
         MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "barang2", null );
-        MenuItem menuBarang3 = new MenuItem(null, true, iconBarang, "barang3", null );
         
         MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "barang1", null );
         MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "barang2", null );
