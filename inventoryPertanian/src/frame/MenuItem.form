@@ -25,13 +25,13 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="18" max="32767" attributes="0"/>
-              <Component id="lb_icon" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
-              <Component id="lb_iconSub" min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <Component id="lb_icon" min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace pref="9" max="32767" attributes="0"/>
+              <Component id="lb_iconSub" min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+              <Component id="lb_menuName" min="-2" pref="125" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-              <Component id="lb_menuName" min="-2" pref="136" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -40,9 +40,9 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="10" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lb_menuName" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                  <Component id="lb_iconSub" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                  <Component id="lb_icon" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="lb_menuName" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="lb_iconSub" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="lb_icon" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="10" max="32767" attributes="0"/>
           </Group>
