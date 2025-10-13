@@ -73,7 +73,7 @@ public class dashboard extends javax.swing.JFrame {
         pn_sidebar.setLayout(pn_sidebarLayout);
         pn_sidebarLayout.setHorizontalGroup(
             pn_sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
         );
         pn_sidebarLayout.setVerticalGroup(
             pn_sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,19 +155,18 @@ public class dashboard extends javax.swing.JFrame {
         
         MenuItem menuBarang1 = new MenuItem(null, true, iconBarang, "barang1", null );
         MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "barang2", null );
-        MenuItem menuBarang3 = new MenuItem(null, true, iconBarang, "barang3", null );
         
         MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "barang1", null );
         MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "barang2", null );
         MenuItem menuKelola3 = new MenuItem(null, true, iconBarang, "barang3", null );
         
-        MenuItem menuBox = new MenuItem(iconBox, false, null, "barang", null, menuBarang1,menuBarang2,menuBarang3);
+        MenuItem menuBox = new MenuItem(iconBox, false, null, "barang", null, menuBarang1,menuBarang2);
         MenuItem menuKelola = new MenuItem(iconBarang, false, null, "Kelola", null, menuKelola1, menuKelola2, menuKelola3);
         MenuItem menuLaporan = new MenuItem(iconBox, false, null, "Laporan", null);
-        MenuItem menuAbout = new MenuItem(iconBox, false, null, "barang", null);
-        MenuItem menuLogout = new MenuItem(iconBox, false, null, "barang", null);
+        MenuItem menuAbout = new MenuItem(iconBox, false, null, "About", null);
+        MenuItem menuLogout = new MenuItem(iconBox, false, null, "Logout", null);
 
-        addMenu(menuBox, menuKelola, menuLaporan);
+        addMenu(menuBox, menuKelola, menuLaporan, menuAbout, menuLogout);
         
         
     }
