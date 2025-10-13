@@ -7,24 +7,28 @@ package classClass;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author user
  */
 public class koneksi {
-    public static Connection mysqlconfig;
+    public static Connection connection;
     
-    public static Connection konek(){
+    public static Connection getConnection(){
+        if (connection==null)
         try {
             String url = "jdbc:mysql://localhost:3306/inventory_pertanian";
             String user = "root";
             String pass = "";
-            
-            mysqlconfig = DriverManager.getConnection(url, user, pass);
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            connection = (Connection) DriverManager.getConnection(url, user, pass);
         } catch (SQLException sQLException) {
-            System.out.println(sQLException.getMessage());
+            Object ex = null;
+            Logger.getLogger(koneksi.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return mysqlconfig;
+        return connection;
     }
     
 }

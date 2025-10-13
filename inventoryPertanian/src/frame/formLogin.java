@@ -23,7 +23,7 @@ public class formLogin extends javax.swing.JFrame {
     
     void reset(){
         tUsername.setText("username");
-        tPassword.setText("password");
+        tPasssword.setText("");
     }
 
     /**
@@ -38,12 +38,12 @@ public class formLogin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         tUsername = new javax.swing.JTextField();
-        tPassword = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        tPasssword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,19 +65,6 @@ public class formLogin extends javax.swing.JFrame {
             }
         });
 
-        tPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tPassword.setText("password");
-        tPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 0)));
-        tPassword.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                tPasswordFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tPasswordFocusLost(evt);
-            }
-        });
-
         btnLogin.setBackground(new java.awt.Color(51, 204, 0));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
@@ -95,6 +82,17 @@ public class formLogin extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-password-30.png"))); // NOI18N
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-user-30.png"))); // NOI18N
+
+        tPasssword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tPasssword.setText("password");
+        tPasssword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tPassswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tPassswordFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,8 +117,8 @@ public class formLogin extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(tUsername, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(tPassword))))))
-                .addGap(102, 312, Short.MAX_VALUE))
+                                    .addComponent(tPasssword))))))
+                .addGap(312, 312, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,9 +134,9 @@ public class formLogin extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tUsername))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tPassword))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(tPasssword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
@@ -176,14 +174,6 @@ public class formLogin extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_tUsernameFocusLost
 
-    private void tPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPasswordFocusLost
-          // TODO add your handling code here:
-          String password = tPassword.getText();
-         if(password.equals("")||password.equals("password")){
-             tPassword.setText("password");
-         }
-    }//GEN-LAST:event_tPasswordFocusLost
-
     private void tUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tUsernameFocusGained
         // TODO add your handling code here:
         String username = tUsername.getText();
@@ -192,13 +182,21 @@ public class formLogin extends javax.swing.JFrame {
           }
     }//GEN-LAST:event_tUsernameFocusGained
 
-    private void tPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPasswordFocusGained
+    private void tPassswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPassswordFocusGained
         // TODO add your handling code here:
-        String password = tPassword.getText();
+         String password = tPasssword.getText();
           if(password.equals("password")){
-              tPassword. setText("");
+              tPasssword. setText("");
           }
-    }//GEN-LAST:event_tPasswordFocusGained
+    }//GEN-LAST:event_tPassswordFocusGained
+
+    private void tPassswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPassswordFocusLost
+        // TODO add your handling code here:
+        String password = tPasssword.getText();
+         if(password.equals("")||password.equals("password")){
+             tPasssword.setText("password");
+         }
+    }//GEN-LAST:event_tPassswordFocusLost
 
     /**
      * @param args the command line arguments
@@ -232,7 +230,7 @@ public class formLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField tPassword;
+    private javax.swing.JPasswordField tPasssword;
     private javax.swing.JTextField tUsername;
     // End of variables declaration//GEN-END:variables
 }
