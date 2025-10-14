@@ -9,7 +9,7 @@ package classClass;
  * @author user
  */
 public class Model_Login {
-    private String id_user, username, password;
+    private String id_user, username, pass;
 
     public String getId_user() {
         return id_user;
@@ -19,7 +19,6 @@ public class Model_Login {
         this.id_user = id_user;
     }
 
-   
     public String getUsername() {
         return username;
     }
@@ -28,13 +27,15 @@ public class Model_Login {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass() {
+        return pass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
+
+   
     
     
 }

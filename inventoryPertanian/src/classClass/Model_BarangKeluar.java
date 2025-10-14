@@ -11,6 +11,7 @@ package classClass;
 public class Model_BarangKeluar {
     private String no_keluar, tgl_keluar;
     private Long total_keluar;
+    private Model_User idUser;
 
     public String getNo_keluar() {
         return no_keluar;
@@ -28,12 +29,21 @@ public class Model_BarangKeluar {
         this.tgl_keluar = tgl_keluar;
     }
 
-    public long getTotal_keluar() {
+    public Long getTotal_keluar() {
         return total_keluar;
     }
 
-    public void setTotal_keluar(long total_keluar) {
+    public void setTotal_keluar(Long total_keluar) {
         this.total_keluar = total_keluar;
     }
-    
+
+    public Model_User getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Model_User idUser) {
+        this.idUser = idUser;
+    }
+
+   
 }
