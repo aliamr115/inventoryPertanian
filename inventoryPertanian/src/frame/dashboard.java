@@ -153,14 +153,14 @@ public class dashboard extends javax.swing.JFrame {
         ImageIcon iconBox = new ImageIcon(getClass().getResource("/img/box.png"));
         ImageIcon iconBarang = new ImageIcon(getClass().getResource("/img/barang.png"));
         
-        MenuItem menuBarang1 = new MenuItem(null, true, iconBarang, "barang1", null );
-        MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "barang2", null );
+        MenuItem menuBarang1 = new MenuItem(null, true, iconBarang, "Barang", null );
+        MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "Jenis Barang", null );
         
-        MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "barang1", null );
-        MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "barang2", null );
-        MenuItem menuKelola3 = new MenuItem(null, true, iconBarang, "barang3", null );
+        MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "Barang Masuk", null );
+        MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "Barang Keluar", null );
+        MenuItem menuKelola3 = new MenuItem(null, true, iconBarang, "Hasil Panen", null );
         
-        MenuItem menuBox = new MenuItem(iconBox, false, null, "barang", null, menuBarang1,menuBarang2);
+        MenuItem menuBox = new MenuItem(iconBox, false, null, "Data", null, menuBarang1,menuBarang2);
         MenuItem menuKelola = new MenuItem(iconBarang, false, null, "Kelola", null, menuKelola1, menuKelola2, menuKelola3);
         MenuItem menuLaporan = new MenuItem(iconBox, false, null, "Laporan", null);
         MenuItem menuAbout = new MenuItem(iconBox, false, null, "About", null);
