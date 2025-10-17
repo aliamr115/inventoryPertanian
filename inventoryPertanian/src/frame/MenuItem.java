@@ -5,6 +5,7 @@
 package frame;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.Icon;
@@ -28,9 +29,10 @@ public class MenuItem extends javax.swing.JPanel {
     
     public MenuItem(Icon icon, boolean sbm, Icon iconSub, String menuName, ActionListener act, MenuItem... subMenu) {
         initComponents();
-        
+        setLayout(new FlowLayout(FlowLayout.LEFT, 15, 25)); //mengatur margin panel, 15 adalah jarak horizontal antar icon dan teks
         lb_icon.setIcon(icon); 
         lb_menuName.setText(menuName);
+        lb_menuName.setIconTextGap(3); //untuk mengatur jarak antara icon dan teks
         lb_iconSub.setIcon(iconSub);
         lb_iconSub.setVisible(sbm);
         
@@ -78,9 +80,9 @@ public class MenuItem extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(9, Short.MAX_VALUE)
                 .addComponent(lb_icon, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lb_iconSub, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lb_menuName, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
         );
