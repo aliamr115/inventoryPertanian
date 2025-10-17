@@ -152,9 +152,9 @@ public class dashboard extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void execute() {
-        ImageIcon iconBox = new ImageIcon(getClass().getResource("/img/box.png"));
+        ImageIcon iconBox = new ImageIcon(getClass().getResource("/img/box.png")); 
         ImageIcon iconBarang = new ImageIcon(getClass().getResource("/img/barang.png"));
-       // ImageIcon iconKelola = new ImageIcon(getClass().getResource("/"));
+        ImageIcon iconKelola = new ImageIcon(getClass().getResource("/"));//
         
         
         
