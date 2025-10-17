@@ -12,7 +12,7 @@ public class Model_Barang {
     private String kode_barang,  nama_barang;
     private Integer satuan,stok;
     private Long harga;
-    private Model_JenisBarang jns_barang; //memanggil model jenisbarang karena berelasi
+    private Model_JenisBarang jns_barang; //memanggil model jenisbarang karena berelasi(FK)
 
     public String getKode_barang() {
         return kode_barang;

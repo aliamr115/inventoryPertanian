@@ -10,6 +10,8 @@ package classClass;
  */
 public class Model_User {
 
+    private String id_user, nama, username, password, alamat, telp, level;
+    
     public String getId_user() {
         return id_user;
     }
@@ -65,6 +67,6 @@ public class Model_User {
     public void setLevel(String level) {
         this.level = level;
     }
-     private String id_user, nama, username, password, alamat, telp, level;
+     
      
 }
