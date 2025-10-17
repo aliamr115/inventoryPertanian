@@ -1,12 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package frame;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 /**
  *
  * @author user
@@ -40,6 +39,11 @@ public class dashboard extends javax.swing.JFrame {
         pn_utama = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         pn_navbar.setBackground(new java.awt.Color(0, 153, 0));
         pn_navbar.setMinimumSize(new java.awt.Dimension(100, 80));
@@ -105,6 +109,13 @@ public class dashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        pn_utama.add(new content_bg());
+        pn_utama.repaint();
+        pn_utama.revalidate();
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -115,20 +126,8 @@ public class dashboard extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (UnsupportedLookAndFeelException unsupportedLookAndFeelException) {
         }
         //</editor-fold>
 
@@ -160,9 +159,9 @@ public class dashboard extends javax.swing.JFrame {
         MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "barang2", null );
         MenuItem menuKelola3 = new MenuItem(null, true, iconBarang, "barang3", null );
         
-        MenuItem menuBox = new MenuItem(iconBox, false, null, "barang", null, menuBarang1,menuBarang2);
-        MenuItem menuKelola = new MenuItem(iconBarang, false, null, "Kelola", null, menuKelola1, menuKelola2, menuKelola3);
-        MenuItem menuLaporan = new MenuItem(iconBox, false, null, "Laporan", null);
+        MenuItem menuBox = new MenuItem(iconBox, false, null, "barang", null);
+        MenuItem menuKelola = new MenuItem(iconBarang, false, null, "Kelola", null, menuBarang1,menuBarang2);
+        MenuItem menuLaporan = new MenuItem(iconBox, false, null, "Laporan", null, menuKelola1, menuKelola2, menuKelola3);
         MenuItem menuAbout = new MenuItem(iconBox, false, null, "About", null);
         MenuItem menuLogout = new MenuItem(iconBox, false, null, "Logout", null);
 
