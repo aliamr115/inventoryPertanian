@@ -9,8 +9,8 @@ package classClass;
  * @author user
  */
 public class Model_Barang {
-    private String kode_barang,  nama_barang;
-    private Integer satuan,stok;
+    private String kode_barang,  nama_barang, satuan;
+    private Integer stok;
     private Long harga;
     private Model_JenisBarang jns_barang; //memanggil model jenisbarang karena berelasi(FK)
 
@@ -30,13 +30,15 @@ public class Model_Barang {
         this.nama_barang = nama_barang;
     }
 
-    public Integer getSatuan() {
+    public String getSatuan() {
         return satuan;
     }
 
-    public void setSatuan(Integer satuan) {
+    public void setSatuan(String satuan) {
         this.satuan = satuan;
     }
+
+   
 
     public Integer getStok() {
         return stok;
