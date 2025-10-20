@@ -45,5 +45,4 @@ public class Model_BarangKeluar {
         this.idUser = idUser;
     }
 
-   
 }
