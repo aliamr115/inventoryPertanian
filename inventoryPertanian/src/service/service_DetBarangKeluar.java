@@ -4,7 +4,7 @@
  */
 package service;
 
-import classClass.Model_DetBarangKeluar;
+import Class.Model_DetBarangKeluar;
 import java.util.List;
 
 /**

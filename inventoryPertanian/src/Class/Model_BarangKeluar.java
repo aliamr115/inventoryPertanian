@@ -2,24 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package classClass;
+package Class;
 
 /**
  *
  * @author user
  */
-public class Model_BarangMasuk {
+public class Model_BarangKeluar {
     private String no_keluar, tgl_keluar;
     private Long total_keluar;
     private Model_User idUser;
-
-    public Model_User getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Model_User idUser) {
-        this.idUser = idUser;
-    }
 
     public String getNo_keluar() {
         return no_keluar;
@@ -44,4 +36,13 @@ public class Model_BarangMasuk {
     public void setTotal_keluar(Long total_keluar) {
         this.total_keluar = total_keluar;
     }
+
+    public Model_User getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Model_User idUser) {
+        this.idUser = idUser;
+    }
+
 }

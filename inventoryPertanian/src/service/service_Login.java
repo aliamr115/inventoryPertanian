@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package service;
-import classClass.Model_Login;
+import Class.Model_Login;
 /**
  *
  * @author user

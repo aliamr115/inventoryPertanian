@@ -4,7 +4,7 @@
  */
 package service;
 
-import classClass.Model_Barang;
+import Class.Model_Barang;
 import java.util.List;
 
 /**

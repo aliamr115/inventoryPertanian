@@ -5,7 +5,7 @@
 package service;
 
 
-import classClass.Model_User;
+import Class.Model_User;
 import java.util.List;
 
 /**

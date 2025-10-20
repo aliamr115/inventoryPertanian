@@ -5,7 +5,7 @@
 package service;
 
 
-import classClass.Model_SemBarangMasuk;
+import Class.Model_SemBarangMasuk;
 import java.util.List;
 
 /**

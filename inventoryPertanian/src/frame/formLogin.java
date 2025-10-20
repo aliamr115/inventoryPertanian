@@ -4,7 +4,7 @@
  */
 package frame;
 
-import classClass.koneksi;
+import Class.koneksi;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
