@@ -8,10 +8,10 @@ package classClass;
  *
  * @author user
  */
-public class Model_Barang {
+public class Model_Barang { //Model : digunakan untuk mendeklarasikan atribut" apa saja yang ada diDB
     private String kode_barang,  nama_barang, satuan;
-    private Integer stok;
-    private Long harga;
+    private int stok;
+    private int harga;
     private Model_JenisBarang jns_barang; //memanggil model jenisbarang karena berelasi(FK)
 
     public String getKode_barang() {
@@ -48,13 +48,7 @@ public class Model_Barang {
         this.stok = stok;
     }
 
-    public Long getHarga() {
-        return harga;
-    }
-
-    public void setHarga(Long harga) {
-        this.harga = harga;
-    }
+   
 
     public Model_JenisBarang getJns_barang() {
         return jns_barang;

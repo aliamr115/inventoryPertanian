@@ -8,7 +8,7 @@ package classClass;
  *
  * @author user
  */
-public class Model_Login {
+public class Model_Login { 
     private String id_user, username, pass;
 
     public String getId_user() {

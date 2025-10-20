@@ -11,10 +11,21 @@ import java.util.List;
  *
  * @author user
  */
-public interface service_Barang {
-    void tambahData (Model_Barang mobar);
-    void perbaruiData (Model_Barang mobar);
-    void hapusData (Model_Barang mobar);
+public interface service_Barang {  //Berisi method" apa saja yang akan dibuat
+    void tambahData (Model_Barang moBar);
+    void perbaruiData (Model_Barang moBar);
+    void hapusData (Model_Barang moBar);
     
+    Model_Barang getByid (String id);
+     
     List<Model_Barang> ambilData();
+    List<Model_Barang> ambilData2();
+    
+    List<Model_Barang> pencarian(String id);
+    List<Model_Barang> pencarian2(String id);
+    
+    String nomor();
+    String nomor2();
+            
+            
 }
