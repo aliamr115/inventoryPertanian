@@ -152,34 +152,43 @@ public class dashboard extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void execute() {
-        ImageIcon iconBox = new ImageIcon(getClass().getResource("/img/box.png")); 
+        // Memanggil icon menu
+        ImageIcon iconDashboard = new ImageIcon(getClass().getResource("/img/iconDashboard.png"));
+        ImageIcon iconData = new ImageIcon(getClass().getResource("/img/iconData.png"));
+        ImageIcon iconKelola = new ImageIcon(getClass().getResource("/img/iconKelola.png"));
+        ImageIcon iconLaporan = new ImageIcon(getClass().getResource("/img/iconLaporan.png"));
+        ImageIcon iconAbout = new ImageIcon(getClass().getResource("/img/iconAbout.png"));
+        ImageIcon iconLogout = new ImageIcon(getClass().getResource("/img/iconLogout.png"));
+        
+        // Memanggil icon sub menu
         ImageIcon iconBarang = new ImageIcon(getClass().getResource("/img/barang.png"));
-        ImageIcon iconKelola = new ImageIcon(getClass().getResource("/"));//
+        ImageIcon iconJenisBarang = new ImageIcon(getClass().getResource("/"));
+        ImageIcon iconBarangMasuk = new ImageIcon(getClass().getResource("/"));
+        ImageIcon iconBarangKeluar = new ImageIcon(getClass().getResource("/"));
+        ImageIcon iconHasilPanen = new ImageIcon(getClass().getResource("/"));
         
-        
-        
-        
+        // Sub menu pada menu Data
         MenuItem menuBarang1 = new MenuItem(null, true, iconBarang, "Barang", null );
         MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "Jenis Barang", null );
         
+        // Sub menu pada menu Kelola
         MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "Barang Masuk", null );
         MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "Barang Keluar", null );
         
+        // Sub menu pada menu Laporan
         MenuItem menuLaporan1 = new MenuItem(null, true, iconBarang, "Barang Masuk", null );
         MenuItem menuLaporan2 = new MenuItem(null, true, iconBarang, "Barang Keluar", null );
         MenuItem menuLaporan3 = new MenuItem(null, true, iconBarang, "Hasil Panen", null );
         
-        
-        MenuItem menuDasbor = new MenuItem(iconBox, false, null, "Dashboard", null);
-        MenuItem menuBox = new MenuItem(iconBox, false, null, "Data", null, menuBarang1,menuBarang2);
-        MenuItem menuKelola = new MenuItem(iconBarang, false, null, "Kelola", null, menuKelola1,menuKelola2);
-        MenuItem menuLaporan = new MenuItem(iconBox, false, null, "Laporan", null, menuLaporan1, menuLaporan2, menuLaporan3);
-        MenuItem menuAbout = new MenuItem(iconBox, false, null, "About", null);
-        MenuItem menuLogout = new MenuItem(iconBox, false, null, "Logout", null);
+        // Menu utama memamnggil sub menu
+        MenuItem menuDasbor = new MenuItem(iconDashboard, false, null, "Dashboard", null);
+        MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBarang1,menuBarang2);
+        MenuItem menuKelola = new MenuItem(iconKelola, false, null, "Kelola", null, menuKelola1,menuKelola2);
+        MenuItem menuLaporan = new MenuItem(iconLaporan, false, null, "Laporan", null, menuLaporan1, menuLaporan2, menuLaporan3);
+        MenuItem menuAbout = new MenuItem(iconAbout, false, null, "About", null);
+        MenuItem menuLogout = new MenuItem(iconLogout, false, null, "Logout", null);
 
-        addMenu(menuDasbor, menuBox, menuKelola, menuLaporan, menuAbout, menuLogout);
-        
-        
+        addMenu(menuDasbor, menuData, menuKelola, menuLaporan, menuAbout, menuLogout);    
     }
     
     private void addMenu(MenuItem... menu) {
