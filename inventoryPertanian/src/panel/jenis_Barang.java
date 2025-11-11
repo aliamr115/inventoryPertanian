@@ -6,14 +6,14 @@ package panel;
 
 /**
  *
- * @author user
+ * @author asus
  */
-public class jenisBarang extends javax.swing.JPanel {
+public class jenis_Barang extends javax.swing.JPanel {
 
     /**
-     * Creates new form jenisBarang
+     * Creates new form jenis_Barang
      */
-    public jenisBarang() {
+    public jenis_Barang() {
         initComponents();
     }
 
@@ -28,25 +28,19 @@ public class jenisBarang extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnTambah = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         lbCari = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbJenisBarang = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
         jLabel1.setText("Data Jenis Barang");
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
-        btnTambah.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-add-to-collection-20.png"))); // NOI18N
-        btnTambah.setText("TAMBAH");
-
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-search-20.png"))); // NOI18N
 
         lbCari.setText("Pencarian");
 
@@ -63,6 +57,8 @@ public class jenisBarang extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tbJenisBarang);
 
+        jButton1.setText("Tambah");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,7 +74,7 @@ public class jenisBarang extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTambah)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -108,7 +104,7 @@ public class jenisBarang extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTambah)))
+                        .addComponent(jButton1)))
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE))
@@ -117,7 +113,7 @@ public class jenisBarang extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnTambah;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
