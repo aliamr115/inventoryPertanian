@@ -6,14 +6,14 @@ package panel;
 
 /**
  *
- * @author user
+ * @author asus
  */
-public class barangKeluar extends javax.swing.JPanel {
+public class barang_Keluar extends javax.swing.JPanel {
 
     /**
-     * Creates new form barangKeluar
+     * Creates new form barang_Keluar
      */
-    public barangKeluar() {
+    public barang_Keluar() {
         initComponents();
     }
 
@@ -43,7 +43,6 @@ public class barangKeluar extends javax.swing.JPanel {
 
         jButton1.setBackground(new java.awt.Color(153, 255, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-add-to-collection-20.png"))); // NOI18N
         jButton1.setText("TAMBAH");
 
         btnCetak.setBackground(new java.awt.Color(153, 255, 0));
@@ -67,8 +66,6 @@ public class barangKeluar extends javax.swing.JPanel {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
         lbCari.setText("Pencarian");
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-search-20.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -96,7 +93,7 @@ public class barangKeluar extends javax.swing.JPanel {
                                         .addComponent(lbCari)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel3)))))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +119,7 @@ public class barangKeluar extends javax.swing.JPanel {
                             .addComponent(btnCetak, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(20, 20, 20)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
