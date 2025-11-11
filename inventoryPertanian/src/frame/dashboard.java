@@ -12,7 +12,6 @@ import panel.barang_Keluar;
 import panel.barang_Masuk;
 import panel.dataBarang;
 import panel.hasil_Panen;
-import panel.jenisBarang;
 import panel.jenis_Barang;
 import panel.lap_barangKeluar;
 import panel.lap_barangMasuk;
