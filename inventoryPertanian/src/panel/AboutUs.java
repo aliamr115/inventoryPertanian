@@ -4,13 +4,13 @@
  */
 package panel;
 
-/**dsds
+/**
  *
- * @author USER
+ * @autsshor USER
  */
 public class AboutUs extends javax.swing.JPanel {
 
-    /**
+    /**sdwddww
      * Creates new form AboutUs
      */
     public AboutUs() {
