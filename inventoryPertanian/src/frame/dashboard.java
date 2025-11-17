@@ -1,6 +1,6 @@
 package frame;
 
-import com.formdev.flatlaf.FlatLightLaf;
+//import com.formdev.flatlaf.FlatLightLaf;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -36,8 +36,8 @@ public class dashboard extends javax.swing.JFrame {
         pn_sidebar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pn_menu = new javax.swing.JPanel();
-        pn_content = new javax.swing.JPanel();
         pn_utama = new javax.swing.JPanel();
+        pn_content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -72,6 +72,11 @@ public class dashboard extends javax.swing.JFrame {
 
         pn_menu.setBackground(new java.awt.Color(255, 255, 255));
         pn_menu.setLayout(new javax.swing.BoxLayout(pn_menu, javax.swing.BoxLayout.Y_AXIS));
+
+        pn_utama.setBackground(new java.awt.Color(255, 255, 255));
+        pn_utama.setLayout(new java.awt.BorderLayout());
+        pn_menu.add(pn_utama);
+
         jScrollPane1.setViewportView(pn_menu);
 
         javax.swing.GroupLayout pn_sidebarLayout = new javax.swing.GroupLayout(pn_sidebar);
@@ -90,18 +95,15 @@ public class dashboard extends javax.swing.JFrame {
         pn_content.setBackground(new java.awt.Color(255, 255, 255));
         pn_content.setPreferredSize(new java.awt.Dimension(1200, 80));
 
-        pn_utama.setBackground(new java.awt.Color(255, 255, 255));
-        pn_utama.setLayout(new java.awt.BorderLayout());
-
         javax.swing.GroupLayout pn_contentLayout = new javax.swing.GroupLayout(pn_content);
         pn_content.setLayout(pn_contentLayout);
         pn_contentLayout.setHorizontalGroup(
             pn_contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pn_utama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 1050, Short.MAX_VALUE)
         );
         pn_contentLayout.setVerticalGroup(
             pn_contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pn_utama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 580, Short.MAX_VALUE)
         );
 
         getContentPane().add(pn_content, java.awt.BorderLayout.CENTER);
