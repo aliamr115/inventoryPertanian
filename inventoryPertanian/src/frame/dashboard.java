@@ -180,7 +180,7 @@ public class dashboard extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
-                pn_utama.add(new dataBarang());
+                //pn_utama.add(new formBarang());
                 pn_utama.repaint();
                 pn_utama.revalidate();
             }
