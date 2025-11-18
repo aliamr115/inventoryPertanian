@@ -4,11 +4,11 @@
  */
 package frame;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.Icon;
+import java.awt.Dimension; //digunakan untuk menyimpan ukuran (width & height) suatu komponen.
+import java.awt.FlowLayout; //yaitu layout manager yang mengatur komponen secara berurutan seperti aliran teks (kiri ke kanan, atau atas ke bawah)
+import java.awt.event.ActionListener; //digunakan untuk menangani event klik (aksi) pada tombol, menu, atau komponen lain.
+import java.util.ArrayList; //yaitu struktur data berupa daftar dinamis yang bisa menambah atau menghapus elemen secara fleksibel.
+import javax.swing.Icon; //digunakan untuk menampilkan gambar/icon pada komponen Swing seperti JLabel, JButton, atau JMenuItem.
 
 /**
  *
@@ -19,11 +19,13 @@ public class MenuItem extends javax.swing.JPanel {
     /**
      * @return the subMenu
      */
-    public ArrayList<MenuItem> getSubMenu() {
+    public ArrayList<MenuItem> getSubMenu() { //digunakan untuk mengambil atau mengakses daftar submenu (subMenu) dari luar kelas.
         return subMenu;
     }
 
-    private final ArrayList<MenuItem> subMenu = new ArrayList<>();
+    private final ArrayList<MenuItem> subMenu = new ArrayList<>(); 
+    //sebagai wadah untuk menyimpan semua submenu dari suatu menu dalam bentuk ArrayList<MenuItem>, 
+    //dengan referensi yang tidak dapat diubah karena memakai final
     
     private ActionListener act;
     
@@ -103,10 +105,10 @@ public class MenuItem extends javax.swing.JPanel {
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
         setBackground(new java.awt.Color(255,255,255));
-        if (showing) {
-            hideMenu();
+        if (showing) { //Mengecek apakah menu sedang ditampilkan (showing == true)
+            hideMenu(); //jika menu sedang tampil, maka menu disembunyikan
         } else {
-            showMenu();
+            showMenu(); //ika menu sedang tampil, maka menu disembunyikan
         }
         if (act != null) {
             act.actionPerformed(null);
