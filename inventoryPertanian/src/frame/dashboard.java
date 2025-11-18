@@ -257,7 +257,7 @@ public class dashboard extends javax.swing.JFrame {
             }
         });
         
-        
+        // Menu utama memamnggil sub menu
         
         MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBarang1,menuBarang2);
         MenuItem menuKelola = new MenuItem(iconKelola, false, null, "Kelola", null, menuKelola1,menuKelola2);
@@ -265,7 +265,7 @@ public class dashboard extends javax.swing.JFrame {
         MenuItem menuAbout = new MenuItem(iconAbout, false, null, "About", null);
         MenuItem menuLogout = new MenuItem(iconLogout, false, null, "Logout", null);
 
-        addMenu(menuDasbor, menuData, menuKelola, menuLaporan, menuAbout, menuLogout);    
+        addMenu(menuDasbor, menuData, menuKelola, menuLaporan, menuAbout, menuLogout);     
     }
     
     private void addMenu(MenuItem... menu) {
