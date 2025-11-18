@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import panel.About;
 import panel.barang_Keluar;
 import panel.barang_Masuk;
 import panel.formBarang;
@@ -262,7 +263,15 @@ public class dashboard extends javax.swing.JFrame {
         MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBarang1,menuBarang2);
         MenuItem menuKelola = new MenuItem(iconKelola, false, null, "Kelola", null, menuKelola1,menuKelola2);
         MenuItem menuLaporan = new MenuItem(iconLaporan, false, null, "Laporan", null, menuLaporan1, menuLaporan2, menuLaporan3);
-        MenuItem menuAbout = new MenuItem(iconAbout, false, null, "About", null);
+        MenuItem menuAbout = new MenuItem(iconAbout, false, null, "About", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pn_utama.removeAll();
+                pn_utama.add(new About());
+                pn_utama.repaint();
+                pn_utama.revalidate();
+            }
+        });
         MenuItem menuLogout = new MenuItem(iconLogout, false, null, "Logout", null);
 
         addMenu(menuDasbor, menuData, menuKelola, menuLaporan, menuAbout, menuLogout);     

@@ -63,45 +63,33 @@ public class About extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Dubai", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 0));
         jLabel1.setText("AGRITECH");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 60));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 180, 60));
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "KELOMPOK 6", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("KELOMPOK 6"));
 
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Alia Masrukhatur Rizkiah");
 
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Ainiha Qurrotul Aini");
 
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Talitha Intan Kirana");
 
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("M Ubaydillah Romadhon");
 
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("M Burhanudin");
 
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("M Muzakky");
 
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("202457201010");
 
-        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setText("202457201009");
 
-        jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setText("202457201067");
 
-        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("202457201031");
 
-        jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setText("202457201045");
 
-        jLabel22.setForeground(new java.awt.Color(0, 0, 0));
         jLabel22.setText("202457201051");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -157,42 +145,31 @@ public class About extends javax.swing.JPanel {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, 430, 190));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 430, 190));
 
         jPanel2.setBackground(new java.awt.Color(153, 255, 204));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ABOUT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("ABOUT"));
 
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Aplikasi Inventori Pertanian ini dikembangkan untuk membantu kegiatan administrasi");
 
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("dan pengelolaan data dalam bidang pertanian.  ");
 
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Sistem ini berfungsi untuk mencatat, memantau, serta mengelola data inventaris");
 
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("seperti alat pertanian, benih, pupuk, dan perlengkapan kerja secara lebih teratur dan efisien. ");
 
-        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Dengan adanya aplikasi ini, pengguna dapat: ");
 
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Menyimpan data barang dan alat pertanian secara digital ");
 
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Mengontrol stok dan ketersediaan barang dengan mudah ");
 
-        jLabel23.setForeground(new java.awt.Color(0, 0, 0));
         jLabel23.setText("Membuat laporan inventaris dengan cepat dan akurat");
 
-        jLabel24.setForeground(new java.awt.Color(0, 0, 0));
         jLabel24.setText("Mengelola hasil panen dan mengkalkulasi pengeluaran");
 
-        jLabel25.setForeground(new java.awt.Color(0, 0, 0));
         jLabel25.setText("Tujuan kami adalah mendukung modernisasi sistem pertanian");
 
-        jLabel26.setForeground(new java.awt.Color(0, 0, 0));
         jLabel26.setText(" melalui pengelolaan data yang rapi, transparan, dan mudah diakses.");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
