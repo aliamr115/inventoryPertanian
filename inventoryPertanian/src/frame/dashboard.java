@@ -8,16 +8,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import panel.barang_Keluar;
-import panel.barang_Masuk;
-import panel.dataBarang;
-import panel.hasil_Panen;
-import panel.jenis_Barang;
-import panel.lap_barangKeluar;
-import panel.lap_barangMasuk;
+import panel.formBarang;
 
-
-
+/**
+ *
+ * @author user
+ */
 public class dashboard extends javax.swing.JFrame {
 
     /**
@@ -177,72 +173,32 @@ public class dashboard extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
-                //pn_utama.add(new formBarang());
+                pn_utama.add(new formBarang());
                 pn_utama.repaint();
                 pn_utama.revalidate();
             }
         } );
-        MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "Jenis Barang", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pn_utama.removeAll();
-                pn_utama.add(new jenis_Barang());
-                pn_utama.repaint();
-                pn_utama.revalidate();
-            }
-        } );
+        MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "Jenis Barang", null);
         
         // Sub menu pada menu Kelola
-        MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "Barang Masuk", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pn_utama.removeAll();
-                pn_utama.add(new barang_Masuk());
-                pn_utama.repaint();
-                pn_utama.revalidate();
-            }
-        } );
-        MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pn_utama.removeAll();
-                pn_utama.add(new barang_Keluar());
-                pn_utama.repaint();
-                pn_utama.revalidate();
-            }
-        } );
+        MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "Barang Masuk", null);
+        MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "Barang Keluar", null);
         
         // Sub menu pada menu Laporan
-        MenuItem menuLaporan1 = new MenuItem(null, true, iconBarang, "Barang Masuk", new ActionListener() {
+        MenuItem menuLaporan1 = new MenuItem(null, true, iconBarang, "Barang Masuk", null);
+        MenuItem menuLaporan2 = new MenuItem(null, true, iconBarang, "Barang Keluar", null);
+        MenuItem menuLaporan3 = new MenuItem(null, true, iconBarang, "Hasil Panen", null);
+        
+        // Menu utama memamnggil sub menu
+        MenuItem menuDasbor = new MenuItem(iconDashboard, false, null, "Dashboard", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
-                pn_utama.add(new lap_barangMasuk());
+                pn_utama.add(new content_bg());
                 pn_utama.repaint();
                 pn_utama.revalidate();
             }
         });
-        MenuItem menuLaporan2 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pn_utama.removeAll();
-                pn_utama.add(new lap_barangKeluar());
-                pn_utama.repaint();
-                pn_utama.revalidate();
-            }
-        } );
-        MenuItem menuLaporan3 = new MenuItem(null, true, iconBarang, "Hasil Panen", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pn_utama.removeAll();
-                pn_utama.add(new hasil_Panen());
-                pn_utama.repaint();
-                pn_utama.revalidate();
-            }
-        } );
-        
-        // Menu utama memamnggil sub menu
-        MenuItem menuDasbor = new MenuItem(iconDashboard, false, null, "Dashboard", null);
         MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBarang1,menuBarang2);
         MenuItem menuKelola = new MenuItem(iconKelola, false, null, "Kelola", null, menuKelola1,menuKelola2);
         MenuItem menuLaporan = new MenuItem(iconLaporan, false, null, "Laporan", null, menuLaporan1, menuLaporan2, menuLaporan3);
