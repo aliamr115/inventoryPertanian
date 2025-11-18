@@ -15,10 +15,9 @@ import panel.hasil_Panen;
 import panel.jenis_Barang;
 import panel.lap_barangKeluar;
 import panel.lap_barangMasuk;
-/**
- *
- * @author user
- */
+
+
+
 public class dashboard extends javax.swing.JFrame {
 
     /**
