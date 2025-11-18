@@ -6,11 +6,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import panel.jenisBarang;
-/**
- *
- * @author user
- */
+import panel.barang_Keluar;
+import panel.barang_Masuk;
+import panel.dataBarang;
+import panel.hasil_Panen;
+import panel.jenis_Barang;
+import panel.lap_barangKeluar;
+import panel.lap_barangMasuk;
+
+
+
 public class dashboard extends javax.swing.JFrame {
 
     /**
@@ -114,9 +119,7 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         pn_utama.add(new content_bg());
         pn_utama.repaint();
-        pn_utama.revalidate();
-        
-       
+        pn_utama.revalidate();     
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -156,6 +159,25 @@ public class dashboard extends javax.swing.JFrame {
         ImageIcon iconBarang = new ImageIcon(getClass().getResource("/img/barang.png"));
         ImageIcon iconKelola = new ImageIcon(getClass().getResource("/"));//
         
+        // Sub menu pada menu Data
+        MenuItem menuBarang1 = new MenuItem(null, true, iconBarang, "Barang", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pn_utama.removeAll();
+                //pn_utama.add(new formBarang());
+                pn_utama.repaint();
+                pn_utama.revalidate();
+            }
+        } );
+        MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "Jenis Barang", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pn_utama.removeAll();
+                pn_utama.add(new jenis_Barang());
+                pn_utama.repaint();
+                pn_utama.revalidate();
+            }
+        } );
         
         
         
