@@ -8,7 +8,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import panel.barang_Keluar;
+import panel.barang_Masuk;
 import panel.formBarang;
+import panel.hasil_Panen;
+import panel.jenis_Barang;
+import panel.lap_barangKeluar;
+import panel.lap_barangMasuk;
 
 /**
  *
