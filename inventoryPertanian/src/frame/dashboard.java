@@ -122,9 +122,7 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         pn_utama.add(new content_bg());
         pn_utama.repaint();
-        pn_utama.revalidate();
-        
-       
+        pn_utama.revalidate();     
     }//GEN-LAST:event_formWindowOpened
 
     /**
