@@ -9,40 +9,43 @@ package Class;
  * @author user
  */
 public class Model_DetBarangMasuk {
-    private String no_masuk, kode_barang;
-    private int jml_masuk;
-    private double subtotal_masuk;
 
-    public String getNo_masuk() {
-        return no_masuk;
+    private Model_BarangMasuk bm; 
+    private Model_Barang brg;
+    private int jml_keluar;
+    private double subtotal_keluar;
+    
+    public Model_BarangMasuk getBm() {
+        return bm;
     }
 
-    public void setNo_masuk(String no_masuk) {
-        this.no_masuk = no_masuk;
+    public void setBm(Model_BarangMasuk bm) {
+        this.bm = bm;
     }
 
-    public String getKode_barang() {
-        return kode_barang;
+    public Model_Barang getBrg() {
+        return brg;
     }
 
-    public void setKode_barang(String kode_barang) {
-        this.kode_barang = kode_barang;
+    public void setBrg(Model_Barang brg) {
+        this.brg = brg;
     }
 
-    public int getJml_masuk() {
-        return jml_masuk;
+    public int getJml_keluar() {
+        return jml_keluar;
     }
 
-    public void setJml_keluar(int jml_masuk) {
-        this.jml_masuk = jml_masuk;
+    public void setJml_keluar(int jml_keluar) {
+        this.jml_keluar = jml_keluar;
     }
 
-    public double getSubtotal_masuk() {
-        return subtotal_masuk;
+    public double getSubtotal_keluar() {
+        return subtotal_keluar;
     }
 
-    public void setSubtotal_masuk(double subtotal_masuk) {
-        this.subtotal_masuk = subtotal_masuk;
+    public void setSubtotal_keluar(double subtotal_keluar) {
+        this.subtotal_keluar = subtotal_keluar;
     }
+    
 
 }

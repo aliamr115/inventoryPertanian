@@ -16,6 +16,9 @@ public class logout extends javax.swing.JPanel {
     public logout() {
         initComponents();
     }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

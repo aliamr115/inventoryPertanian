@@ -1,11 +1,14 @@
 package frame;
 
+import Class.Model_User;
+import Class.Model_Login;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener; 
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import panel.About;
@@ -16,6 +19,8 @@ import panel.hasil_Panen;
 import panel.jenis_Barang;
 import panel.lap_barangKeluar;
 import panel.lap_barangMasuk;
+import panel.logout;
+
 
 /**
  *
@@ -48,6 +53,7 @@ public class dashboard extends javax.swing.JFrame {
         pn_menu = new javax.swing.JPanel();
         pn_content = new javax.swing.JPanel();
         pn_utama = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -115,6 +121,7 @@ public class dashboard extends javax.swing.JFrame {
         );
 
         getContentPane().add(pn_content, java.awt.BorderLayout.CENTER);
+        setJMenuBar(jMenuBar1);
 
         pack();
         setLocationRelativeTo(null);
@@ -151,6 +158,7 @@ public class dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pn_content;
     private javax.swing.JPanel pn_menu;
@@ -247,7 +255,7 @@ public class dashboard extends javax.swing.JFrame {
         } );
         
         
-        // Menu utama memamnggil sub menu
+        // Menu utama memanggil sub menu
         MenuItem menuDasbor = new MenuItem(iconDashboard, false, null, "Dashboard", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -258,21 +266,34 @@ public class dashboard extends javax.swing.JFrame {
             }
         });
         
-        // Menu utama memamnggil sub menu
-        
-        MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBarang1,menuBarang2);
-        MenuItem menuKelola = new MenuItem(iconKelola, false, null, "Kelola", null, menuKelola1,menuKelola2);
-        MenuItem menuLaporan = new MenuItem(iconLaporan, false, null, "Laporan", null, menuLaporan1, menuLaporan2, menuLaporan3);
         MenuItem menuAbout = new MenuItem(iconAbout, false, null, "About", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 pn_utama.removeAll();
                 pn_utama.add(new About());
                 pn_utama.repaint();
                 pn_utama.revalidate();
             }
         });
-        MenuItem menuLogout = new MenuItem(iconLogout, false, null, "Logout", null);
+        
+        MenuItem menuLogout = new MenuItem(iconLogout, false, null, "logout", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int pesan = JOptionPane.showConfirmDialog(null, "Apakah Anda ingin keluar?", "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (pesan == JOptionPane.YES_OPTION){
+                dispose ();
+                 new formLogin().setVisible(true);
+                }
+            }
+        });
+        
+        
+        // Menu utama memanggil sub menu
+        MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBarang1,menuBarang2);
+        MenuItem menuKelola = new MenuItem(iconKelola, false, null, "Kelola", null, menuKelola1,menuKelola2);
+        MenuItem menuLaporan = new MenuItem(iconLaporan, false, null, "Laporan", null, menuLaporan1, menuLaporan2, menuLaporan3);
+        
 
         addMenu(menuDasbor, menuData, menuKelola, menuLaporan, menuAbout, menuLogout);     
     }

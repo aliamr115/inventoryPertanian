@@ -50,13 +50,7 @@ public class Model_Barang { //Model : digunakan untuk mendeklarasikan atribut" a
 
    
 
-    public Model_JenisBarang getJns_barang() {
-        return jns_barang;
-    }
-
-    public void setJns_barang(Model_JenisBarang jns_barang) {
-        this.jns_barang = jns_barang;
-    }
+  
 
      
 }

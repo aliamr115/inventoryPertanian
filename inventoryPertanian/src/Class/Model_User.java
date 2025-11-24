@@ -8,7 +8,7 @@ package Class;
  *
  * @author user
  */
-public class Model_User {
+public class Model_User extends koneksi{
 
     private String id_user, nama, username, password, alamat, telp, level;
     
@@ -67,6 +67,8 @@ public class Model_User {
     public void setLevel(String level) {
         this.level = level;
     }
+    
+     
      
      
 }
