@@ -8,18 +8,14 @@ package panel;
  *
  * @author user
  */
-public class pengguna extends javax.swing.JPanel {
+public class tambahBarang extends javax.swing.JPanel {
 
     /**
-     * Creates new form pengguna
+     * Creates new form tambahBarang
      */
-    public pengguna() {
+    public tambahBarang() {
         initComponents();
     }
-    
-        
-    
-
 
     /**
      * This method is called from within the constructor to initialize the form.

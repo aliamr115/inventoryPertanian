@@ -8,12 +8,12 @@ package panel;
  *
  * @author user
  */
-public class dataBarang extends javax.swing.JPanel {
+public class detailTambahBarang extends javax.swing.JPanel {
 
     /**
-     * Creates new form dataBarang
+     * Creates new form detailTambahBarang
      */
-    public dataBarang() {
+    public detailTambahBarang() {
         initComponents();
     }
 

@@ -4,11 +4,20 @@
  */
 package panel;
 
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Ainiha
  */
 public class formBarang extends javax.swing.JPanel {
+
+    private JTable tblTampilDataBarang;
+    private JButton btnTambahBarang;
+    private JTextField jTextField6;
 
     /**
      * Creates new form formBarang
@@ -99,14 +108,14 @@ public class formBarang extends javax.swing.JPanel {
 
         mainPanel = new javax.swing.JPanel();
         tampilBarang = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblTampilBarang = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         btnTambah = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblTampilBarang = new javax.swing.JTable();
         dataBarang = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDataBarang = new javax.swing.JTable();
@@ -144,6 +153,20 @@ public class formBarang extends javax.swing.JPanel {
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI Light", 1, 18)); // NOI18N
+        jLabel12.setText("Data Barang");
+
+        jLabel13.setText("Pencarian");
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-search-20.png"))); // NOI18N
+
+        btnTambah.setText("Tambah");
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
+
         tblTampilBarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -159,22 +182,11 @@ public class formBarang extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblTampilBarangMouseClicked(evt);
             }
-        });
-        jScrollPane2.setViewportView(tblTampilBarang);
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI Light", 1, 18)); // NOI18N
-        jLabel12.setText("Data Barang");
-
-        jLabel13.setText("Pencarian");
-
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-search-20.png"))); // NOI18N
-
-        btnTambah.setText("Tambah");
-        btnTambah.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTambahActionPerformed(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tblTampilBarangMouseEntered(evt);
             }
         });
+        jScrollPane2.setViewportView(tblTampilBarang);
 
         javax.swing.GroupLayout tampilBarangLayout = new javax.swing.GroupLayout(tampilBarang);
         tampilBarang.setLayout(tampilBarangLayout);
@@ -184,15 +196,8 @@ public class formBarang extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tampilBarangLayout.createSequentialGroup()
-                        .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tampilBarangLayout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jSeparator4))
-                        .addContainerGap())
-                    .addGroup(tampilBarangLayout.createSequentialGroup()
                         .addComponent(btnTambah)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 632, Short.MAX_VALUE)
                         .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(tampilBarangLayout.createSequentialGroup()
@@ -201,7 +206,12 @@ public class formBarang extends javax.swing.JPanel {
                                 .addComponent(jLabel14)))
                         .addGap(97, 97, 97))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tampilBarangLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE)
+                        .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tampilBarangLayout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING))
                         .addContainerGap())))
         );
         tampilBarangLayout.setVerticalGroup(
@@ -211,18 +221,18 @@ public class formBarang extends javax.swing.JPanel {
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(tampilBarangLayout.createSequentialGroup()
-                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnTambah))
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         mainPanel.add(tampilBarang, "card2");
@@ -270,7 +280,9 @@ public class formBarang extends javax.swing.JPanel {
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-search-20.png"))); // NOI18N
 
+        btnUbah.setFont(new java.awt.Font("Segoe UI Historic", 1, 12)); // NOI18N
         btnUbah.setText("Ubah");
+        btnUbah.setBorderPainted(false);
         btnUbah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUbahActionPerformed(evt);
@@ -468,11 +480,11 @@ public class formBarang extends javax.swing.JPanel {
                     .addComponent(jSeparator2)
                     .addGroup(tambahBarangLayout.createSequentialGroup()
                         .addGroup(tambahBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addGroup(tambahBarangLayout.createSequentialGroup()
                                 .addComponent(btnSimpan)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnBatal)))
+                                .addComponent(btnBatal))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         tambahBarangLayout.setVerticalGroup(
@@ -536,15 +548,6 @@ public class formBarang extends javax.swing.JPanel {
         showTampilBarang();
     }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void tblTampilBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTampilBarangMouseClicked
-        // TODO add your handling code here:
-        btnTambah.setVisible(false);
-        
-        btnUbah.setVisible(true);
-        btnHapus.setVisible(true);
-        btnbatal.setVisible(true);
-    }//GEN-LAST:event_tblTampilBarangMouseClicked
-
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         // TODO add your handling code here:
         int row = tblDataBarang.getSelectedRow();
@@ -568,6 +571,14 @@ public class formBarang extends javax.swing.JPanel {
         btnHapus.setVisible(true);
         btnbatal.setVisible(true);
     }//GEN-LAST:event_tblDataBarangMouseClicked
+
+    private void tblTampilBarangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTampilBarangMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblTampilBarangMouseEntered
+
+    private void tblTampilBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTampilBarangMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblTampilBarangMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
