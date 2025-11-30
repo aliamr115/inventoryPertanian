@@ -43,6 +43,7 @@ public class dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         pn_navbar = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         pn_sidebar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pn_menu = new javax.swing.JPanel();
@@ -56,19 +57,29 @@ public class dashboard extends javax.swing.JFrame {
             }
         });
 
-        pn_navbar.setBackground(new java.awt.Color(0, 153, 0));
+        pn_navbar.setBackground(new java.awt.Color(0, 153, 51));
         pn_navbar.setMinimumSize(new java.awt.Dimension(100, 80));
         pn_navbar.setPreferredSize(new java.awt.Dimension(1300, 70));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("A G R I T E C H ");
 
         javax.swing.GroupLayout pn_navbarLayout = new javax.swing.GroupLayout(pn_navbar);
         pn_navbar.setLayout(pn_navbarLayout);
         pn_navbarLayout.setHorizontalGroup(
             pn_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1300, Short.MAX_VALUE)
+            .addGroup(pn_navbarLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel1)
+                .addContainerGap(1092, Short.MAX_VALUE))
         );
         pn_navbarLayout.setVerticalGroup(
             pn_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGroup(pn_navbarLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel1)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         getContentPane().add(pn_navbar, java.awt.BorderLayout.PAGE_START);
@@ -151,6 +162,7 @@ public class dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pn_content;
     private javax.swing.JPanel pn_menu;
@@ -169,11 +181,11 @@ public class dashboard extends javax.swing.JFrame {
         ImageIcon iconLogout = new ImageIcon(getClass().getResource("/img/iconLogout.png"));
         
         // Memanggil icon sub menu
-        ImageIcon iconBarang = new ImageIcon(getClass().getResource("/img/barang.png"));
-        ImageIcon iconJenisBarang = new ImageIcon(getClass().getResource("/"));
-        ImageIcon iconBarangMasuk = new ImageIcon(getClass().getResource("/"));
-        ImageIcon iconBarangKeluar = new ImageIcon(getClass().getResource("/"));
-        ImageIcon iconHasilPanen = new ImageIcon(getClass().getResource("/"));
+        ImageIcon iconBarang = new ImageIcon(getClass().getResource("/img/sub_barang.png"));
+        ImageIcon iconJenisBarang = new ImageIcon(getClass().getResource("/img/sub_jenis_barang.png"));
+        ImageIcon iconBarangMasukdanKeluar = new ImageIcon(getClass().getResource("/img/sub_barang_masuk_keluar.png"));
+        ImageIcon iconLaporanMasukdanKeluar = new ImageIcon(getClass().getResource("/img/sub_lap_barang_masuk_keluar.png"));
+        ImageIcon iconHasilPanen = new ImageIcon(getClass().getResource("/img/sub_lap_hasil_panen.png"));
         
         // Sub menu pada menu Data
         MenuItem menuBarang1 = new MenuItem(null, true, iconBarang, "Barang", new ActionListener() {
@@ -186,7 +198,7 @@ public class dashboard extends javax.swing.JFrame {
             }
         } );
         
-        MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "Jenis Barang", new ActionListener() {
+        MenuItem menuBarang2 = new MenuItem(null, true, iconJenisBarang, "Jenis Barang", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -197,7 +209,7 @@ public class dashboard extends javax.swing.JFrame {
         } );
         
         // Sub menu pada menu Kelola
-        MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "Barang Masuk", new ActionListener() {
+        MenuItem menuKelola1 = new MenuItem(null, true, iconBarangMasukdanKeluar, "Barang Masuk", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -207,7 +219,7 @@ public class dashboard extends javax.swing.JFrame {
             }
         } );
         
-        MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
+        MenuItem menuKelola2 = new MenuItem(null, true, iconBarangMasukdanKeluar, "Barang Keluar", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -218,7 +230,7 @@ public class dashboard extends javax.swing.JFrame {
         } );
         
         // Sub menu pada menu Laporan
-        MenuItem menuLaporan1 = new MenuItem(null, true, iconBarang, "Barang Masuk", new ActionListener() {
+        MenuItem menuLaporan1 = new MenuItem(null, true, iconLaporanMasukdanKeluar, "Laporan Barang Masuk", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -227,7 +239,7 @@ public class dashboard extends javax.swing.JFrame {
                 pn_utama.revalidate();
             }
         });
-        MenuItem menuLaporan2 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
+        MenuItem menuLaporan2 = new MenuItem(null, true, iconLaporanMasukdanKeluar, "Laporan Barang Keluar", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -236,7 +248,7 @@ public class dashboard extends javax.swing.JFrame {
                 pn_utama.revalidate();
             }
         } );
-        MenuItem menuLaporan3 = new MenuItem(null, true, iconBarang, "Hasil Panen", new ActionListener() {
+        MenuItem menuLaporan3 = new MenuItem(null, true, iconHasilPanen, "Hasil Panen", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -259,7 +271,6 @@ public class dashboard extends javax.swing.JFrame {
         });
         
         // Menu utama memamnggil sub menu
-        
         MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBarang1,menuBarang2);
         MenuItem menuKelola = new MenuItem(iconKelola, false, null, "Kelola", null, menuKelola1,menuKelola2);
         MenuItem menuLaporan = new MenuItem(iconLaporan, false, null, "Laporan", null, menuLaporan1, menuLaporan2, menuLaporan3);
