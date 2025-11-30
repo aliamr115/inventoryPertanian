@@ -217,6 +217,15 @@ public class dashboard extends javax.swing.JFrame {
         
         // Sub menu pada menu Laporan
         
+        MenuItem menuLaporan1 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pn_utama.removeAll();
+                pn_utama.add(new laporan());
+                pn_utama.repaint();
+                pn_utama.revalidate();
+            }
+        } );
       
         MenuItem menuLaporan2 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
             @Override
