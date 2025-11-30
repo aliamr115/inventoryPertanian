@@ -13,8 +13,7 @@ import panel.barang_Masuk;
 import panel.formBarang;
 import panel.hasil_Panen;
 import panel.jenis_Barang;
-import panel.lap_barangKeluar;
-import panel.lap_barangMasuk;
+import panel.laporan;
 
 /**
  *
@@ -217,20 +216,13 @@ public class dashboard extends javax.swing.JFrame {
         } );
         
         // Sub menu pada menu Laporan
-        MenuItem menuLaporan1 = new MenuItem(null, true, iconBarang, "Barang Masuk", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pn_utama.removeAll();
-                pn_utama.add(new lap_barangMasuk());
-                pn_utama.repaint();
-                pn_utama.revalidate();
-            }
-        });
+        
+      
         MenuItem menuLaporan2 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
-                pn_utama.add(new lap_barangKeluar());
+                pn_utama.add(new laporan());
                 pn_utama.repaint();
                 pn_utama.revalidate();
             }
