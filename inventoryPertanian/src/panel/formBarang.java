@@ -4,10 +4,17 @@
  */
 package panel;
 
-import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import Class.koneksi;
+import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -15,84 +22,136 @@ import javax.swing.JTextField;
  */
 public class formBarang extends javax.swing.JPanel {
 
-    private JTable tblTampilDataBarang;
-    private JButton btnTambahBarang;
-    private JTextField jTextField6;
+  private Connection conn;
 
     /**
      * Creates new form formBarang
      */
     public formBarang() {
         initComponents();
+        conn = new koneksi().configDB();
         
         showTampilBarang();
+        tampilPanel(tampilBarang);
+        mainPanel.setLayout(new CardLayout());
+        
+        mainPanel.add(tampilBarang, "tampilBarang");
+        mainPanel.add(dataBarang, "dataBarang");
+        mainPanel.add(tambahBarang, "tambahBarang");
+    }
+    
+    private void showPanel(String namaPanel) {
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        cl.show(mainPanel, namaPanel);
+    }
+    
+    private void tampilPanel(javax.swing.JPanel panel) {
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        mainPanel.revalidate();
+        
+        mainPanel.add(panel);
+        mainPanel.repaint();
+        mainPanel.revalidate();
     }
     
     private void showTampilBarang() {
-        mainPanel.removeAll();
-        mainPanel.add(tampilBarang);
-        mainPanel.repaint();
-        mainPanel.revalidate();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Kode Barang");
+        model.addColumn("Nama Barang");
+        model.addColumn("Satuan");
+        model.addColumn("Harga");
+        model.addColumn("Stok");
         
-        btnUbah.setVisible(false);
-        btnHapus.setVisible(false);
-        btnbatal.setVisible(false);
-        
-        loadDataBarang();
+        try {
+            String sql = "SELECT kode_barang, nama_barang, satuan, harga, stok FROM barang";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                model.addRow(new Object[] {
+                    rs.getString("kode_barang"),
+                    rs.getString("nama_barang"),
+                    rs.getString("satuan"),
+                    rs.getString("harga"),
+                    rs.getInt("stok")
+                }) ;
+                
+            }
+            
+            tblTampilBarang.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error tampil data: " + e.getMessage());
+        }
     }
     
-    private void showDataBarang() {
-        mainPanel.removeAll();
-        mainPanel.add(dataBarang);
-        mainPanel.repaint();
-        mainPanel.revalidate();
-        
-        btnUbah.setVisible(false);
-        btnHapus.setVisible(false);
-        btnbatal.setVisible(false);
-        
-        loadDataBarang();
-    }
-    
-    private void showTambahBarang() {
-        mainPanel.removeAll();
-        mainPanel.add(tambahBarang);
-        mainPanel.repaint();
-        mainPanel.revalidate();
-        
-        clearForm();
-    }
-    
-    private void clearForm() {
+    private void resetForm() {
         tKodeBarang.setText("");
-        tKodeJenisBarang.setText("");
         tNamaBarang.setText("");
-        cSatuan.setSelectedIndex(0);
         tHarga.setText("");
         tStok.setText("");
-        
-        btnSimpan.setText("Simpan");
-    }
-    
-    private void loadDataBarang() {
-        
-        
-        System.out.println("Data barang direfresh");
+        cSatuan.setSelectedItem("");
     }
     
     private void simpanBarang() {
-        String kode = tKodeBarang.getText();
-        String jenis = tKodeJenisBarang.getText();
-        String nama = tNamaBarang.getText();
-        String satuan = cSatuan.getSelectedItem().toString();
-        String harga = tHarga.getText();
-        String stok = tStok.getText();
+        try {
+            String sql = "INSERT INTO barang (kode_barang, nama_barang, satuan, harga, stok) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            ps.setString(1, tKodeBarang.getText());
+            ps.setString(2, tNamaBarang.getText());
+            ps.setString(3, cSatuan.getSelectedItem().toString());
+            ps.setString(4, tHarga.getText());
+            ps.setInt(5, Integer.parseInt(tStok.getText()));
+            
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
+            resetForm();
+            showTampilBarang();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error simpan: " + e.getMessage());
+        }
     }
     
     private void updateBarang() {
-        
+        try {
+            String sql = "UPDATE barang SET nama_barang=?, satuan=?, harga=?, stok=? WHERE kode_barang=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            ps.setString(1, tNamaBarang.getText());
+            ps.setString(2, cSatuan.getSelectedItem().toString());
+            ps.setString(3, tHarga.getText());
+            ps.setInt(4, Integer.parseInt(tStok.getText()));
+            ps.setString(5, tKodeBarang.getText());
+            
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Data berhasil diubah!");
+            resetForm();
+            showTampilBarang();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error update: " + e.getMessage());
+        }
     }
     
+    private void hapusBarang() {
+        try {
+            String sql = "DELETE FROM barang WHERE kode_barang=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, tKodeBarang.getText());
+            
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
+            showTampilBarang();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error hapus: " + e.getMessage());
+        }
+    }
+    
+    
+ 
     
     
 
@@ -197,7 +256,7 @@ public class formBarang extends javax.swing.JPanel {
                 .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tampilBarangLayout.createSequentialGroup()
                         .addComponent(btnTambah)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 632, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 723, Short.MAX_VALUE)
                         .addGroup(tampilBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(tampilBarangLayout.createSequentialGroup()
@@ -309,7 +368,7 @@ public class formBarang extends javax.swing.JPanel {
                         .addComponent(btnHapus)
                         .addGap(18, 18, 18)
                         .addComponent(btnbatal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 453, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 544, Short.MAX_VALUE)
                         .addGroup(dataBarangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(dataBarangLayout.createSequentialGroup()
@@ -417,7 +476,7 @@ public class formBarang extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(tKodeJenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, 100, Short.MAX_VALUE))
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(tNamaBarang)
                     .addComponent(cSatuan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tNamaJenisBarang)
@@ -430,7 +489,7 @@ public class formBarang extends javax.swing.JPanel {
                             .addComponent(jLabel3)
                             .addComponent(jLabel9)
                             .addComponent(jLabel7))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 968, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -510,66 +569,62 @@ public class formBarang extends javax.swing.JPanel {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
-        int row = tblDataBarang.getSelectedRow();
-        if (row < 0) return; 
-            
-        String kode = tblDataBarang.getValueAt(row, 0).toString();
-        
-        loadDataBarang();
+        hapusBarang();
+        tampilPanel(tampilBarang);
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
         // TODO add your handling code here:
-        showTampilBarang();
+        tampilPanel(tampilBarang);
     }//GEN-LAST:event_btnBatalActionPerformed
 
     private void btnbatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbatalActionPerformed
         // TODO add your handling code here:
-        btnUbah.setVisible(false);
-        btnHapus.setVisible(false);
-        btnbatal.setVisible(false);
-        
-        tblDataBarang.clearSelection();
+        tampilPanel(tampilBarang);
     }//GEN-LAST:event_btnbatalActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
-        showTambahBarang();
+        resetForm();
+        tKodeBarang.setEditable(true);
+        btnSimpan.setVisible(true);
+        btnUbah.setVisible(false);
+        btnHapus.setVisible(false);
+        
+        tampilPanel(tambahBarang);
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
-        if (btnSimpan.getText().equals("Update")) {
-            updateBarang();
-        } else {
-            simpanBarang();
-        }
-        
-        showTampilBarang();
+        simpanBarang();
+        tampilPanel(tampilBarang);
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         // TODO add your handling code here:
-        int row = tblDataBarang.getSelectedRow();
-        if (row < 0) return;
-        
-        tKodeBarang.setText(tblDataBarang.getValueAt(row, 0).toString());
-        tKodeJenisBarang.setText(tblDataBarang.getValueAt(row, 1).toString());
-        tNamaBarang.setText(tblDataBarang.getValueAt(row, 2).toString());
-        cSatuan.setSelectedItem(tblDataBarang.getValueAt(row, 3).toString());
-        tHarga.setText(tblDataBarang.getValueAt(row, 4).toString());
-        tStok.setText(tblDataBarang.getValueAt(row, 5).toString());
-        
-        btnSimpan.setText("Update");
-        
-        showTambahBarang();
+        updateBarang();
+        tampilPanel(tampilBarang);
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void tblDataBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDataBarangMouseClicked
         // TODO add your handling code here:
-        btnUbah.setVisible(true);
-        btnHapus.setVisible(true);
-        btnbatal.setVisible(true);
+        int row = tblDataBarang.getSelectedRow();
+        if (row >= 0) {
+            tKodeBarang.setText(tblDataBarang.getValueAt(row, 0).toString());
+            tNamaJenisBarang.setText(tblDataBarang.getValueAt(row, 1).toString());
+            tNamaBarang.setText(tblDataBarang.getValueAt(row, 2).toString());
+            cSatuan.setSelectedItem(tblDataBarang.getValueAt(row, 3).toString());
+            tHarga.setText(tblDataBarang.getValueAt(row, 4).toString());
+            tStok.setText(tblDataBarang.getValueAt(row, 5).toString());
+
+            ///setKodeJenisByNama(tNamaJenisBarang.getText());
+
+            btnUbah.setVisible(true);
+            btnHapus.setVisible(true);
+            btnbatal.setVisible(true);
+
+            showPanel("dataBarang");
+        }
     }//GEN-LAST:event_tblDataBarangMouseClicked
 
     private void tblTampilBarangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTampilBarangMouseEntered
@@ -578,6 +633,20 @@ public class formBarang extends javax.swing.JPanel {
 
     private void tblTampilBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTampilBarangMouseClicked
         // TODO add your handling code here:
+        int row = tblTampilBarang.getSelectedRow();
+        
+        tKodeBarang.setText(tblTampilBarang.getValueAt(row, 0).toString());
+        tNamaBarang.setText(tblTampilBarang.getValueAt(row, 1).toString());
+        cSatuan.setSelectedItem(tblTampilBarang.getValueAt(row, 2).toString());
+        tHarga.setText(tblTampilBarang.getValueAt(row, 3).toString());
+        tStok.setText(tblTampilBarang.getValueAt(row, 4).toString());
+        
+        tKodeBarang.setEditable(false);
+        btnSimpan.setVisible(false);
+        btnUbah.setVisible(true);
+        btnHapus.setVisible(true);
+        
+        tampilPanel(dataBarang);
     }//GEN-LAST:event_tblTampilBarangMouseClicked
 
 

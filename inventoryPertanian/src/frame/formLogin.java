@@ -137,27 +137,7 @@ public class formLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String username = tUsername.getText();
-        String password = tPassword.getText();
         
-        String sql = "SELECT * FROM user WHERE username = ? AND password = MD5(?)"; 
-        Connection conn = koneksi.konek();
-        
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                new dashboard().setVisible(true);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Username atau Password salah!");
-            }
-        } catch (SQLException sQLException) {
-            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE,null,ex);
-        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void tUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tUsernameActionPerformed
