@@ -136,7 +136,7 @@ public class formLogin extends javax.swing.JFrame {
         String password = tPassword.getText();
         
         String sql = "SELECT * FROM user WHERE username = ? AND password = MD5(?)"; 
-        Connection conn = koneksi.konek();
+        Connection conn = new koneksi().configDB();
         
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
