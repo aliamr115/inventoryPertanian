@@ -123,7 +123,32 @@ public class jenis_Barang extends javax.swing.JPanel {
     }
      
     
-    
+    public void autoID(){
+        try {
+            Connection mysqlConfig = koneksi.configDB();
+            Statement st = mysqlConfig.createStatement();
+            ResultSet rs = st.executeQuery("SELECT MAX(kode_jenis) AS max_id FROM jenisbarang");
+            
+            if (rs.next()){
+                String maxID = rs.getString("max_id");
+                
+                if(maxID == null){
+                    tKodeJenis.setText("JN001");
+                } else {
+                    int nomor = Integer.parseInt(maxID.substring(2));
+                    nomor ++;
+                    
+                    String kodeBaru = String.format("JN%03d", nomor);
+                    tKodeJenis.setText(kodeBaru);
+                }
+            }
+            
+            rs.close();
+            st.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
      
      void simpan(){
          
@@ -379,6 +404,7 @@ public class jenis_Barang extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        autoID();
         showTambahJenis();
     }//GEN-LAST:event_btnTambahActionPerformed
 
@@ -419,7 +445,7 @@ public class jenis_Barang extends javax.swing.JPanel {
     }//GEN-LAST:event_tCariActionPerformed
 
     private void tKodeJenisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tKodeJenisMouseClicked
-        
+        autoID();
     }//GEN-LAST:event_tKodeJenisMouseClicked
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
@@ -433,7 +459,7 @@ public class jenis_Barang extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-        Model_JenisBarang jns = new Model_JenisBarang();
+       Model_JenisBarang jns = new Model_JenisBarang();
        jns.setKode_jenis(tKodeJenis.getText());
        
        jns.HapusJenis();
