@@ -4,14 +4,16 @@
  */
 package panel;
 import Class.Model_BarangKeluar;
-import javax.swing.JOptionPane;
+import Class.Model_DetBarangKeluar;
+import Class.Model_Barang;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-import javax.swing.RowFilter;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.TableRowSorter;
 
 
 
@@ -20,6 +22,14 @@ import java.util.Date;
  * @author asus
  */
 public class barang_Keluar extends javax.swing.JPanel {
+    
+    private Model_BarangKeluar modelBarangKeluar;
+    private Model_DetBarangKeluar modelDetBarangKeluar;
+    private DefaultTableModel tabelModelBarangKeluar;
+    private DefaultTableModel tabelModelDetail;
+    private TableRowSorter<DefaultTableModel> sorter;
+    
+    private barang_Keluar formPanel;
   
   
     /**
@@ -28,9 +38,43 @@ public class barang_Keluar extends javax.swing.JPanel {
     public barang_Keluar() {
         initComponents();
         
+        modelBarangKeluar = new Model_BarangKeluar();
+        modelDetBarangKeluar = new Model_DetBarangKeluar();
+        initTabelBarangKeluar();
+        initTabelDetail();
+        loadDataBarangKeluar();
+        setupSearchFilter();
+        setupTableListeners();
+        setupButtonListeners();
+        
+        showPanelBarangKeluar();
         
     }
+    private void setupButtonListeners(){
+     btnHapus2.addActionListener(e -> hapusDetailBarangKeluar());}
     
+    private void showPanelBarangKeluar(){}
+    private void showPanelDetail(){}
+    private void initTabelBarangKeluar(){}
+    private void loadDataBarangKeluar(){}
+    private void initTabelDetail(){}
+    private void loadDetailBarangKeluar(){}
+    private String getNamaBarang(String kodeBarang){
+        return "";    
+    }
+    private void setupTableListeners(){}
+    private void setupSearchFilter(){}
+    private void tambahBarangKeluar(){}
+    private void hapusBarangKeluar(){}
+    private void ubahBarangKeluar(){}
+    private void tambahDetailBarangKeluar(){}
+    private void hitungSubtotal(){}
+    private void updateTotalBarangKeluar(){}
+    private void hapusDetailBarangKeluar(){}
+    
+   
+    
+           
     
  
     /**
@@ -102,6 +146,11 @@ public class barang_Keluar extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblBarangKeluar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBarangKeluarMouseClicked(evt);
+            }
+        });
         jScrollPane8.setViewportView(tblBarangKeluar);
 
         txtCari7.setText("Pencarian");
@@ -136,16 +185,16 @@ public class barang_Keluar extends javax.swing.JPanel {
                                 .addComponent(jLabel15)
                                 .addGap(252, 252, 252)
                                 .addComponent(txtCari7, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(460, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(barangKeluar1Layout.createSequentialGroup()
                         .addGroup(barangKeluar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1028, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(barangKeluar1Layout.createSequentialGroup()
                                 .addComponent(btnTambah)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnHapus)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnUbah))
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1028, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnUbah)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         barangKeluar1Layout.setVerticalGroup(
@@ -155,16 +204,16 @@ public class barang_Keluar extends javax.swing.JPanel {
                 .addGroup(barangKeluar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(txtCari7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(34, 34, 34)
                 .addGroup(barangKeluar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnTambah)
+                    .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnUbah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel16)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         mainPanel.add(barangKeluar1, "card2");
@@ -174,10 +223,17 @@ public class barang_Keluar extends javax.swing.JPanel {
 
         btnTambah2.setBackground(new java.awt.Color(153, 255, 0));
         btnTambah2.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btnTambah2.setForeground(new java.awt.Color(0, 0, 0));
         btnTambah2.setText("TAMBAH");
+        btnTambah2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambah2ActionPerformed(evt);
+            }
+        });
 
         btnHapus2.setBackground(new java.awt.Color(153, 255, 0));
         btnHapus2.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btnHapus2.setForeground(new java.awt.Color(0, 0, 0));
         btnHapus2.setText("HAPUS");
 
         tblBK.setBackground(new java.awt.Color(204, 255, 204));
@@ -220,6 +276,7 @@ public class barang_Keluar extends javax.swing.JPanel {
 
         btnCetak7.setBackground(new java.awt.Color(153, 255, 0));
         btnCetak7.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btnCetak7.setForeground(new java.awt.Color(0, 0, 0));
         btnCetak7.setText("UBAH");
 
         javax.swing.GroupLayout detBarangKeluarLayout = new javax.swing.GroupLayout(detBarangKeluar);
@@ -232,7 +289,7 @@ public class barang_Keluar extends javax.swing.JPanel {
                     .addGroup(detBarangKeluarLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel14)
-                        .addContainerGap(1038, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(detBarangKeluarLayout.createSequentialGroup()
                         .addGroup(detBarangKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(detBarangKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -259,14 +316,19 @@ public class barang_Keluar extends javax.swing.JPanel {
                 .addGroup(detBarangKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(txtCari6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(detBarangKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTambah2)
-                    .addComponent(btnHapus2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCetak7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
+                .addGroup(detBarangKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(detBarangKeluarLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(detBarangKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnHapus2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCetak7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(40, 40, 40))
+                    .addGroup(detBarangKeluarLayout.createSequentialGroup()
+                        .addComponent(btnTambah2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -300,10 +362,18 @@ public class barang_Keluar extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnUbahActionPerformed
 
+    private void btnTambah2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambah2ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnTambah2ActionPerformed
+
+    private void tblBarangKeluarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBarangKeluarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblBarangKeluarMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel barangKeluar1;
-    private javax.swing.JButton btnCetak2;
     private javax.swing.JButton btnCetak7;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnHapus2;
@@ -311,27 +381,18 @@ public class barang_Keluar extends javax.swing.JPanel {
     private javax.swing.JButton btnTambah2;
     private javax.swing.JButton btnUbah;
     private javax.swing.JPanel detBarangKeluar;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTable tblBK;
     private javax.swing.JTable tblBarangKeluar;
-    private javax.swing.JTable tblBarangKeluar2;
     private javax.swing.JTable tblDetailBarangKeluar;
-    private javax.swing.JTextField txtCari2;
     private javax.swing.JTextField txtCari6;
     private javax.swing.JTextField txtCari7;
     // End of variables declaration//GEN-END:variables
