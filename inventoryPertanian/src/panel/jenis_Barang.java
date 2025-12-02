@@ -143,7 +143,6 @@ public class jenis_Barang extends javax.swing.JPanel {
         tampilJenis = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
-        jSeparator6 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTampilJenis = new javax.swing.JTable();
@@ -171,8 +170,6 @@ public class jenis_Barang extends javax.swing.JPanel {
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
 
-        jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
-
         tblTampilJenis.setFont(new java.awt.Font("Franklin Gothic Book", 0, 14)); // NOI18N
         tblTampilJenis.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -192,7 +189,7 @@ public class jenis_Barang extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(tblTampilJenis);
 
-        btnTambah.setFont(new java.awt.Font("Franklin Gothic Book", 0, 14)); // NOI18N
+        btnTambah.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnTambah.setText("Tambah");
         btnTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,6 +208,7 @@ public class jenis_Barang extends javax.swing.JPanel {
             }
         });
 
+        btnUbah.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnUbah.setText("Ubah");
         btnUbah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +216,7 @@ public class jenis_Barang extends javax.swing.JPanel {
             }
         });
 
+        btnHapus.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnHapus.setText("Hapus");
         btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,10 +245,9 @@ public class jenis_Barang extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnHapus)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                        .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6)
-                            .addComponent(tCari, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(tCari, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(53, 53, 53))
         );
         tampilJenisLayout.setVerticalGroup(
@@ -257,28 +255,30 @@ public class jenis_Barang extends javax.swing.JPanel {
             .addGroup(tampilJenisLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel5)
-                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tampilJenisLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(jLabel6)
-                        .addGap(0, 0, 0)
-                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel6))
                     .addGroup(tampilJenisLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(tampilJenisLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnTambah)
-                                    .addComponent(btnUbah)
-                                    .addComponent(btnHapus)))
-                            .addGroup(tampilJenisLayout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(tampilJenisLayout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(1, 1, 1))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tampilJenisLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(25, 25, 25)
+                                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnUbah, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnTambah, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         mainPanel.add(tampilJenis, "card9");
@@ -288,7 +288,7 @@ public class jenis_Barang extends javax.swing.JPanel {
 
         jSeparator17.setForeground(new java.awt.Color(0, 0, 0));
 
-        btnSimpan.setFont(new java.awt.Font("Franklin Gothic Book", 0, 14)); // NOI18N
+        btnSimpan.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnSimpan.setText("Simpan");
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,7 +296,7 @@ public class jenis_Barang extends javax.swing.JPanel {
             }
         });
 
-        btnBatal.setFont(new java.awt.Font("Franklin Gothic Book", 0, 14)); // NOI18N
+        btnBatal.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnBatal.setText("Batal");
         btnBatal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -360,17 +360,17 @@ public class jenis_Barang extends javax.swing.JPanel {
                         .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16)
                         .addGroup(tambahJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSimpan)
-                            .addComponent(btnBatal))))
+                            .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBatal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(72, 72, 72)
                 .addComponent(jLabel1)
-                .addGap(10, 10, 10)
+                .addGap(5, 5, 5)
                 .addComponent(tKodeJenis, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jLabel2)
-                .addGap(10, 10, 10)
+                .addGap(5, 5, 5)
                 .addComponent(tNamaJenis, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(261, Short.MAX_VALUE))
+                .addContainerGap(254, Short.MAX_VALUE))
         );
 
         mainPanel.add(tambahJenis, "card11");
@@ -456,7 +456,6 @@ public class jenis_Barang extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator17;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField tCari;
     private javax.swing.JTextField tKodeJenis;

@@ -54,10 +54,9 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnHapus" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jSeparator6" alignment="0" pref="234" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tCari" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="tCari" alignment="0" min="-2" pref="234" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -70,35 +69,39 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jSeparator6" min="-2" pref="10" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jSeparator5" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="btnTambah" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="btnUbah" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="btnHapus" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="tCari" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                              <Component id="btnHapus" min="-2" pref="37" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
+                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="tCari" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="btnUbah" alignment="1" min="-2" pref="37" max="-2" attributes="0"/>
+                                          <Component id="btnTambah" alignment="1" min="-2" pref="37" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="24" max="32767" attributes="0"/>
+                      <EmptySpace pref="21" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -113,13 +116,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator5">
-              <Properties>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="0" red="0" type="rgb"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JSeparator" name="jSeparator6">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
@@ -158,7 +154,7 @@
             <Component class="javax.swing.JButton" name="btnTambah">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Franklin Gothic Book" size="14" style="0"/>
+                  <Font name="Franklin Gothic Book" size="13" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Tambah"/>
               </Properties>
@@ -174,6 +170,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnUbah">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Franklin Gothic Book" size="13" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ubah"/>
               </Properties>
               <Events>
@@ -182,6 +181,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnHapus">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Franklin Gothic Book" size="13" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Hapus"/>
               </Properties>
               <Events>
@@ -250,20 +252,20 @@
                               <Component id="jSeparator17" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnSimpan" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnBatal" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnSimpan" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                                  <Component id="btnBatal" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Component id="tKodeJenis" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Component id="tNamaJenis" min="-2" pref="33" max="-2" attributes="0"/>
-                      <EmptySpace pref="261" max="32767" attributes="0"/>
+                      <EmptySpace pref="254" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -289,7 +291,7 @@
             <Component class="javax.swing.JButton" name="btnSimpan">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Franklin Gothic Book" size="14" style="0"/>
+                  <Font name="Franklin Gothic Book" size="13" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Simpan"/>
               </Properties>
@@ -300,7 +302,7 @@
             <Component class="javax.swing.JButton" name="btnBatal">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Franklin Gothic Book" size="14" style="0"/>
+                  <Font name="Franklin Gothic Book" size="13" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Batal"/>
               </Properties>
