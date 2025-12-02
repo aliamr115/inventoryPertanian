@@ -13,7 +13,7 @@ public class koneksi {
     
     public static Connection konek(){
         try {
-            String url = "jdbc:mysql://localhost:3306/inventory_pertanian";
+            String url = "jdbc:mysql://localhost:3306/inventory_pertanian2";
             String user = "root";
             String pass = "";
             
