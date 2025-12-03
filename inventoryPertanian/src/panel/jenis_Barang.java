@@ -7,6 +7,7 @@ package panel;
 import Class.koneksi;
 import Class.Model_JenisBarang;
 import static com.formdev.flatlaf.extras.components.FlatTabbedPane.TabType.card;
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +17,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Statement;
 import javax.swing.JTable;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 
 
@@ -31,7 +34,8 @@ public class jenis_Barang extends javax.swing.JPanel {
     CardLayout card;
     
     //variabel untuk UBAH data jenis
-    String kodeEdit = null;
+    String kodeEdit = "";
+    String namaEdit = "";
     
     
     /**
@@ -40,16 +44,17 @@ public class jenis_Barang extends javax.swing.JPanel {
     public jenis_Barang() {
         initComponents();
         
-        card = (CardLayout) mainPanel.getLayout(); 
-        showTampilJenis();
+        
+        showDataJenis();
         eventTableClick();
     }
     
-    private void showTampilJenis() { //menampilkan panel utama dengan button TAMBAH
+    private void showDataJenis() { //menampilkan panel utama dengan button TAMBAH
         mainPanel.removeAll();
-        mainPanel.add(tampilJenis);
+        mainPanel.add(dataJenis);
         mainPanel.repaint();
         mainPanel.revalidate();
+
         
         btnTambah.setVisible(true);
         btnUbah.setVisible(true);
@@ -64,7 +69,7 @@ public class jenis_Barang extends javax.swing.JPanel {
         mainPanel.add(tambahJenis);
         mainPanel.repaint();
         mainPanel.revalidate();
-        
+
         reset();
     }
     
@@ -86,7 +91,7 @@ public class jenis_Barang extends javax.swing.JPanel {
                   });
         }
            //set model ke JTable
-        tblTampilJenis.setModel(model);
+        tblDataJenis.setModel(model);
         
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
@@ -104,20 +109,20 @@ public class jenis_Barang extends javax.swing.JPanel {
     
      
     private void eventTableClick(){ //untuk menampilkan panel UBAH,HAPUS,BATAL saat salah satu data pada JTable diklik 
-        tblTampilJenis.addMouseListener(new MouseAdapter(){
+        tblDataJenis.addMouseListener(new MouseAdapter(){
         @Override
         public void mouseClicked(MouseEvent e){
-            int baris = tblTampilJenis.getSelectedRow();
+            int baris = tblDataJenis.getSelectedRow();
             
             if (baris != -1){
                 //ambil data dari tabel
-                String kode = tblTampilJenis.getValueAt(baris, 0).toString();
-                String nama = tblTampilJenis.getValueAt(baris, 1).toString();
+                String kode = tblDataJenis.getValueAt(baris, 0).toString();
+                String nama = tblDataJenis.getValueAt(baris, 1).toString();
                 
                 
-                kodeEdit = kode; //simpan kode untuk UBAH
-                card.show(mainPanel, "dataJenis");//pindah ke panel dataJenis(UBAH,HAPUS,BATAL)
-            }
+                kodeEdit = kode; //simpan data kevariabel
+                namaEdit = nama;
+        }
         }
         });
     }
@@ -150,9 +155,9 @@ public class jenis_Barang extends javax.swing.JPanel {
         }
     }
      
-     void simpan(){
-         
-     }
+       
+     
+     
      
    
     /**
@@ -165,16 +170,17 @@ public class jenis_Barang extends javax.swing.JPanel {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        tampilJenis = new javax.swing.JPanel();
+        dataJenis = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tblTampilJenis = new javax.swing.JTable();
+        tblDataJenis = new javax.swing.JTable();
         btnTambah = new javax.swing.JButton();
         tCari = new javax.swing.JTextField();
         btnUbah = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         tambahJenis = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jSeparator17 = new javax.swing.JSeparator();
@@ -185,18 +191,27 @@ public class jenis_Barang extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         tKodeJenis = new javax.swing.JTextField();
         tNamaJenis = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
-        setLayout(new java.awt.CardLayout());
+        setLayout(null);
 
-        mainPanel.setLayout(new java.awt.CardLayout());
+        mainPanel.setLayout(null);
+
+        dataJenis.setLayout(null);
 
         jLabel5.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
         jLabel5.setText("Data Jenis Barang");
+        dataJenis.add(jLabel5);
+        jLabel5.setBounds(30, 30, 142, 21);
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
+        dataJenis.add(jSeparator5);
+        jSeparator5.setBounds(31, 56, 970, 3);
+        dataJenis.add(jLabel6);
+        jLabel6.setBounds(997, 108, 0, 0);
 
-        tblTampilJenis.setFont(new java.awt.Font("Franklin Gothic Book", 0, 14)); // NOI18N
-        tblTampilJenis.setModel(new javax.swing.table.DefaultTableModel(
+        tblDataJenis.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        tblDataJenis.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -207,12 +222,15 @@ public class jenis_Barang extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblTampilJenis.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblDataJenis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblTampilJenisMouseClicked(evt);
+                tblDataJenisMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(tblTampilJenis);
+        jScrollPane3.setViewportView(tblDataJenis);
+
+        dataJenis.add(jScrollPane3);
+        jScrollPane3.setBounds(54, 146, 920, 390);
 
         btnTambah.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnTambah.setText("Tambah");
@@ -221,6 +239,8 @@ public class jenis_Barang extends javax.swing.JPanel {
                 btnTambahActionPerformed(evt);
             }
         });
+        dataJenis.add(btnTambah);
+        btnTambah.setBounds(60, 100, 80, 30);
 
         tCari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,6 +252,8 @@ public class jenis_Barang extends javax.swing.JPanel {
                 tCariKeyReleased(evt);
             }
         });
+        dataJenis.add(tCari);
+        tCari.setBounds(730, 70, 234, 22);
 
         btnUbah.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnUbah.setText("Ubah");
@@ -240,6 +262,8 @@ public class jenis_Barang extends javax.swing.JPanel {
                 btnUbahActionPerformed(evt);
             }
         });
+        dataJenis.add(btnUbah);
+        btnUbah.setBounds(170, 100, 72, 30);
 
         btnHapus.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnHapus.setText("Hapus");
@@ -248,70 +272,28 @@ public class jenis_Barang extends javax.swing.JPanel {
                 btnHapusActionPerformed(evt);
             }
         });
+        dataJenis.add(btnHapus);
+        btnHapus.setBounds(270, 100, 72, 30);
 
-        javax.swing.GroupLayout tampilJenisLayout = new javax.swing.GroupLayout(tampilJenis);
-        tampilJenis.setLayout(tampilJenisLayout);
-        tampilJenisLayout.setHorizontalGroup(
-            tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tampilJenisLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tampilJenisLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3)
-                    .addGroup(tampilJenisLayout.createSequentialGroup()
-                        .addComponent(btnTambah)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnUbah)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnHapus)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(tCari, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(53, 53, 53))
-        );
-        tampilJenisLayout.setVerticalGroup(
-            tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tampilJenisLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel5)
-                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tampilJenisLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel6))
-                    .addGroup(tampilJenisLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tampilJenisLayout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(tampilJenisLayout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(1, 1, 1))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tampilJenisLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(tampilJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnUbah, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnTambah, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
+        dataJenis.add(jLabel4);
+        jLabel4.setBounds(0, 0, 1050, 580);
 
-        mainPanel.add(tampilJenis, "card9");
+        mainPanel.add(dataJenis);
+        dataJenis.setBounds(0, 0, 1091, 580);
+
+        tambahJenis.setLayout(null);
 
         jLabel17.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
         jLabel17.setText("Tambah Jenis Barang");
+        tambahJenis.add(jLabel17);
+        jLabel17.setBounds(36, 35, 168, 21);
 
         jSeparator17.setForeground(new java.awt.Color(0, 0, 0));
+        tambahJenis.add(jSeparator17);
+        jSeparator17.setBounds(36, 62, 930, 3);
+        tambahJenis.add(jLabel18);
+        jLabel18.setBounds(997, 94, 0, 0);
 
         btnSimpan.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnSimpan.setText("Simpan");
@@ -320,6 +302,8 @@ public class jenis_Barang extends javax.swing.JPanel {
                 btnSimpanActionPerformed(evt);
             }
         });
+        tambahJenis.add(btnSimpan);
+        btnSimpan.setBounds(80, 80, 80, 30);
 
         btnBatal.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnBatal.setText("Batal");
@@ -328,79 +312,45 @@ public class jenis_Barang extends javax.swing.JPanel {
                 btnBatalActionPerformed(evt);
             }
         });
+        tambahJenis.add(btnBatal);
+        btnBatal.setBounds(180, 80, 72, 30);
 
-        jLabel1.setFont(new java.awt.Font("Franklin Gothic Book", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Kode Jenis");
+        tambahJenis.add(jLabel1);
+        jLabel1.setBounds(100, 210, 100, 21);
 
-        jLabel2.setFont(new java.awt.Font("Franklin Gothic Book", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nama Jenis");
+        tambahJenis.add(jLabel2);
+        jLabel2.setBounds(100, 320, 110, 20);
 
         tKodeJenis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tKodeJenisMouseClicked(evt);
             }
         });
+        tKodeJenis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tKodeJenisActionPerformed(evt);
+            }
+        });
+        tambahJenis.add(tKodeJenis);
+        tKodeJenis.setBounds(100, 230, 840, 40);
+        tambahJenis.add(tNamaJenis);
+        tNamaJenis.setBounds(100, 340, 840, 40);
 
-        javax.swing.GroupLayout tambahJenisLayout = new javax.swing.GroupLayout(tambahJenis);
-        tambahJenis.setLayout(tambahJenisLayout);
-        tambahJenisLayout.setHorizontalGroup(
-            tambahJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tambahJenisLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(tambahJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tambahJenisLayout.createSequentialGroup()
-                        .addComponent(btnSimpan)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBatal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel18)
-                        .addGap(53, 53, 53))
-                    .addGroup(tambahJenisLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(tambahJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(tambahJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel2)
-                                .addComponent(tKodeJenis, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
-                                .addComponent(tNamaJenis)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(tambahJenisLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(tambahJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17))
-                .addContainerGap(124, Short.MAX_VALUE))
-        );
-        tambahJenisLayout.setVerticalGroup(
-            tambahJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tambahJenisLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel17)
-                .addGroup(tambahJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tambahJenisLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel18))
-                    .addGroup(tambahJenisLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addGroup(tambahJenisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBatal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(72, 72, 72)
-                .addComponent(jLabel1)
-                .addGap(5, 5, 5)
-                .addComponent(tKodeJenis, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jLabel2)
-                .addGap(5, 5, 5)
-                .addComponent(tNamaJenis, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
-        );
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
+        tambahJenis.add(jLabel3);
+        jLabel3.setBounds(0, 0, 1050, 580);
 
-        mainPanel.add(tambahJenis, "card11");
+        mainPanel.add(tambahJenis);
+        tambahJenis.setBounds(0, 0, 1091, 580);
 
-        add(mainPanel, "card9");
+        add(mainPanel);
+        mainPanel.setBounds(0, 0, 1091, 580);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
@@ -413,31 +363,60 @@ public class jenis_Barang extends javax.swing.JPanel {
        jns.setKode_jenis(tKodeJenis.getText());
        jns.setNama_jenis(tNamaJenis.getText());
        
-       jns.TambahJenis();
+       if(btnSimpan.getText().equals("Ubah")){
+           jns.UbahJenis(); //proses ubah
+           JOptionPane.showMessageDialog(this, "Data berhasil diubah");
+       } else {
+           jns.TambahJenis();
+           JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
+       }
+       showDataJenis(); //kembali ke panel tampilJenis
        load_table_jenis();
-       showTampilJenis();
+       
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
-        showTampilJenis();
+        showDataJenis();
     }//GEN-LAST:event_btnBatalActionPerformed
 
-    private void tblTampilJenisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTampilJenisMouseClicked
-        int baris = tblTampilJenis.getSelectedRow();
+    private void tblDataJenisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDataJenisMouseClicked
+        int baris = tblDataJenis.getSelectedRow();
         
         if (baris != -1){
-            String kode = tblTampilJenis.getValueAt(baris, 0).toString();
-            String nama = tblTampilJenis.getValueAt(baris, 1).toString();
+            String kode = tblDataJenis.getValueAt(baris, 0).toString();
+            String nama = tblDataJenis.getValueAt(baris, 1).toString();
            
             
             tKodeJenis.setText(kode);
             tKodeJenis.setEditable(false);
             tNamaJenis.setText(nama);
         }
-    }//GEN-LAST:event_tblTampilJenisMouseClicked
+    }//GEN-LAST:event_tblDataJenisMouseClicked
 
     private void tCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCariKeyReleased
+        String cari = tCari.getText();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Kode Jenis");
+        model.addColumn("Nama Jenis");
         
+        try{
+            String sql = "SELECT * FROM jenisbarang WHERE kode_jenis LIKE ? OR nama_jenis LIKE ?";
+            PreparedStatement ps = koneksi.configDB().prepareStatement(sql);
+            ps.setString(1,"%" + cari + "%");
+            ps.setString(2,"%" + cari + "%");
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Object[] data = {
+                    rs.getString("kode_jenis"),
+                    rs.getString("nama_jenis")
+                };
+                model.addRow(data);
+            }
+            tblDataJenis.setModel(model);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_tCariKeyReleased
 
     private void tCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCariActionPerformed
@@ -449,13 +428,15 @@ public class jenis_Barang extends javax.swing.JPanel {
     }//GEN-LAST:event_tKodeJenisMouseClicked
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
-        Model_JenisBarang jns = new Model_JenisBarang();
-        jns.setKode_jenis(tKodeJenis.getText());
-        jns.setNama_jenis(tNamaJenis.getText());
-
-        jns.UbahJenis();
-        load_table_jenis();
-        showTambahJenis();
+        eventTableClick();
+        showTambahJenis(); 
+               
+        //isi form dari variabel
+        tKodeJenis.setText(kodeEdit);
+        tKodeJenis.setEditable(false);
+        tNamaJenis.setText(namaEdit);
+        
+        btnSimpan.setText("Ubah"); 
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
@@ -466,6 +447,10 @@ public class jenis_Barang extends javax.swing.JPanel {
        load_table_jenis();
     }//GEN-LAST:event_btnHapusActionPerformed
 
+    private void tKodeJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tKodeJenisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tKodeJenisActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBatal;
@@ -473,10 +458,13 @@ public class jenis_Barang extends javax.swing.JPanel {
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnUbah;
+    private javax.swing.JPanel dataJenis;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane3;
@@ -487,7 +475,6 @@ public class jenis_Barang extends javax.swing.JPanel {
     private javax.swing.JTextField tKodeJenis;
     private javax.swing.JTextField tNamaJenis;
     private javax.swing.JPanel tambahJenis;
-    private javax.swing.JPanel tampilJenis;
-    private javax.swing.JTable tblTampilJenis;
+    private javax.swing.JTable tblDataJenis;
     // End of variables declaration//GEN-END:variables
 }

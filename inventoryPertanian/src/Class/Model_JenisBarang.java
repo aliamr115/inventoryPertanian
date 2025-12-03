@@ -4,6 +4,7 @@
  */
 package Class;
 
+import Class.koneksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,20 +60,21 @@ public class Model_JenisBarang extends koneksi{
         }   
     }
     
-    public void UbahJenis(){
-         query = "UPDATE jenisbarang SET nama_jenis =? WHERE kode_jenis =?";
+    public boolean UbahJenis(){
         
         try {
-            ps = koneksi.prepareStatement(query);
+            String sql = "UPDATE jenisbarang SET nama_jenis=? WHERE kode_jenis=?";
+            PreparedStatement ps = koneksi.prepareStatement(sql);
+           
             ps.setString(1, nama_jenis);
-            ps.setString(2, kode_jenis);
-          
-            
+            ps.setString(2, kode_jenis);  
             ps.executeUpdate();
             ps.close();
-            JOptionPane.showMessageDialog(null,"Data Berhasil Diubah");
+            return true;
+            
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Data Gagal Diubah");
+            e.printStackTrace();
+            return false;
         }
     }
     
