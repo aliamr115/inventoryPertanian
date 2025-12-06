@@ -4,25 +4,18 @@
  */
 package Class;
 
-import Class.koneksi;
-import java.awt.CardLayout;
-import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 
 /**
  *
  * @author user
  */
 public class Model_Barang { //Model : digunakan untuk mendeklarasikan atribut" apa saja yang ada diDB
-    private String kode_barang,  nama_barang, satuan, jns_barang;
-    private int stok;
-    private int harga;
+    private String kode_barang,  nama_barang, satuan, jenis_barang;
+    private int harga, stok;
     
     private Connection conn;
     private PreparedStatement ps;
@@ -75,25 +68,69 @@ public class Model_Barang { //Model : digunakan untuk mendeklarasikan atribut" a
     }
 
     public String getJns_barang() {
-        return jns_barang;
+        return jenis_barang;
     }
 
     public void setJns_barang(String jns_barang) {
-        this.jns_barang = jns_barang;
+        this.jenis_barang = jns_barang;
     }
 
-    
    
-    public ResultSet tampilBarang() {
+    
+    public void tambahBarang() {
         try {
-            query = "SELECT * FROM barang";
+            query = "INSERT INTO barang (kode_barang, kode_jenis, nama_barang, satuan, harga, stok) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)";
             ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            return rs;
+            ps.setString(1, kode_barang);
+            ps.setString(2, jenis_barang);
+            ps.setString(3, nama_barang);
+            ps.setString(4, satuan);
+            ps.setInt(5, harga);
+            ps.setInt(6, stok);
+            
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data Berhasil Ditambahkan!");
+            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error tampil data: " + e.getMessage());
-            return null;
+            JOptionPane.showMessageDialog(null, "Error tambah: " + e.getMessage());
         }
+    }
+    
+    public void ubahBarang() {
+        try {
+            query = "UPDATE barang SET kode_jenis=?, nama_barang=?, satuan=?, harga=?, stok=? "
+                    + "WHERE kode_barang=?";
+            
+            ps = conn.prepareStatement(query);
+            ps.setString(1, jenis_barang);
+            ps.setString(2, nama_barang);
+            ps.setString(3, satuan);
+            ps.setInt(4, harga);
+            ps.setInt(5, stok);
+            ps.setString(6, kode_barang);
+            
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data Berhasil Diubah!");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error update: " + e.getMessage());
+        }
+    }
+    
+    public void hapusBarang() {
+        try {
+         query = "DELETE FROM barang WHERE kode_barang = ?";
+           
+            ps = conn.prepareStatement(query);
+            ps.setString(1, kode_barang);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "DaTA BERASIL DIHAPUS!");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "DaTA GAGAL DIHAPUS: " + e.getMessage());
+           
+    }
     }
 }
 
