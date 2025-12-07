@@ -1,14 +1,10 @@
-  /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package frame;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.Icon;
+import java.awt.Dimension; //digunakan untuk menyimpan ukuran (width & height) suatu komponen.
+import java.awt.FlowLayout; //yaitu layout manager yang mengatur komponen secara berurutan seperti aliran teks (kiri ke kanan, atau atas ke bawah)
+import java.awt.event.ActionListener; //digunakan untuk menangani event klik (aksi) pada tombol, menu, atau komponen lain.
+import java.util.ArrayList; //yaitu struktur data berupa daftar dinamis yang bisa menambah atau menghapus elemen secara fleksibel.
+import javax.swing.Icon; //digunakan untuk menampilkan gambar/icon pada komponen Swing seperti JLabel, JButton, atau JMenuItem.
 
 /**
  *
@@ -19,11 +15,13 @@ public class MenuItem extends javax.swing.JPanel {
     /**
      * @return the subMenu
      */
-    public ArrayList<MenuItem> getSubMenu() {
+    public ArrayList<MenuItem> getSubMenu() { //digunakan untuk mengambil atau mengakses daftar submenu (subMenu) dari luar kelas.
         return subMenu;
     }
 
-    private final ArrayList<MenuItem> subMenu = new ArrayList<>();
+    private final ArrayList<MenuItem> subMenu = new ArrayList<>(); 
+    //sebagai wadah untuk menyimpan semua submenu dari suatu menu dalam bentuk ArrayList<MenuItem>, 
+    //dengan referensi yang tidak dapat diubah karena memakai final
     
     private ActionListener act;
     
@@ -78,10 +76,10 @@ public class MenuItem extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(10, Short.MAX_VALUE)
                 .addComponent(lb_icon, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lb_iconSub, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lb_iconSub, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lb_menuName, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
@@ -89,13 +87,13 @@ public class MenuItem extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_iconSub, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_iconSub, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lb_menuName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lb_icon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(9, Short.MAX_VALUE))
+                        .addComponent(lb_menuName, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lb_icon, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -103,10 +101,10 @@ public class MenuItem extends javax.swing.JPanel {
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
         setBackground(new java.awt.Color(255,255,255));
-        if (showing) {
-            hideMenu();
+        if (showing) { //Mengecek apakah menu sedang ditampilkan (showing == true)
+            hideMenu(); //jika menu sedang tampil, maka menu disembunyikan
         } else {
-            showMenu();
+            showMenu(); //ika menu sedang tampil, maka menu disembunyikan
         }
         if (act != null) {
             act.actionPerformed(null);
