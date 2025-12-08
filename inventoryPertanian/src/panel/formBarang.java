@@ -74,6 +74,7 @@ public class formBarang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
+   
     
     //untuk ganti panel
     private void showPanel(String name) {
