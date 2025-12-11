@@ -13,10 +13,9 @@ import java.sql.SQLException;
  * @author user
  */
 public class koneksi {
-    private Connection mysqlConfig;
+    public static Connection mysqlConfig;
     
-    public  Connection configDB(){
-        
+    public static Connection configDB(){
         try {
             String url = "jdbc:mysql://localhost:3306/inventory_pertanian";
             String user = "root";
