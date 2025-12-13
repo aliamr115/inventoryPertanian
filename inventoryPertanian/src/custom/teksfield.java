@@ -182,5 +182,13 @@ public class teksfield extends JTextField{
         frame.add(field);
         frame.setVisible(true);
     }
+
+    public void setEhcochar(char c) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setEchoChar(char c) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
 
