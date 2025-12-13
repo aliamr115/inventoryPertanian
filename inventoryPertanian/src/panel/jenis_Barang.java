@@ -378,10 +378,8 @@ public class jenis_Barang extends javax.swing.JPanel {
        
        if(btnSimpan.getText().equals("Ubah")){
            jns.UbahJenis(); //proses ubah
-           JOptionPane.showMessageDialog(this, "Data berhasil diubah");
        } else {
            jns.TambahJenis();
-           JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
        }
        showDataJenis(); //kembali ke panel tampilJenis
        load_table_jenis();

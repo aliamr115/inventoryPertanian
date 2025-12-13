@@ -70,10 +70,11 @@ public class Model_JenisBarang extends koneksi{
             ps.setString(2, kode_jenis);  
             ps.executeUpdate();
             ps.close();
-            return true;
             
+            JOptionPane.showMessageDialog(null,"Data Berhasil Diubah");
+            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Data Gagal Diubah");
             return false;
         }
     }
