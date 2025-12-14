@@ -13,6 +13,7 @@ public class Model_BarangKeluar {
     private Long total_keluar;
     private Model_User idUser;
 
+   
     public String getNo_keluar() {
         return no_keluar;
     }
@@ -36,13 +37,13 @@ public class Model_BarangKeluar {
     public void setTotal_keluar(Long total_keluar) {
         this.total_keluar = total_keluar;
     }
-
-    public Model_User getIdUser() {
+    
+     public Model_User getIdUser() {
         return idUser;
     }
 
     public void setIdUser(Model_User idUser) {
         this.idUser = idUser;
     }
-
+    
 }

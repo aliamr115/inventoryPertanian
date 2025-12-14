@@ -9,24 +9,26 @@ package Class;
  * @author user
  */
 public class Model_DetBarangKeluar {
-    private String no_keluar, kode_barang;
+
+    private Model_BarangKeluar bk; 
+    private Model_Barang brg;
     private int jml_keluar;
     private double subtotal_keluar;
-
-    public String getNo_keluar() {
-        return no_keluar;
+    
+    public Model_BarangKeluar getBk() {
+        return bk;
     }
 
-    public void setNo_keluar(String no_keluar) {
-        this.no_keluar = no_keluar;
+    public void setBk(Model_BarangKeluar bk) {
+        this.bk = bk;
     }
 
-    public String getKode_barang() {
-        return kode_barang;
+    public Model_Barang getBrg() {
+        return brg;
     }
 
-    public void setKode_barang(String kode_barang) {
-        this.kode_barang = kode_barang;
+    public void setBrg(Model_Barang brg) {
+        this.brg = brg;
     }
 
     public int getJml_keluar() {
@@ -44,5 +46,4 @@ public class Model_DetBarangKeluar {
     public void setSubtotal_keluar(double subtotal_keluar) {
         this.subtotal_keluar = subtotal_keluar;
     }
-
 }

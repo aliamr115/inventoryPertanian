@@ -4,13 +4,20 @@
  */
 package Class;
 
+import java.sql.Connection; 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 /**
  *
  * @author user
  */
-public class Model_Login { 
+public class Model_Login extends koneksi{ 
     private String id_user, username, pass;
 
+    
     public String getId_user() {
         return id_user;
     }

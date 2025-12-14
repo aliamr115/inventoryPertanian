@@ -69,6 +69,7 @@ public class MenuItem extends javax.swing.JPanel {
             }
         });
 
+        lb_menuName.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
         lb_menuName.setText("Menu Item...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

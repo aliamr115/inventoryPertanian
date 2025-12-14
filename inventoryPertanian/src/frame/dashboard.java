@@ -1,11 +1,14 @@
 package frame;
 
+import Class.Model_User;
+import Class.Model_Login;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener; 
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -68,6 +71,7 @@ private javax.swing.JLabel jLabel1;
         pn_menu = new javax.swing.JPanel();
         pn_content = new javax.swing.JPanel();
         pn_utama = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -153,6 +157,7 @@ private javax.swing.JLabel jLabel1;
         );
 
         getContentPane().add(pn_content, java.awt.BorderLayout.CENTER);
+        setJMenuBar(jMenuBar1);
 
         pack();
         setLocationRelativeTo(null);
@@ -189,6 +194,7 @@ private javax.swing.JLabel jLabel1;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lAgritech;
     private javax.swing.JPanel pn_content;
@@ -303,6 +309,7 @@ private javax.swing.JLabel jLabel1;
         MenuItem menuAbout = new MenuItem(iconAbout, false, null, "About", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 pn_utama.removeAll();
                 pn_utama.add(new About());
                 pn_utama.repaint();
