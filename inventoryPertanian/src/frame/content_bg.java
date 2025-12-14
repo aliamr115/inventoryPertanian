@@ -30,7 +30,7 @@ public class content_bg extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(1300, 650));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_dasbor.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_bgDashbor.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -40,10 +40,7 @@ public class content_bg extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(jLabel1)
         );
     }// </editor-fold>//GEN-END:initComponents
 

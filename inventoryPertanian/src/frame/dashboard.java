@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import panel.About;
@@ -21,6 +22,7 @@ import panel.laporan;
  * @author user
  */
 public class dashboard extends javax.swing.JFrame {
+private javax.swing.JLabel jLabel1;
 
     
     /**
@@ -29,10 +31,26 @@ public class dashboard extends javax.swing.JFrame {
     public dashboard() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+        runningText();
         execute();
     }
+    
+    void runningText() {
+        Timer timer = new Timer(100, new ActionListener() {
+            int jumlahSpasi = 250;
+            String spasi = " ".repeat(jumlahSpasi);
+            String text = spasi + "Selamat datang di Aplikasi Inventory Pertanian AGRITECH. Aplikasi ini dirancang untuk membantu Anda mengelola setiap aspek persediaan pertanian secara lebih teratur, cepat, dan akurat. Dengan sistem yang modern dan mudah digunakan, Anda dapat memantau stok, mencatat transaksi, mengelola data produk, serta meningkatkan efisiensi dalam proses pengelolaan hasil pertanian.";
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                text = text.substring(1) + text.charAt(0);
+                jLabel1.setText(text);
+            }
+        });
+        timer.start();
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,6 +61,8 @@ public class dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         pn_navbar = new javax.swing.JPanel();
+        lAgritech = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         pn_sidebar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pn_menu = new javax.swing.JPanel();
@@ -60,15 +80,33 @@ public class dashboard extends javax.swing.JFrame {
         pn_navbar.setMinimumSize(new java.awt.Dimension(100, 80));
         pn_navbar.setPreferredSize(new java.awt.Dimension(1300, 70));
 
+        lAgritech.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lAgritech.setForeground(new java.awt.Color(255, 255, 255));
+        lAgritech.setText("A G R I T E C H ");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Selamat datang di Aplikasi Inventroy Pertanian");
+
         javax.swing.GroupLayout pn_navbarLayout = new javax.swing.GroupLayout(pn_navbar);
         pn_navbar.setLayout(pn_navbarLayout);
         pn_navbarLayout.setHorizontalGroup(
             pn_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1300, Short.MAX_VALUE)
+            .addGroup(pn_navbarLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(lAgritech)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 999, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
         pn_navbarLayout.setVerticalGroup(
             pn_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGroup(pn_navbarLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(pn_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lAgritech)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         getContentPane().add(pn_navbar, java.awt.BorderLayout.PAGE_START);
@@ -152,6 +190,7 @@ public class dashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lAgritech;
     private javax.swing.JPanel pn_content;
     private javax.swing.JPanel pn_menu;
     private javax.swing.JPanel pn_navbar;
