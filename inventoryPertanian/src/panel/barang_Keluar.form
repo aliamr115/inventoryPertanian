@@ -226,7 +226,10 @@
                                       <Component id="cKodeBarang" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tIdUser" alignment="0" pref="748" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="jcTglKeluar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                                      <Component id="jcTglKeluar" min="-2" pref="473" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -279,8 +282,8 @@
                       <Component id="cKodeBarang" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jcTglKeluar" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <Component id="jcTglKeluar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
@@ -394,7 +397,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="com.toedter.calendar.JCalendar" name="jcTglKeluar">
+            <Component class="com.toedter.calendar.JDateChooser" name="jcTglKeluar">
             </Component>
           </SubComponents>
         </Container>

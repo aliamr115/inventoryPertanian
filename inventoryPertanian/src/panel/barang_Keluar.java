@@ -368,7 +368,7 @@ public class barang_Keluar extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cKodeBarang = new javax.swing.JComboBox<>();
-        jcTglKeluar = new com.toedter.calendar.JCalendar();
+        jcTglKeluar = new com.toedter.calendar.JDateChooser();
         detailBK = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jSeparator13 = new javax.swing.JSeparator();
@@ -583,7 +583,9 @@ public class barang_Keluar extends javax.swing.JPanel {
                             .addGroup(tambahBKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(cKodeBarang, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(tIdUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE))
-                            .addComponent(jcTglKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(tambahBKLayout.createSequentialGroup()
+                                .addGap(69, 69, 69)
+                                .addComponent(jcTglKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(tambahBKLayout.createSequentialGroup()
                 .addGroup(tambahBKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -624,8 +626,8 @@ public class barang_Keluar extends javax.swing.JPanel {
                 .addComponent(cKodeBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcTglKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jcTglKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jLabel5)
                 .addGap(26, 26, 26)
@@ -897,7 +899,7 @@ public class barang_Keluar extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator9;
-    private com.toedter.calendar.JCalendar jcTglKeluar;
+    private com.toedter.calendar.JDateChooser jcTglKeluar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField tCari;
     private javax.swing.JTextField tIdUser;
