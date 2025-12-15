@@ -67,12 +67,12 @@ public class Model_Barang { //Model : digunakan untuk mendeklarasikan atribut" a
         this.harga = harga;
     }
 
-    public String getJns_barang() {
+    public String getJenis_barang() {
         return jenis_barang;
     }
 
-    public void setJns_barang(String jns_barang) {
-        this.jenis_barang = jns_barang;
+    public void setJenis_barang(String jenis_barang) {
+        this.jenis_barang = jenis_barang;
     }
 
    
