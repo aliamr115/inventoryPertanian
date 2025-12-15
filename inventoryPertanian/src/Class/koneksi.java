@@ -13,11 +13,11 @@ import java.sql.SQLException;
  * @author user
  */
 public class koneksi {
-    public  Connection mysqlConfig;
+    public static Connection mysqlConfig;
     
     public static Connection configDB(){
         try {
-            String url = "jdbc:mysql://localhost:3306/inventory_pertanian2";
+            String url = "jdbc:mysql://localhost:3306/inventory_pertanian";
             String user = "root";
             String pass = "";
             
