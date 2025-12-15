@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.mysql.cj.jdbc.PreparedStatementWrapper;
+import frame.dashboard;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -137,7 +138,27 @@ public class formLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String username = tUsername.getText();
+        String password = tPassword.getText();
         
+        String sql = "SELECT * FROM user WHERE username = ? AND password = MD5(?)"; 
+        Connection conn = new koneksi().configDB();
+        
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                new dashboard().setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Username atau Password salah!");
+            }
+        } catch (SQLException sQLException) {
+            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE,null,ex);
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void tUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tUsernameActionPerformed
