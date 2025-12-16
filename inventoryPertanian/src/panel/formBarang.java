@@ -125,7 +125,7 @@ public class formBarang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
 }
-    
+     
     private void loadComboBarang() { 
     try {
         String sql = "SELECT kode_jenis, nama_jenis FROM jenisbarang";
