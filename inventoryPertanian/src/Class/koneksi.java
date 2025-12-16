@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * @author user
  */
 public class koneksi {
-    public static Connection mysqlConfig;
+    public  static Connection mysqlConfig;
     
     public static Connection configDB(){
         try {
