@@ -42,13 +42,13 @@ public class barang_Masuk extends javax.swing.JPanel {
     /**
      * Creates new form barang_Masuk
      */
-    public barang_Masuk() {
+    public barang_Masuk() {//konstruktor
         initComponents();
         tSubtotal.setEditable(false);
         tHarga.setEditable(false);
         tKodeBarang.setEditable(false);
         tNoMasuk.setEditable(true);
-        tIdUser.setEditable(true);
+        tIdUser.setEditable(false);
         tTotalMasuk.setEditable(true);
         
         tampilDataBarangMasuk();
@@ -57,6 +57,8 @@ public class barang_Masuk extends javax.swing.JPanel {
         loadComboBarang();
         IDno_masuk();
         autoIdUser();
+        load_table_dataBarangMasuk();
+        eventTableClick();
     }
  
     private void tampilDataBarangMasuk(){// menampilkan panel utama button tambah
@@ -78,7 +80,6 @@ public class barang_Masuk extends javax.swing.JPanel {
         mainPanel.repaint();
         mainPanel.revalidate();
         
-        eventTableClick();
         btnUbah.setVisible(true);
         btnKembali.setVisible(true);
         
@@ -98,7 +99,7 @@ public class barang_Masuk extends javax.swing.JPanel {
     void load_table_dataBarangMasuk(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("No Masuk");
-        model.addColumn("Id User");
+        model.addColumn("ID User");
         model.addColumn("Tanggal Masuk");
         model.addColumn("Total Masuk");
         
@@ -106,6 +107,35 @@ public class barang_Masuk extends javax.swing.JPanel {
             //membuat objek user dan mengambil data dari database
             Model_BarangMasuk dbm = new Model_BarangMasuk();
             ResultSet result =  dbm.tampilDataBarangMasuk();
+            //loop data baris per baris
+            while (result.next()){
+                //Tambahkan baris ke dalam tabel model
+            model.addRow(new Object[]{
+                 result.getString("no_masuk"),
+                 result.getString("id_user"),
+                 result.getDate("tgl_masuk"),
+                 result.getBigDecimal("total_masuk")
+            });
+        }
+           //set model ke JTable
+        tblDataBarangMasuk.setModel(model);
+        
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    
+    void load_table_detailBarangMasuk(String noMasuk){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("no_msuk");
+        model.addColumn("kode_barang");
+        model.addColumn("jml_masuk");
+        model.addColumn("subtotal_masuk");
+        
+        try {
+            String sql = "SELECT * FROM barangmasuk";
+            Statement st = koneksi.configDB().createStatement();
+            ResultSet result =  st.executeQuery(sql);
             //loop data baris per baris
             while (result.next()){
                 //Tambahkan baris ke dalam tabel model
@@ -119,45 +149,16 @@ public class barang_Masuk extends javax.swing.JPanel {
            //set model ke JTable
         tblDataBarangMasuk.setModel(model);
         
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-    
-    void load_table_detailBarangMasuk(String noMasuk){
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("No Masuk");
-        model.addColumn("Kode Barang");
-        model.addColumn("Jumlah");
-        model.addColumn("Subtotal");
-        
-        try {
-            //membuat objek user dan mengambil data dari database
-            Model_DetBarangMasuk detbm = new Model_DetBarangMasuk();
-            ResultSet result =  detbm.tampilDetail(noMasuk);
-            //loop data baris per baris
-            while (result.next()){
-                //Tambahkan baris ke dalam tabel model
-            model.addRow(new Object[]{
-                 result.getInt("No Masuk"),
-                 result.getInt("Kode Barang"),
-                 result.getString("Jumlah"),
-                 result.getInt("Subtotal")
-            });
-        }
-           //set model ke JTable
-        tblDetailBawah.setModel(model);
-        
         } catch (Exception e) {
             e.printStackTrace();
         }
     }       
     public void tampilkanTabelAtas(String noMasuk){//menampilkan tabel atas
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("No Masuk");
-        model.addColumn("ID User");
-        model.addColumn("Tanggal");
-        model.addColumn("Total");
+        model.addColumn("no_masuk");
+        model.addColumn("id_user");
+        model.addColumn("tgl_masuk");
+        model.addColumn("total_masuk");
         
         try {
             String sql = "SELECT * FROM barangmasuk WHERE no_masuk =?";
@@ -181,10 +182,10 @@ public class barang_Masuk extends javax.swing.JPanel {
     
     public void tampilkanTabelBawah(String noMasuk){ //menampilkan tabel detail bawah
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("No Masuk");
-        model.addColumn("Kode Barang");
-        model.addColumn("Jumlah");
-        model.addColumn("Subtotal");
+        model.addColumn("no_masuk");
+        model.addColumn("kode_barang");
+        model.addColumn("jml_masuk");
+        model.addColumn("subtotal_masuk");
         
         try {
             String sql = "SELECT d.no_masuk, b.kode_barang, b.nama_barang, b.harga, d.jml_masuk, d.subtotal_masuk "
@@ -208,37 +209,22 @@ public class barang_Masuk extends javax.swing.JPanel {
     }
     
     private void IDno_masuk(){//id otomatis
-        String sql = "SELECT MAX(no_masuk) AS max_id FROM barangmasuk";
         try {
-            Connection con = koneksi.configDB();
-            Statement st = con.createStatement();
+            String sql = "SELECT MAX(no_masuk) FROM barangmasuk";
+            Statement st = koneksi.configDB().createStatement();
             ResultSet rs = st.executeQuery(sql);
             
             if (rs.next()){
-                System.out.println("Kolom tersedia");
-                java.sql.ResultSetMetaData md = rs.getMetaData();
-                for (int i = 1; i <md.getColumnCount(); i++) {
-                    System.out.println(md.getColumnLabel(i));
-                }
-                String maxID = rs.getString("max_id");
-                
-                try {
-                    maxID = rs.getString("max_id");
-                } catch (Exception e) {
-                    maxID = rs.getString(1);
-                }
-                
-                if (maxID == null || maxID.isEmpty()) {
-                    tNoMasuk.setText("DB001");
+                String maxID = rs.getString(1);
+
+                if (maxID == null) {
+                    tNoMasuk.setText("BM001");
                 } else {
                     int no = Integer.parseInt(maxID.substring(2)) + 1;
-                    tNoMasuk.setText(String.format("DB%03d", no));
+                    tNoMasuk.setText(String.format("BM%03d", no));
                 }
             }
-            rs.close();
-            st.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error auto ID: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -353,6 +339,20 @@ public class barang_Masuk extends javax.swing.JPanel {
         btnSimpan.setText("Simpan");
     }
     
+    public void hapusBarangMasuk(String noMasuk){
+        try {
+            Connection con = koneksi.configDB();
+            con.setAutoCommit(false);
+            PreparedStatement ps = con.prepareStatement("DELETE FROM detail_barangmasuk WHERE no_masuk = ?");
+            ps.setString(1, noMasuk);
+            ps.executeUpdate();
+            con.commit();
+            JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal Hapus: " + e.getMessage());
+        }
+    }
+    
     private void cariData(){
         String cari = tCari.getText();
         DefaultTableModel model = (DefaultTableModel) tblDataBarangMasuk.getModel();
@@ -414,7 +414,7 @@ public class barang_Masuk extends javax.swing.JPanel {
                 tIdUser.setEditable(false);
                 
                 try{
-                    java.util.Date dt = new SimpleDateFormat("yyyy-mm-dd").parse(tgl);
+                    java.util.Date dt = new SimpleDateFormat("yyyy-MM-dd").parse(tgl);
                     jcTanggal.setDate(dt);
                 } catch (Exception ex){
                     System.out.println("Error parsing tanggal: " + ex.getMessage());
@@ -503,7 +503,7 @@ public class barang_Masuk extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "No Masuk", "ID User", "Tanggal", "Total"
             }
         ));
         tblDataBarangMasuk.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -606,7 +606,7 @@ public class barang_Masuk extends javax.swing.JPanel {
 
         btnKembali.setBackground(new java.awt.Color(153, 255, 0));
         btnKembali.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnKembali.setText("KEMBALI");
+        btnKembali.setText("Kembali");
         btnKembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKembaliActionPerformed(evt);
@@ -658,7 +658,7 @@ public class barang_Masuk extends javax.swing.JPanel {
 
         btnUbah.setBackground(new java.awt.Color(153, 255, 0));
         btnUbah.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnUbah.setText("UBAH");
+        btnUbah.setText("Ubah");
         btnUbah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUbahActionPerformed(evt);
@@ -773,7 +773,7 @@ public class barang_Masuk extends javax.swing.JPanel {
 
         btnBatalTambah.setBackground(new java.awt.Color(153, 255, 0));
         btnBatalTambah.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnBatalTambah.setText("BATAL");
+        btnBatalTambah.setText("Batal");
         btnBatalTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBatalTambahActionPerformed(evt);
@@ -955,26 +955,13 @@ public class barang_Masuk extends javax.swing.JPanel {
     private void tblDataBarangMasukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDataBarangMasukMouseClicked
         // TODO add your handling code here:
         int baris = tblDataBarangMasuk.getSelectedRow();
-        
+        eventTableClick();
         if (baris != -1) {
-            String noMasuk = tblDataBarangMasuk.getValueAt(baris, 0).toString();
-            load_table_dataBarangMasuk();
-            String id = tblDataBarangMasuk.getValueAt(baris, 1).toString();
-            String tgl = tblDataBarangMasuk.getValueAt(baris, 2).toString();
-            String total = tblDataBarangMasuk.getValueAt(baris, 3).toString();
+            String no = String.valueOf(tblDataBarangMasuk.getValueAt(baris, 0));
+            String id = String.valueOf(tblDataBarangMasuk.getValueAt(baris, 1));
+            String tgl = String.valueOf(tblDataBarangMasuk.getValueAt(baris, 2));
+            String total = String.valueOf(tblDataBarangMasuk.getValueAt(baris, 3));
             
-            tNoMasuk.setText(noMasuk);
-            tIdUser.setText(id);
-            
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-                java.util.Date dt = sdf.parse(tgl);
-                jcTanggal.setDate(dt);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            tTotalMasuk.setText(total);
-            eventTableClick();
         }
     }//GEN-LAST:event_tblDataBarangMasukMouseClicked
 
@@ -1000,9 +987,9 @@ public class barang_Masuk extends javax.swing.JPanel {
         // TODO add your handling code here:
         Model_BarangMasuk bm = new Model_BarangMasuk();
         bm.setNo_masuk(tNoMasuk.getText());
-        
         bm.hapusBarangMasuk();
         load_table_dataBarangMasuk();
+        reset();
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
@@ -1070,7 +1057,7 @@ public class barang_Masuk extends javax.swing.JPanel {
         // TODO add your handling code here:
         IDno_masuk();
         eventTableClick();
-        tampilDataBarangMasuk();
+        tampilTambahBarangMasuk();
         
         //isi form
         tNoMasuk.setText(noEdit);
