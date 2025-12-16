@@ -151,8 +151,8 @@ public class formBarang extends javax.swing.JPanel {
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
-                String kodeLama = rs.getString("kode_barang").trim();
-                kodeLama = kodeLama.replace("BR", "").trim();
+                String kodeLama = rs.getString("kode_barang").trim(); //Hapus spasi
+                kodeLama = kodeLama.replace("BR", "").trim(); 
                 int angka = Integer.parseInt(kodeLama) + 1;
                 tKodeBarang.setText("BR" + angka);
             } else {
