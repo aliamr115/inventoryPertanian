@@ -5,11 +5,10 @@
 package Class;
 
 import Class.koneksi;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 /**
@@ -26,7 +25,9 @@ public class Model_BarangMasuk extends koneksi{
     private ResultSet rs;
     private String query;
     
-    
+public Model_BarangMasuk(){
+    cn = super.configDB();
+} 
 
     public String getNo_masuk() {
         return no_masuk;
@@ -109,7 +110,17 @@ public class Model_BarangMasuk extends koneksi{
             JOptionPane.showMessageDialog(null, "Gagal");
         }
     }
-    
-     
+
+    public ResultSet tampilDataBarangMasuk() {
+        query = "SELECT * FROM barangmasuk";
+        cn = koneksi.configDB();
+        try {
+            st = cn.createStatement();
+            rs = st.executeQuery(query);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Data Gagal Ditampilkan");
+    }
+    return rs;
+    }
 }
     

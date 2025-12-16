@@ -4,9 +4,13 @@
  */
 package panel;
 
+import Class.Model_BarangMasuk;
+import Class.Model_User;
+import Class.Model_Barang;
+import Class.Model_DetBarangMasuk;
 import Class.koneksi;
 import java.awt.CardLayout;
-import java.awt.HeadlessException;
+import javax.swing.JTable;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
@@ -15,92 +19,75 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
+import java.math.BigDecimal;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author asus
  */
 public class barang_Masuk extends javax.swing.JPanel {
-
+    String noEdit = "";
+    String idEdit = "";
+    String tglEdit = "";
+    String totalEdit = "";
+    
     /**
      * Creates new form barang_Masuk
      */
     public barang_Masuk() {
         initComponents();
-        mainPanel.setLayout(new CardLayout());
-        
-        mainPanel.add(dataBarangMasuk, "Data Barang Masuk");
-        mainPanel.add(detailBarangMasuk, "Detail Barang Masuk");
-        mainPanel.add(tambahBarangMasuk, "Tambah Barang Masuk");
-        load_table_dataBarangMasuk();
+        tampilDataBarangMasuk();
+        tampilkanTabelAtas(noEdit);
+        tampilkanTabelBawah(noEdit);
+        loadComboBarang();
+        IDno_masuk();
+        autoIdUser();
     }
-    
-    private class Model_dataBarangMasuk{
-    private Connection cn;
-    public Model_dataBarangMasuk(){
-       cn = new koneksi().konek();
-    }
-    
-    //ambil semua data barang masuk
-    public ResultSet tampilTambah() throws SQLException{
-        String sql = "SELECT * FROM barangmasuk";
-        PreparedStatement ps = cn.prepareStatement(sql);
-        return ps.executeQuery();
-    }
-
-
-    //simpan data baru
-    public void tambahData(int noMasuk, int idUser, String tanggalMasuk, int totalMasuk)throws SQLException{
-        String sql = "INSERT INTO barangMasuk(no_masuk, id_user, tanggal_masuk, total_masuk)VALUES(?,?,?,?)";
-        PreparedStatement ps = cn.prepareStatement(sql);
-
-        ps.setInt(1, noMasuk);
-        ps.setInt(2, idUser);
-        ps.setString(3, tanggalMasuk);
-        ps.setInt(4, totalMasuk);
-        ps.executeUpdate();
-        ps.close();
-    }
-}
-    
-    private void tampilDataBarangMasuk(){
+ 
+    private void tampilDataBarangMasuk(){// menampilkan panel utama button tambah
         mainPanel.removeAll();
         mainPanel.add(dataBarangMasuk);
         mainPanel.repaint();
         mainPanel.revalidate();
         
         btnTambah.setVisible(true);
-        btnUbah.setVisible(true);
         btnHapus.setVisible(true);
-
+        btnHapus.setVisible(true);
         
         load_table_dataBarangMasuk();
     }
     
-    private void tampilDetailBarangMasuk(){
+    private void tampilDetailBarangMasuk(){ // tampil panel utama
         mainPanel.removeAll();
         mainPanel.add(detailBarangMasuk);
         mainPanel.repaint();
         mainPanel.revalidate();
         
-        btnUbahDetailBarangMasuk.setVisible(true);
-        btnTambahDetailBarang.setVisible(true);
-        btnSimpanDetailBarangMasuk.setVisible(true);
+        eventTableClick();
+        btnUbah.setVisible(true);
+        btnKembali.setVisible(true);
         
-        load_table_dataBarangMasuk();
+        tampilkanTabelAtas(noEdit);
+        tampilkanTabelBawah(noEdit);
     }
     
-    private void tampilTambahBarangMasuk() {
+    private void tampilTambahBarangMasuk() { // menampilkan panel untuk input tambah jenis
         mainPanel.removeAll();
         mainPanel.add(tambahBarangMasuk);
         mainPanel.repaint();
         mainPanel.revalidate();
         
-        btnSimpanTambah.setVisible(true);
-        btnBatalTambah.setVisible(true);
+        reset();
     }
     
-    private void load_table_dataBarangMasuk(){
+    void load_table_dataBarangMasuk(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("No Masuk");
         model.addColumn("Id User");
@@ -109,32 +96,304 @@ public class barang_Masuk extends javax.swing.JPanel {
         
         try {
             //membuat objek user dan mengambil data dari database
-            Model_dataBarangMasuk dbm = new Model_dataBarangMasuk();
-            ResultSet result =  dbm.tampilTambah();
+            Model_BarangMasuk dbm = new Model_BarangMasuk();
+            ResultSet result =  dbm.tampilDataBarangMasuk();
             //loop data baris per baris
             while (result.next()){
                 //Tambahkan baris ke dalam tabel model
             model.addRow(new Object[]{
                  result.getInt("no_masuk"),
                  result.getInt("id_user"),
-                 result.getString("tanggal_masuk"),
+                 result.getString("tgl_masuk"),
                  result.getInt("total_masuk")
             });
         }
            //set model ke JTable
         tblDataBarangMasuk.setModel(model);
-        tblDetailBarangMasuk.setModel(model);
-        tblDetailBarangMasuk2.setModel(model);
         
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
+    }
+    
+    void load_table_detailBarangMasuk(String noMasuk){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No Masuk");
+        model.addColumn("Kode Barang");
+        model.addColumn("Jumlah");
+        model.addColumn("Subtotal");
+        
+        try {
+            //membuat objek user dan mengambil data dari database
+            Model_DetBarangMasuk detbm = new Model_DetBarangMasuk();
+            ResultSet result =  detbm.tampilDetail(noMasuk);
+            //loop data baris per baris
+            while (result.next()){
+                //Tambahkan baris ke dalam tabel model
+            model.addRow(new Object[]{
+                 result.getInt("No Masuk"),
+                 result.getInt("Kode Barang"),
+                 result.getString("Jumlah"),
+                 result.getInt("Subtotal")
+            });
+        }
+           //set model ke JTable
+        tblDetailBawah.setModel(model);
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }       
-    void reset(){
+    public void tampilkanTabelAtas(String noMasuk){//menampilkan tabel atas
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No Masuk");
+        model.addColumn("ID User");
+        model.addColumn("Tanggal");
+        model.addColumn("Total");
+        
+        try {
+            String sql = "SELECT * FROM barangmasuk WHERE no_masuk =?";
+            PreparedStatement ps = koneksi.configDB().prepareStatement(sql);
+            ps.setString(1, noMasuk);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("no_masuk"),
+                    rs.getString("id_user"),
+                    rs.getString("tgl_masuk"),
+                    rs.getBigDecimal("total_masuk"),
+                });
+        }
+            tblDetailAtas.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void tampilkanTabelBawah(String noMasuk){ //menampilkan tabel detail bawah
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No Masuk");
+        model.addColumn("Kode Barang");
+        model.addColumn("Jumlah");
+        model.addColumn("Subtotal");
+        
+        try {
+            String sql = "SELECT b.kode_barang, b.nama_barang, b.harga, d.jml_masuk, d.subtotal "
+                        + "FROM detail_barangmasuk d + JOIN barang b ON d.kode_barang = b.kode_barang "
+                        + "WHERE d.no_masuk = ?";
+            PreparedStatement ps = koneksi.configDB().prepareStatement(sql);
+            ps.setString(1, noMasuk);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()){
+                model.addRow(new Object[]{
+                    rs.getString("kode_barang"),
+                    rs.getString("nama_barang"),
+                    rs.getString("harga"),
+                    rs.getInt("jml_masuk"),
+                    rs.getBigDecimal("subtotal"),
+                });
+            }
+            tblDetailBawah.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void IDno_masuk(){//id otomatis
+        try {
+            Connection mysqlConfig = koneksi.configDB();
+            Statement st = mysqlConfig.createStatement();
+            ResultSet rs = st.executeQuery("SELECT MAX(no_masuk) AS max_id FROM barangmasuk");
+            
+            if (rs.next()){
+                String maxID = rs.getString("max_id");
+                
+                if (maxID == null) {
+                    tNoMasuk.setText("DB001");
+                } else {
+                    int no = Integer.parseInt(maxID.substring(2));
+                    no ++;
+                    
+                    String kodeBaru = String.format("DB%03d", no);
+                    tNoMasuk.setText(kodeBaru);
+                }
+            }
+            rs.close();
+            st.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void autoIdUser(){// id otomatis angka 1-seterusnya
+        try {
+            Connection mysqlConfig = koneksi.configDB();
+            Statement st = mysqlConfig.createStatement();
+            ResultSet rs = st.executeQuery("SELECT MAX(CAST(id_user AS UNSIGNED)) AS mx_id FROM user");
+            
+            if (rs.next()) {
+                String maxID = rs.getString("max_id");
+                
+                if (maxID == null) {
+                    tIdUser.setText("1");
+                } else {
+                    int no = Integer.parseInt(maxID);
+                    no ++;
+                    
+                    tIdUser.setText(String.valueOf(no));
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error auto ID: " + e.getMessage());
+        }
+    }
+    
+    private void loadComboBarang(){//kode barang, nama barang, harga muncul otomatis saat dipilih nama barang
+        try {
+            String sql = "SELECT kode_barang, nama_barang, harga FROM barang";
+            Connection con = koneksi.configDB();
+            Statement st =  con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            cNamaBarang.removeAllItems();
+            while (rs.next()) { 
+                cNamaBarang.addItem(rs.getString("nama_barang"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            
+            reset();
+        }
+    }
+    
+    private void simpanBarangMasukDanDetail(){//digunakan untuk simpan ke 2 tabel
+        Connection conn = null;
+        PreparedStatement psHeader = null;
+        PreparedStatement psDetail = null;
+        
+        try {
+            conn = koneksi.configDB();
+            conn.setAutoCommit(false);
+            
+            //simpan ke barangmasuk
+            String sqlHeader = "INSERT INTO barangmasuk (no_masuk, id_user, tgl_masuk, total_masuk) VALUES (?,?,?,?)";
+            psHeader = conn.prepareStatement(sqlHeader);
+            psHeader.setString(1, tNoMasuk.getText());
+            psHeader.setString(2, tIdUser.getText());
+            psHeader.setDate(3, new java.sql.Date(jcTanggal.getDate().getTime()));
+            psHeader.setString(4, tNoMasuk.getText());
+            psHeader.executeUpdate();
+            
+            //simpan ke detail
+            String sqlDetail = "INSERT INTO detail_barangmasuk (no_masuk, kode_barang, jml_masuk, subtotal) VALUES (?,?,?,?)";
+            psDetail = conn.prepareStatement(sqlDetail);
+            
+            for (int i = 0; i < tblDetailBawah.getRowCount(); i++) {
+                psDetail.setString(1, tNoMasuk.getText());
+                psDetail.setString(2, tblDetailBawah.getValueAt(i, 0).toString());//kode barang
+                psDetail.setInt(3, Integer.parseInt(tblDetailBawah.getValueAt(i, 2).toString()));//jumlah masuk
+                psDetail.setBigDecimal(4, new BigDecimal(tblDetailBawah.getValueAt(i, 3).toString()));//subtotal
+                psDetail.executeUpdate();
+            }
+            conn.commit();
+            JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+        } catch (Exception e) {
+            try {
+                if (conn != null) conn.rollback();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        JOptionPane.showMessageDialog(null, "Gagal Menyimpan: " + e.getMessage());
+    } finally {
+            try {
+                if (psHeader != null) psHeader.close();
+                if (psDetail != null) psDetail.close();
+                if (conn != null) conn.setAutoCommit(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+        
+    private void reset(){
         tNoMasuk.setText(null);
         tIdUser.setText(null);
-        tTglMasuk.setText(null);
+        jcTanggal.setDate(null);
         tTotalMasuk.setText(null);
+        
+        btnSimpan.setText("Simpan");
+    }
+    
+    private void cariData(){
+        String cari = tCari.getText();
+        DefaultTableModel model = (DefaultTableModel) tblDataBarangMasuk.getModel();
+        model.setRowCount(0);
+        
+        try {
+            String sql = "SELECT * FROM barangmasuk WHERE no_masuk LIKE ? OR id_user LIKE ? OR tgl_masuk LIKE ? OR total_masuk LIKE ?";
+            PreparedStatement ps = koneksi.configDB().prepareStatement(sql);
+            ps.setString(1, "%" + cari + "%");
+            ps.setString(2, "%" + cari + "%");
+            ps.setString(3, "%" + cari + "%");
+            ps.setString(4, "%" + cari + "%");
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                model.addRow(new Object[]{
+                    rs.getString("no_masuk"),
+                    rs.getString("id_user"),
+                    rs.getString("tgl_masuk"),
+                    rs.getString("total_masuk"),
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error : " + e.getMessage());
+        }
+    }    
+       
+    private void eventTableClick(){// menampilkan panel ubah,hapus,batal saat salah satu data pada JTable diklik
+        tblDataBarangMasuk.addMouseListener(new MouseAdapter(){
+        public void mouseClicked(MouseEvent e){
+            int baris = tblDataBarangMasuk.getSelectedRow();
+            
+            if (baris != -1) {
+                //ambil data dari tabel
+                String noMasuk = tblDataBarangMasuk.getValueAt(baris, 0).toString();
+                String id = tblDataBarangMasuk.getValueAt(baris, 1).toString();
+                String tgl = tblDataBarangMasuk.getValueAt(baris, 2).toString();
+                String total = tblDataBarangMasuk.getValueAt(baris, 3).toString();
+                
+                //simpan data
+                noEdit    = noMasuk;
+                idEdit    = id;
+                tglEdit   = tgl;
+                totalEdit = total;
+                
+                dataBarangMasuk.setVisible(true);//tampil panel data tambah,ubah,hapus
+                
+                //mengisi otomatis variabel/text
+                tNoMasuk.setText(noMasuk);
+                tNoMasuk.setEditable(false);
+                tIdUser.setText(id);
+                tIdUser.setEditable(false);
+                
+                try{
+                    java.util.Date dt = new SimpleDateFormat("yyyy-mm-dd").parse(tgl);
+                    jcTanggal.setDate(dt);
+                } catch (Exception ex){
+                    System.out.println("Error parsing tanggal: " + ex.getMessage());
+                }
+                
+                tTotalMasuk.setText(total);
+                tampilkanTabelBawah(noMasuk);
+                tampilkanTabelAtas(noMasuk);
+                btnSimpan.setText("Ubah");
+                tampilDetailBarangMasuk();
+            }
+        }
+        });
     }
     /**z
      * This method is called from within the constructor to initialize the form.
@@ -149,7 +408,6 @@ public class barang_Masuk extends javax.swing.JPanel {
         dataBarangMasuk = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
-        btnUbah = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblDataBarangMasuk = new javax.swing.JTable();
@@ -159,20 +417,19 @@ public class barang_Masuk extends javax.swing.JPanel {
         detailBarangMasuk = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
-        btnTambahDetailBarang = new javax.swing.JButton();
+        btnKembali = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tblDetailBarangMasuk = new javax.swing.JTable();
+        tblDetailAtas = new javax.swing.JTable();
         jSeparator10 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tblDetailBarangMasuk2 = new javax.swing.JTable();
-        btnUbahDetailBarangMasuk = new javax.swing.JButton();
-        btnSimpanDetailBarangMasuk = new javax.swing.JButton();
+        tblDetailBawah = new javax.swing.JTable();
+        btnUbah = new javax.swing.JButton();
         tambahBarangMasuk = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
-        btnSimpanTambah = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -180,9 +437,19 @@ public class barang_Masuk extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         tNoMasuk = new javax.swing.JTextField();
         tIdUser = new javax.swing.JTextField();
-        tTglMasuk = new javax.swing.JTextField();
         tTotalMasuk = new javax.swing.JTextField();
         btnBatalTambah = new javax.swing.JButton();
+        jcTanggal = new com.toedter.calendar.JDateChooser();
+        jLabel12 = new javax.swing.JLabel();
+        tKodeBarang = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        tHarga = new javax.swing.JTextField();
+        tJumlah = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        cNamaBarang = new javax.swing.JComboBox<>();
+        tSubtotal = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
 
         setLayout(new java.awt.CardLayout());
 
@@ -192,16 +459,6 @@ public class barang_Masuk extends javax.swing.JPanel {
         jLabel3.setText("Data Barang Masuk");
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-
-        btnUbah.setBackground(new java.awt.Color(0, 153, 0));
-        btnUbah.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        btnUbah.setForeground(new java.awt.Color(255, 255, 255));
-        btnUbah.setText("Ubah");
-        btnUbah.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUbahActionPerformed(evt);
-            }
-        });
 
         tblDataBarangMasuk.setBackground(new java.awt.Color(204, 255, 204));
         tblDataBarangMasuk.setModel(new javax.swing.table.DefaultTableModel(
@@ -242,6 +499,17 @@ public class barang_Masuk extends javax.swing.JPanel {
             }
         });
 
+        tCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tCariActionPerformed(evt);
+            }
+        });
+        tCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tCariKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout dataBarangMasukLayout = new javax.swing.GroupLayout(dataBarangMasuk);
         dataBarangMasuk.setLayout(dataBarangMasukLayout);
         dataBarangMasukLayout.setHorizontalGroup(
@@ -249,9 +517,7 @@ public class barang_Masuk extends javax.swing.JPanel {
             .addGroup(dataBarangMasukLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addComponent(btnTambah)
-                .addGap(35, 35, 35)
-                .addComponent(btnUbah)
-                .addGap(35, 35, 35)
+                .addGap(43, 43, 43)
                 .addComponent(btnHapus)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
@@ -285,7 +551,6 @@ public class barang_Masuk extends javax.swing.JPanel {
                     .addGroup(dataBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnHapus)
                         .addComponent(btnTambah)
-                        .addComponent(btnUbah)
                         .addComponent(tCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,17 +570,17 @@ public class barang_Masuk extends javax.swing.JPanel {
 
         jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
 
-        btnTambahDetailBarang.setBackground(new java.awt.Color(153, 255, 0));
-        btnTambahDetailBarang.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnTambahDetailBarang.setText("TAMBAH");
-        btnTambahDetailBarang.addActionListener(new java.awt.event.ActionListener() {
+        btnKembali.setBackground(new java.awt.Color(153, 255, 0));
+        btnKembali.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btnKembali.setText("KEMBALI");
+        btnKembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTambahDetailBarangActionPerformed(evt);
+                btnKembaliActionPerformed(evt);
             }
         });
 
-        tblDetailBarangMasuk.setBackground(new java.awt.Color(204, 255, 204));
-        tblDetailBarangMasuk.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetailAtas.setBackground(new java.awt.Color(204, 255, 204));
+        tblDetailAtas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -326,20 +591,20 @@ public class barang_Masuk extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblDetailBarangMasuk.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblDetailAtas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDetailBarangMasukMouseClicked(evt);
+                tblDetailAtasMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(tblDetailBarangMasuk);
+        jScrollPane4.setViewportView(tblDetailAtas);
 
         jSeparator10.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel11.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
         jLabel11.setText("Detail Barang Masuk");
 
-        tblDetailBarangMasuk2.setBackground(new java.awt.Color(204, 255, 204));
-        tblDetailBarangMasuk2.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetailBawah.setBackground(new java.awt.Color(204, 255, 204));
+        tblDetailBawah.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -350,20 +615,21 @@ public class barang_Masuk extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblDetailBarangMasuk2.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblDetailBawah.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDetailBarangMasuk2MouseClicked(evt);
+                tblDetailBawahMouseClicked(evt);
             }
         });
-        jScrollPane5.setViewportView(tblDetailBarangMasuk2);
+        jScrollPane5.setViewportView(tblDetailBawah);
 
-        btnUbahDetailBarangMasuk.setBackground(new java.awt.Color(153, 255, 0));
-        btnUbahDetailBarangMasuk.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnUbahDetailBarangMasuk.setText("UBAH");
-
-        btnSimpanDetailBarangMasuk.setBackground(new java.awt.Color(153, 255, 0));
-        btnSimpanDetailBarangMasuk.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnSimpanDetailBarangMasuk.setText("SIMPAN");
+        btnUbah.setBackground(new java.awt.Color(153, 255, 0));
+        btnUbah.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btnUbah.setText("UBAH");
+        btnUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUbahActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout detailBarangMasukLayout = new javax.swing.GroupLayout(detailBarangMasuk);
         detailBarangMasuk.setLayout(detailBarangMasukLayout);
@@ -384,11 +650,9 @@ public class barang_Masuk extends javax.swing.JPanel {
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(detailBarangMasukLayout.createSequentialGroup()
-                                .addComponent(btnTambahDetailBarang)
+                                .addComponent(btnKembali)
                                 .addGap(39, 39, 39)
-                                .addComponent(btnUbahDetailBarangMasuk)
-                                .addGap(42, 42, 42)
-                                .addComponent(btnSimpanDetailBarangMasuk)
+                                .addComponent(btnUbah)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel7)
                                 .addGap(5, 5, 5))))
@@ -414,9 +678,8 @@ public class barang_Masuk extends javax.swing.JPanel {
                 .addGroup(detailBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7)
                     .addGroup(detailBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnTambahDetailBarang)
-                        .addComponent(btnUbahDetailBarangMasuk)
-                        .addComponent(btnSimpanDetailBarangMasuk)))
+                        .addComponent(btnKembali)
+                        .addComponent(btnUbah)))
                 .addGap(41, 41, 41)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -435,12 +698,12 @@ public class barang_Masuk extends javax.swing.JPanel {
 
         jSeparator9.setForeground(new java.awt.Color(0, 0, 0));
 
-        btnSimpanTambah.setBackground(new java.awt.Color(153, 255, 0));
-        btnSimpanTambah.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnSimpanTambah.setText("SIMPAN");
-        btnSimpanTambah.addActionListener(new java.awt.event.ActionListener() {
+        btnSimpan.setBackground(new java.awt.Color(153, 255, 0));
+        btnSimpan.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btnSimpan.setText("SIMPAN");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSimpanTambahActionPerformed(evt);
+                btnSimpanActionPerformed(evt);
             }
         });
 
@@ -456,13 +719,23 @@ public class barang_Masuk extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("Total Masuk");
 
-        tNoMasuk.setText("jTextField1");
+        tNoMasuk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tNoMasukActionPerformed(evt);
+            }
+        });
 
-        tIdUser.setText("jTextField1");
+        tIdUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tIdUserActionPerformed(evt);
+            }
+        });
 
-        tTglMasuk.setText("jTextField1");
-
-        tTotalMasuk.setText("jTextField1");
+        tTotalMasuk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tTotalMasukActionPerformed(evt);
+            }
+        });
 
         btnBatalTambah.setBackground(new java.awt.Color(153, 255, 0));
         btnBatalTambah.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
@@ -472,6 +745,52 @@ public class barang_Masuk extends javax.swing.JPanel {
                 btnBatalTambahActionPerformed(evt);
             }
         });
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel12.setText("Kode Barang");
+
+        tKodeBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tKodeBarangActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setText("Nama Barang");
+
+        tHarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tHargaActionPerformed(evt);
+            }
+        });
+
+        tJumlah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tJumlahActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setText("Harga");
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setText("Jumlah");
+
+        cNamaBarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cNamaBarang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cNamaBarangItemStateChanged(evt);
+            }
+        });
+
+        tSubtotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tSubtotalKeyReleased(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel16.setText("Sub Total");
 
         javax.swing.GroupLayout tambahBarangMasukLayout = new javax.swing.GroupLayout(tambahBarangMasuk);
         tambahBarangMasuk.setLayout(tambahBarangMasukLayout);
@@ -489,19 +808,35 @@ public class barang_Masuk extends javax.swing.JPanel {
                         .addComponent(jLabel8)
                         .addContainerGap(863, Short.MAX_VALUE))
                     .addGroup(tambahBarangMasukLayout.createSequentialGroup()
-                        .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
+                        .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(tambahBarangMasukLayout.createSequentialGroup()
-                                .addComponent(btnSimpanTambah)
-                                .addGap(42, 42, 42)
-                                .addComponent(btnBatalTambah))
-                            .addComponent(tNoMasuk, javax.swing.GroupLayout.DEFAULT_SIZE, 1012, Short.MAX_VALUE)
-                            .addComponent(tIdUser)
-                            .addComponent(tTglMasuk)
-                            .addComponent(tTotalMasuk))
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(tambahBarangMasukLayout.createSequentialGroup()
+                                .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addGroup(tambahBarangMasukLayout.createSequentialGroup()
+                                        .addComponent(btnSimpan)
+                                        .addGap(42, 42, 42)
+                                        .addComponent(btnBatalTambah))
+                                    .addComponent(tIdUser)
+                                    .addComponent(tNoMasuk)
+                                    .addComponent(tTotalMasuk)
+                                    .addComponent(jcTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE))
+                                .addGap(147, 147, 147)
+                                .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel12)
+                                    .addComponent(tHarga)
+                                    .addComponent(tKodeBarang)
+                                    .addComponent(tJumlah, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel15)
+                                    .addComponent(cNamaBarang, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         tambahBarangMasukLayout.setVerticalGroup(
@@ -513,27 +848,50 @@ public class barang_Masuk extends javax.swing.JPanel {
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSimpanTambah)
+                    .addComponent(btnSimpan)
                     .addComponent(btnBatalTambah))
                 .addGap(17, 17, 17)
                 .addComponent(jLabel9)
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tNoMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tIdUser, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tambahBarangMasukLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tNoMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tIdUser, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tambahBarangMasukLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tKodeBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tTglMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jLabel10)
+                .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel14))
                 .addGap(18, 18, 18)
-                .addComponent(tTotalMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126))
+                .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel15))
+                .addGap(18, 18, 18)
+                .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tTotalMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
+                .addGroup(tambahBarangMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16))
+                .addGap(39, 39, 39))
         );
 
         mainPanel.add(tambahBarangMasuk, "card4");
@@ -541,17 +899,10 @@ public class barang_Masuk extends javax.swing.JPanel {
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnTambahDetailBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahDetailBarangActionPerformed
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         // TODO add your handling code here:
-        CardLayout cl = (CardLayout) mainPanel.getLayout();
-        cl.show(mainPanel, "Data Barang Masuk");
-    }//GEN-LAST:event_btnTambahDetailBarangActionPerformed
-
-    private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
-        // TODO add your handling code here:
-        CardLayout cl = (CardLayout) mainPanel.getLayout();
-        cl.show(mainPanel, "Tambah Barang Masuk");
-    }//GEN-LAST:event_btnUbahActionPerformed
+        tampilDataBarangMasuk();
+    }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void detailBarangMasukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_detailBarangMasukMouseClicked
         // TODO add your handling code here:
@@ -559,78 +910,176 @@ public class barang_Masuk extends javax.swing.JPanel {
 
     private void tblDataBarangMasukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDataBarangMasukMouseClicked
         // TODO add your handling code here:
-        CardLayout cl = (CardLayout) mainPanel.getLayout();
-        cl.show(mainPanel, "Detail Barang Masuk");
+        int baris = tblDataBarangMasuk.getSelectedRow();
+        
+        if (baris != -1) {
+            String noMasuk = tblDataBarangMasuk.getValueAt(baris, 0).toString();
+            load_table_dataBarangMasuk();
+            String id = tblDataBarangMasuk.getValueAt(baris, 1).toString();
+            String tgl = tblDataBarangMasuk.getValueAt(baris, 2).toString();
+            String total = tblDataBarangMasuk.getValueAt(baris, 3).toString();
+            
+            tNoMasuk.setText(noMasuk);
+            tIdUser.setText(id);
+            
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+                java.util.Date dt = sdf.parse(tgl);
+                jcTanggal.setDate(dt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tTotalMasuk.setText(total);
+            eventTableClick();
+        }
     }//GEN-LAST:event_tblDataBarangMasukMouseClicked
 
-    private void tblDetailBarangMasukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetailBarangMasukMouseClicked
+    private void tblDetailAtasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetailAtasMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblDetailBarangMasukMouseClicked
+    }//GEN-LAST:event_tblDetailAtasMouseClicked
 
-    private void tblDetailBarangMasuk2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetailBarangMasuk2MouseClicked
+    private void tblDetailBawahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetailBawahMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblDetailBarangMasuk2MouseClicked
+    }//GEN-LAST:event_tblDetailBawahMouseClicked
 
     private void btnBatalTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalTambahActionPerformed
         // TODO add your handling code here:
-        
+        tampilDataBarangMasuk();
     }//GEN-LAST:event_btnBatalTambahActionPerformed
 
-    private void btnSimpanTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanTambahActionPerformed
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
-    try {
-        int noMasuk = Integer.parseInt(tNoMasuk.getText());
-        int idUser = Integer.parseInt(tIdUser.getText());
-        String tanggalMasuk = tTglMasuk.getText();
-        int totalMasuk = Integer.parseInt(tTotalMasuk.getText());
-
-        Model_dataBarangMasuk db = new Model_dataBarangMasuk();
-        db.tambahData(noMasuk, idUser, tanggalMasuk, totalMasuk);
-
-        JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
-        reset();
-        load_table_dataBarangMasuk();
-        tampilDataBarangMasuk();
-
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    }
-
-    }//GEN-LAST:event_btnSimpanTambahActionPerformed
+        simpanBarangMasukDanDetail();
+    }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
-
+        Model_BarangMasuk bm = new Model_BarangMasuk();
+        bm.setNo_masuk(tNoMasuk.getText());
+        
+        bm.hapusBarangMasuk();
+        load_table_dataBarangMasuk();
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
-        CardLayout cl = (CardLayout) mainPanel.getLayout();
-        cl.show(mainPanel, "Tambah Barang Masuk");
+        IDno_masuk();
+        tampilTambahBarangMasuk();
     }//GEN-LAST:event_btnTambahActionPerformed
 
-    public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable(){
-            public void run(){
-                new panel.dataBarang().setVisible(true);
+    private void tCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCariActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tCariActionPerformed
+
+    private void tNoMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNoMasukActionPerformed
+        // TODO add your handling code here:
+        Model_BarangMasuk bm = new Model_BarangMasuk();
+        IDno_masuk();
+    }//GEN-LAST:event_tNoMasukActionPerformed
+
+    private void tKodeBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tKodeBarangActionPerformed
+        // TODO add your handling code here:
+        try {
+            String sql = "SELECT nama_barang, harga FROM barang WHERE kode_barang = ?"; 
+            Connection con = koneksi.configDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, tKodeBarang.getText());
+            ResultSet rs= ps.executeQuery();
+            if (rs.next()){
+                cNamaBarang.setSelectedItem(rs.getString("nama_barang"));
+                tHarga.setText(rs.getString("harga"));
             }
-        });
-    }
+        } catch (Exception e) {
+            reset();
+        }
+    }//GEN-LAST:event_tKodeBarangActionPerformed
+
+    private void tJumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tJumlahActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tJumlahActionPerformed
+
+    private void tSubtotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tSubtotalKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tSubtotalKeyReleased
+
+    private void tIdUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tIdUserActionPerformed
+        // TODO add your handling code here:
+        Model_User usr = new Model_User();
+        IDno_masuk();
+    }//GEN-LAST:event_tIdUserActionPerformed
+
+    private void tTotalMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tTotalMasukActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tTotalMasukActionPerformed
+
+    private void tHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tHargaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tHargaActionPerformed
+
+    private void tCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCariKeyReleased
+        // TODO add your handling code here:
+        cariData();
+    }//GEN-LAST:event_tCariKeyReleased
+
+    private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
+        // TODO add your handling code here:
+        IDno_masuk();
+        eventTableClick();
+        tampilDataBarangMasuk();
+        
+        //isi form
+        tNoMasuk.setText(noEdit);
+        tNoMasuk.setEditable(false);
+        tIdUser.setText(idEdit);
+        tIdUser.setEditable(false);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        java.util.Date dt = null;
+        
+        try {
+            dt = sdf.parse(tglEdit);
+        } catch (ParseException e) {
+            Logger.getLogger(barang_Masuk.class.getName()).log(Level.SEVERE, null, e);
+        }
+        jcTanggal.setDate(dt);
+        tTotalMasuk.setText(totalEdit);
+    }//GEN-LAST:event_btnUbahActionPerformed
+
+    private void cNamaBarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cNamaBarangItemStateChanged
+        // TODO add your handling code here:
+        try {
+            String sql = "SELECT kode_barang, harga FROM barang WHERE nama_barang = ?"; 
+            Connection con = koneksi.configDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, cNamaBarang.getSelectedItem().toString());
+            ResultSet rs= ps.executeQuery();
+            if (rs.next()){
+                tKodeBarang.setText(rs.getString("kode_barang"));
+                tHarga.setText(rs.getString("harga"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            reset();
+        }
+    }//GEN-LAST:event_cNamaBarangItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBatalTambah;
     private javax.swing.JButton btnHapus;
-    private javax.swing.JButton btnSimpanDetailBarangMasuk;
-    private javax.swing.JButton btnSimpanTambah;
+    private javax.swing.JButton btnKembali;
+    private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnTambah;
-    private javax.swing.JButton btnTambahDetailBarang;
     private javax.swing.JButton btnUbah;
-    private javax.swing.JButton btnUbahDetailBarangMasuk;
+    private javax.swing.JComboBox<String> cNamaBarang;
     private javax.swing.JPanel dataBarangMasuk;
     private javax.swing.JPanel detailBarangMasuk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -646,16 +1095,20 @@ public class barang_Masuk extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator9;
+    private com.toedter.calendar.JDateChooser jcTanggal;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField tCari;
+    private javax.swing.JTextField tHarga;
     private javax.swing.JTextField tIdUser;
+    private javax.swing.JTextField tJumlah;
+    private javax.swing.JTextField tKodeBarang;
     private javax.swing.JTextField tNoMasuk;
-    private javax.swing.JTextField tTglMasuk;
+    private javax.swing.JTextField tSubtotal;
     private javax.swing.JTextField tTotalMasuk;
     private javax.swing.JPanel tambahBarangMasuk;
     private javax.swing.JTable tblDataBarangMasuk;
-    private javax.swing.JTable tblDetailBarangMasuk;
-    private javax.swing.JTable tblDetailBarangMasuk2;
+    private javax.swing.JTable tblDetailAtas;
+    private javax.swing.JTable tblDetailBawah;
     // End of variables declaration//GEN-END:variables
 
 }

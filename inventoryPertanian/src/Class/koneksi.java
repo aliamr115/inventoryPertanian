@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class koneksi {
     public static Connection mysqlConfig;
     
-    public static Connection konek(){
+    public static Connection configDB(){
         try {
             String url = "jdbc:mysql://localhost:3306/inventory_pertanian";
             String user = "root";
@@ -28,5 +28,4 @@ public class koneksi {
         
         return mysqlConfig;
     }
-    
 }
