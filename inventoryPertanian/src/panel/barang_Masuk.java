@@ -43,6 +43,11 @@ public class barang_Masuk extends javax.swing.JPanel {
         btnTambah.setBackground(new java.awt.Color(153, 255, 0));
         btnTambah.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btnTambah.setText("TAMBAH");
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -111,6 +116,10 @@ public class barang_Masuk extends javax.swing.JPanel {
                 .addGap(0, 1, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTambahActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
