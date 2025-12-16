@@ -10,6 +10,7 @@ import Class.Model_Barang;
 import Class.Model_DetBarangMasuk;
 import Class.koneksi;
 import java.awt.CardLayout;
+import java.awt.event.ItemEvent;
 import javax.swing.JTable;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -43,6 +44,13 @@ public class barang_Masuk extends javax.swing.JPanel {
      */
     public barang_Masuk() {
         initComponents();
+        tSubtotal.setEditable(false);
+        tHarga.setEditable(false);
+        tKodeBarang.setEditable(false);
+        tNoMasuk.setEditable(true);
+        tIdUser.setEditable(true);
+        tTotalMasuk.setEditable(true);
+        
         tampilDataBarangMasuk();
         tampilkanTabelAtas(noEdit);
         tampilkanTabelBawah(noEdit);
@@ -179,20 +187,18 @@ public class barang_Masuk extends javax.swing.JPanel {
         model.addColumn("Subtotal");
         
         try {
-            String sql = "SELECT b.kode_barang, b.nama_barang, b.harga, d.jml_masuk, d.subtotal "
-                        + "FROM detail_barangmasuk d + JOIN barang b ON d.kode_barang = b.kode_barang "
-                        + "WHERE d.no_masuk = ?";
+            String sql = "SELECT d.no_masuk, b.kode_barang, b.nama_barang, b.harga, d.jml_masuk, d.subtotal_masuk "
+                        + "FROM detail_barangmasuk d JOIN barang b ON d.kode_barang = b.kode_barang WHERE d.no_masuk = ?";
             PreparedStatement ps = koneksi.configDB().prepareStatement(sql);
             ps.setString(1, noMasuk);
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()){
                 model.addRow(new Object[]{
+                    rs.getString("no_masuk"),
                     rs.getString("kode_barang"),
-                    rs.getString("nama_barang"),
-                    rs.getString("harga"),
                     rs.getInt("jml_masuk"),
-                    rs.getBigDecimal("subtotal"),
+                    rs.getBigDecimal("subtotal_masuk"),
                 });
             }
             tblDetailBawah.setModel(model);
@@ -202,27 +208,37 @@ public class barang_Masuk extends javax.swing.JPanel {
     }
     
     private void IDno_masuk(){//id otomatis
+        String sql = "SELECT MAX(no_masuk) AS max_id FROM barangmasuk";
         try {
-            Connection mysqlConfig = koneksi.configDB();
-            Statement st = mysqlConfig.createStatement();
-            ResultSet rs = st.executeQuery("SELECT MAX(no_masuk) AS max_id FROM barangmasuk");
+            Connection con = koneksi.configDB();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
             
             if (rs.next()){
+                System.out.println("Kolom tersedia");
+                java.sql.ResultSetMetaData md = rs.getMetaData();
+                for (int i = 1; i <md.getColumnCount(); i++) {
+                    System.out.println(md.getColumnLabel(i));
+                }
                 String maxID = rs.getString("max_id");
                 
-                if (maxID == null) {
+                try {
+                    maxID = rs.getString("max_id");
+                } catch (Exception e) {
+                    maxID = rs.getString(1);
+                }
+                
+                if (maxID == null || maxID.isEmpty()) {
                     tNoMasuk.setText("DB001");
                 } else {
-                    int no = Integer.parseInt(maxID.substring(2));
-                    no ++;
-                    
-                    String kodeBaru = String.format("DB%03d", no);
-                    tNoMasuk.setText(kodeBaru);
+                    int no = Integer.parseInt(maxID.substring(2)) + 1;
+                    tNoMasuk.setText(String.format("DB%03d", no));
                 }
             }
             rs.close();
             st.close();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error auto ID: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -316,7 +332,18 @@ public class barang_Masuk extends javax.swing.JPanel {
             }
         }
     }
-        
+    
+    private void hitungSubtotal(){
+        try {
+            int jumlah = Integer.parseInt(tJumlah.getText());
+            int harga = Integer.parseInt(tHarga.getText());
+            
+            int subtotal = jumlah * harga;
+            tSubtotal.setText(String.valueOf(subtotal));
+        } catch (NumberFormatException e) {
+            tSubtotal.setText("0");
+        }
+    }
     private void reset(){
         tNoMasuk.setText(null);
         tIdUser.setText(null);
@@ -352,7 +379,14 @@ public class barang_Masuk extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error : " + e.getMessage());
         }
     }    
-       
+    private void hitungTotalMasuk(){
+        int total = 0;
+        for (int i = 0; i < tblDetailBawah.getRowCount(); i++) {
+            total += Integer.parseInt(tblDetailBawah.getValueAt(i, 3).toString());
+        }
+        tTotalMasuk.setText(String.valueOf(total));
+    }   
+    
     private void eventTableClick(){// menampilkan panel ubah,hapus,batal saat salah satu data pada JTable diklik
         tblDataBarangMasuk.addMouseListener(new MouseAdapter(){
         public void mouseClicked(MouseEvent e){
@@ -700,7 +734,7 @@ public class barang_Masuk extends javax.swing.JPanel {
 
         btnSimpan.setBackground(new java.awt.Color(153, 255, 0));
         btnSimpan.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        btnSimpan.setText("SIMPAN");
+        btnSimpan.setText("Simpan");
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimpanActionPerformed(evt);
@@ -763,10 +797,20 @@ public class barang_Masuk extends javax.swing.JPanel {
                 tHargaActionPerformed(evt);
             }
         });
+        tHarga.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tHargaKeyReleased(evt);
+            }
+        });
 
         tJumlah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tJumlahActionPerformed(evt);
+            }
+        });
+        tJumlah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tJumlahKeyReleased(evt);
             }
         });
 
@@ -790,7 +834,7 @@ public class barang_Masuk extends javax.swing.JPanel {
         });
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel16.setText("Sub Total");
+        jLabel16.setText("Subtotal");
 
         javax.swing.GroupLayout tambahBarangMasukLayout = new javax.swing.GroupLayout(tambahBarangMasuk);
         tambahBarangMasuk.setLayout(tambahBarangMasukLayout);
@@ -1000,6 +1044,7 @@ public class barang_Masuk extends javax.swing.JPanel {
 
     private void tSubtotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tSubtotalKeyReleased
         // TODO add your handling code here:
+        tSubtotal.setEnabled(false);
     }//GEN-LAST:event_tSubtotalKeyReleased
 
     private void tIdUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tIdUserActionPerformed
@@ -1046,6 +1091,13 @@ public class barang_Masuk extends javax.swing.JPanel {
 
     private void cNamaBarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cNamaBarangItemStateChanged
         // TODO add your handling code here:
+        if (evt.getStateChange() != ItemEvent.SELECTED) {
+           hitungSubtotal();
+        }
+        if (cNamaBarang.getSelectedItem() == null) {
+            return;
+            }
+  
         try {
             String sql = "SELECT kode_barang, harga FROM barang WHERE nama_barang = ?"; 
             Connection con = koneksi.configDB();
@@ -1061,6 +1113,15 @@ public class barang_Masuk extends javax.swing.JPanel {
             reset();
         }
     }//GEN-LAST:event_cNamaBarangItemStateChanged
+
+    private void tJumlahKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tJumlahKeyReleased
+        // TODO add your handling code here:
+        hitungSubtotal();
+    }//GEN-LAST:event_tJumlahKeyReleased
+
+    private void tHargaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tHargaKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tHargaKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBatalTambah;

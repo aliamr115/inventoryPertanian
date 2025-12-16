@@ -98,12 +98,20 @@ public class dashboard extends javax.swing.JFrame {
 
         pn_content.setBackground(new java.awt.Color(255, 255, 255));
         pn_content.setPreferredSize(new java.awt.Dimension(1200, 80));
-        pn_content.setLayout(null);
 
         pn_utama.setBackground(new java.awt.Color(255, 255, 255));
         pn_utama.setLayout(new java.awt.BorderLayout());
-        pn_content.add(pn_utama);
-        pn_utama.setBounds(-10, 5, 1060, 580);
+
+        javax.swing.GroupLayout pn_contentLayout = new javax.swing.GroupLayout(pn_content);
+        pn_content.setLayout(pn_contentLayout);
+        pn_contentLayout.setHorizontalGroup(
+            pn_contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_utama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        pn_contentLayout.setVerticalGroup(
+            pn_contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_utama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         getContentPane().add(pn_content, java.awt.BorderLayout.CENTER);
 
@@ -160,11 +168,11 @@ public class dashboard extends javax.swing.JFrame {
         ImageIcon iconLogout = new ImageIcon(getClass().getResource("/img/iconLogout.png"));
         
         // Memanggil icon sub menu
-        ImageIcon iconBarang = new ImageIcon(getClass().getResource("/img/barang.png"));
-        ImageIcon iconJenisBarang = new ImageIcon(getClass().getResource("/"));
-        ImageIcon iconBarangMasuk = new ImageIcon(getClass().getResource("/"));
-        ImageIcon iconBarangKeluar = new ImageIcon(getClass().getResource("/"));
-        ImageIcon iconHasilPanen = new ImageIcon(getClass().getResource("/"));
+        ImageIcon iconBarang = new ImageIcon(getClass().getResource("/img/sub_barang.png"));
+        ImageIcon iconJenisBarang = new ImageIcon(getClass().getResource("/img/sub_jenis_barang.png"));
+        ImageIcon iconBarangMasukKeluar = new ImageIcon(getClass().getResource("/img/sub_barang_masuk_keluar.png"));
+        ImageIcon iconLapBarangMasukKeluar = new ImageIcon(getClass().getResource("/img/sub_lap_barang_masuk_keluar.png"));
+        ImageIcon iconHasilPanen = new ImageIcon(getClass().getResource("/img/sub_lap_hasil_panen.png"));
         
         // Sub menu pada menu Data
         MenuItem menuBarang1 = new MenuItem(null, true, iconBarang, "Barang", new ActionListener() {
@@ -177,7 +185,7 @@ public class dashboard extends javax.swing.JFrame {
             }
         } );
         
-        MenuItem menuBarang2 = new MenuItem(null, true, iconBarang, "Jenis Barang", new ActionListener() {
+        MenuItem menuBarang2 = new MenuItem(null, true, iconJenisBarang, "Jenis Barang", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -188,7 +196,7 @@ public class dashboard extends javax.swing.JFrame {
         } );
         
         // Sub menu pada menu Kelola
-        MenuItem menuKelola1 = new MenuItem(null, true, iconBarang, "Barang Masuk", new ActionListener() {
+        MenuItem menuKelola1 = new MenuItem(null, true, iconBarangMasukKeluar, "Barang Masuk", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -198,7 +206,7 @@ public class dashboard extends javax.swing.JFrame {
             }
         } );
         
-        MenuItem menuKelola2 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
+        MenuItem menuKelola2 = new MenuItem(null, true, iconBarangMasukKeluar, "Barang Keluar", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -210,7 +218,7 @@ public class dashboard extends javax.swing.JFrame {
         
         // Sub menu pada menu Laporan
         
-        MenuItem menuLaporan1 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
+        MenuItem menuLaporan1 = new MenuItem(null, true, iconLapBarangMasukKeluar, "Laporan Barang Keluar", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -220,7 +228,7 @@ public class dashboard extends javax.swing.JFrame {
             }
         } );
       
-        MenuItem menuLaporan2 = new MenuItem(null, true, iconBarang, "Barang Keluar", new ActionListener() {
+        MenuItem menuLaporan2 = new MenuItem(null, true, iconLapBarangMasukKeluar, "Laporan Barang Keluar", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -229,7 +237,7 @@ public class dashboard extends javax.swing.JFrame {
                 pn_utama.revalidate();
             }
         } );
-        MenuItem menuLaporan3 = new MenuItem(null, true, iconBarang, "Hasil Panen", new ActionListener() {
+        MenuItem menuLaporan3 = new MenuItem(null, true, iconHasilPanen, "Laporan Hasil Panen", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
@@ -241,7 +249,7 @@ public class dashboard extends javax.swing.JFrame {
         
         
         // Menu utama memamnggil sub menu
-        MenuItem menuDasbor = new MenuItem(iconDashboard, false, null, "Dashboard", new ActionListener() {
+        MenuItem menuDasbor = new MenuItem(null, true, iconDashboard, "Dashboard", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
