@@ -33,38 +33,38 @@ public class formBarang extends javax.swing.JPanel {
     public formBarang() {
         initComponents();
         
-        conn = new koneksi().configDB();
+        conn = new koneksi().configDB(); //membuat koneksi ke database
 
         //card layout
-        mainPanel.setLayout(new CardLayout());
-        mainPanel.add(dataBarang, "dataBarang");
-        mainPanel.add(tambahBarang, "tambahBarang");
+        mainPanel.setLayout(new CardLayout()); //mengatur layout panel utama
+        mainPanel.add(dataBarang, "dataBarang"); //menambahkan panel data (panel tabel baranng), nama kartu 
+        mainPanel.add(tambahBarang, "tambahBarang"); //menambahkan panel form tambah / edit, digunakan saat klik tambah?edit
         
-        setTableModel();
-        loadDataBarang();
-        loadComboBarang();
+        setTableModel(); //struktur tabel
+        loadDataBarang(); //mengisi tabel dari database, menjalankan Select*From barang, dan memasukkan data ke jtable
+        loadComboBarang(); //mengisi combobox, kodeJenisBarang & namajenisbarang supaya user tinggal pilih, ngga ngetik manual
     }
     
     
     private void setTableModel() {
         String[] kolom = {"Kode Barang", "Kode Jenis", "Nama Jenis", "Nama Barang", "Satuan", "Harga", "Stok"};
         
-        model = new DefaultTableModel(kolom, 0);
-        tblDataBarang.setModel(model);
+        model = new DefaultTableModel(kolom, 0); //membuat model tabel dengan jumlah baris awal (kosong)
+        tblDataBarang.setModel(model); 
     }
     
-    private void loadDataBarang() {
+    private void loadDataBarang() { //method untuk mengambil & menampilkan data barang
         try {
-            model.setRowCount(0);
+            model.setRowCount(0); //mengosongkan isi tabel (menghapus semua baris lama, supaya tidak double saat data di load ulang)
             
         String sql = "SELECT b.kode_barang, b.kode_jenis, j.nama_jenis, b.nama_barang, b.satuan, b.harga, b.stok "
                 + "FROM barang b JOIN jenisbarang j ON j.kode_jenis = b.kode_jenis "
-                + "ORDER BY LENGTH(b.kode_barang), b.kode_barang ASC";
+                + "ORDER BY LENGTH(b.kode_barang), b.kode_barang ASC"; //mengurutkan kode barang
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         
         while (rs.next()) {
-            model.addRow(new Object[]{
+            model.addRow(new Object[]{ 
                 rs.getString("kode_barang"),
                 rs.getString("kode_jenis"),
                 rs.getString("nama_jenis"),
@@ -81,13 +81,13 @@ public class formBarang extends javax.swing.JPanel {
     }
     
     
-    //untuk ganti panel
+    //untuk ganti panel 
     private void showPanel(String name) {
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.show(mainPanel, name);
     }
     
-    private void reset() {
+    private void reset() { //mengosongkan form input
         tKodeJenisBarang.setText("");
         cNamaJnsBrng.setSelectedItem(null);
         tNamaBarang.setText("");
@@ -96,7 +96,7 @@ public class formBarang extends javax.swing.JPanel {
         tStok.setText("");
     }
     
-    private void cariData(){
+    private void cariData(){ //mencari data
         String cari = tCari.getText();
         
         DefaultTableModel model = (DefaultTableModel) tblDataBarang.getModel();
@@ -126,7 +126,7 @@ public class formBarang extends javax.swing.JPanel {
         }
 }
     
-    private void loadComboBarang() { //agar kode barang, nama barang, dan harga muncul otomatis saat pilih nama barang
+    private void loadComboBarang() { 
     try {
         String sql = "SELECT kode_jenis, nama_jenis FROM jenisbarang";
         Connection con = koneksi.configDB();
@@ -144,7 +144,7 @@ public class formBarang extends javax.swing.JPanel {
     }
 }
     
-    private void autoKodeBarang() {
+    private void autoKodeBarang() { //membuat kode barang otomatis
         try {
             String sql = "SELECT kode_barang FROM barang ORDER BY kode_barang DESC LIMIT 1";
             PreparedStatement ps = conn.prepareStatement(sql);
