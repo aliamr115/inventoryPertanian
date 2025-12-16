@@ -13,8 +13,7 @@ import panel.barang_Masuk;
 import panel.formBarang;
 import panel.hasil_Panen;
 import panel.jenis_Barang;
-import panel.lap_barangKeluar;
-import panel.lap_barangMasuk;
+import panel.laporan;
 /**
  *
  * @author user
@@ -220,7 +219,7 @@ public class dashboard extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
-                pn_utama.add(new lap_barangMasuk());
+                pn_utama.add(new laporan());
                 pn_utama.repaint();
                 pn_utama.revalidate();
             }
@@ -229,7 +228,7 @@ public class dashboard extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
-                pn_utama.add(new lap_barangKeluar());
+                pn_utama.add(new laporan());
                 pn_utama.repaint();
                 pn_utama.revalidate();
             }
