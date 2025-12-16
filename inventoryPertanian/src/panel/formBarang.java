@@ -126,7 +126,7 @@ public class formBarang extends javax.swing.JPanel {
         }
 }
      
-    private void loadComboBarang() { 
+    private void loadComboBarang() { //isi combobox
     try {
         String sql = "SELECT kode_jenis, nama_jenis FROM jenisbarang";
         Connection con = koneksi.configDB();
