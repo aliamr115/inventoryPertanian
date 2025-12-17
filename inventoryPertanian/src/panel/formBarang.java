@@ -38,7 +38,7 @@ public class formBarang extends javax.swing.JPanel {
         //card layout
         mainPanel.setLayout(new CardLayout()); //mengatur layout panel utama
         mainPanel.add(dataBarang, "dataBarang"); //menambahkan panel data (panel tabel baranng), nama kartu 
-        mainPanel.add(jPanel2, "tambahBarang"); //menambahkan panel form tambah / edit, digunakan saat klik tambah?edit
+        mainPanel.add(tambahBarang, "tambahBarang"); //menambahkan panel form tambah / edit, digunakan saat klik tambah?edit
         
         setTableModel(); //struktur tabel
         loadDataBarang(); //mengisi tabel dari database, menjalankan Select*From barang, dan memasukkan data ke jtable
@@ -192,30 +192,29 @@ public class formBarang extends javax.swing.JPanel {
         tCari = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         tambahBarang = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        btnSimpan = new javax.swing.JButton();
-        btnBatal = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JSeparator();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        tKodeBarang1 = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        tKodeJenisBarang1 = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        cNamaJnsBrng1 = new javax.swing.JComboBox<>();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        tNamaBarang1 = new javax.swing.JTextField();
-        cSatuan1 = new javax.swing.JComboBox<>();
-        tHarga1 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        tStok1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        btnSimpan1 = new javax.swing.JButton();
+        btnBatal1 = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        tKodeBarang = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
+        tKodeJenisBarang = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        cNamaJnsBrng = new javax.swing.JComboBox<>();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        tNamaBarang = new javax.swing.JTextField();
+        cSatuan = new javax.swing.JComboBox<>();
+        tHarga = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        tStok = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
 
         setLayout(new java.awt.CardLayout());
 
-        mainPanel.setLayout(null);
+        mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         dataBarang.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -287,110 +286,107 @@ public class formBarang extends javax.swing.JPanel {
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
         dataBarang.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 600));
 
-        mainPanel.add(dataBarang);
-        dataBarang.setBounds(0, -1, 1050, 440);
+        mainPanel.add(dataBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 1050, 440));
 
         tambahBarang.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
-        jLabel2.setText("Tambah Data Barang");
-        tambahBarang.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 40));
+        jLabel4.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
+        jLabel4.setText("Tambah Data Barang");
+        tambahBarang.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 940, 40));
 
-        btnSimpan.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
-        btnSimpan.setText("Simpan");
-        btnSimpan.setBorderPainted(false);
-        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+        btnSimpan1.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
+        btnSimpan1.setText("Simpan");
+        btnSimpan1.setBorderPainted(false);
+        btnSimpan1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSimpanActionPerformed(evt);
+                btnSimpan1ActionPerformed(evt);
             }
         });
-        tambahBarang.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
+        tambahBarang.add(btnSimpan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, 30));
 
-        btnBatal.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
-        btnBatal.setText("Batal");
-        btnBatal.setBorderPainted(false);
-        btnBatal.addActionListener(new java.awt.event.ActionListener() {
+        btnBatal1.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
+        btnBatal1.setText("Batal");
+        btnBatal1.setBorderPainted(false);
+        btnBatal1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBatalActionPerformed(evt);
+                btnBatal1ActionPerformed(evt);
             }
         });
-        tambahBarang.add(btnBatal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
-        tambahBarang.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 0));
+        tambahBarang.add(btnBatal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 90, 30));
 
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel19.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        jLabel19.setText("Kode Barang");
+        tambahBarang.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 1020, -1));
 
-        jLabel12.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
-        jLabel12.setText("Kode Barang");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 1020, -1));
-
-        tKodeBarang1.addActionListener(new java.awt.event.ActionListener() {
+        tKodeBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tKodeBarangActionPerformed(evt);
             }
         });
-        jPanel2.add(tKodeBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 1000, 30));
+        tambahBarang.add(tKodeBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 1000, 30));
 
-        jLabel13.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
-        jLabel13.setText("Kode Jenis Barang");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 1050, -1));
+        jLabel20.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        jLabel20.setText("Kode Jenis Barang");
+        tambahBarang.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 1050, -1));
 
-        tKodeJenisBarang1.addActionListener(new java.awt.event.ActionListener() {
+        tKodeJenisBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tKodeJenisBarangActionPerformed(evt);
             }
         });
-        tKodeJenisBarang1.addKeyListener(new java.awt.event.KeyAdapter() {
+        tKodeJenisBarang.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tKodeJenisBarangKeyReleased(evt);
             }
         });
-        jPanel2.add(tKodeJenisBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 1000, 30));
+        tambahBarang.add(tKodeJenisBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 1000, 30));
 
-        jLabel14.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
-        jLabel14.setText("Nama Jenis Barang");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 1060, -1));
+        jLabel21.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        jLabel21.setText("Nama Jenis Barang");
+        tambahBarang.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 1060, -1));
 
-        cNamaJnsBrng1.addActionListener(new java.awt.event.ActionListener() {
+        cNamaJnsBrng.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cNamaJnsBrngActionPerformed(evt);
             }
         });
-        cNamaJnsBrng1.addKeyListener(new java.awt.event.KeyAdapter() {
+        cNamaJnsBrng.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 cNamaJnsBrngKeyReleased(evt);
             }
         });
-        jPanel2.add(cNamaJnsBrng1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 1000, 30));
+        tambahBarang.add(cNamaJnsBrng, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 1000, 30));
 
-        jLabel15.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
-        jLabel15.setText("Nama Barang");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 1030, -1));
+        jLabel22.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        jLabel22.setText("Nama Barang");
+        tambahBarang.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 1030, -1));
 
-        jLabel16.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
-        jLabel16.setText("Harga");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 990, -1));
-        jPanel2.add(tNamaBarang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 1000, 30));
+        jLabel23.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        jLabel23.setText("Harga");
+        tambahBarang.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 990, -1));
+        tambahBarang.add(tNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 1000, 30));
 
-        cSatuan1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gr", "Kg", "Sak", "Liter", "Karung", "Botol", "Buah" }));
-        jPanel2.add(cSatuan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 1000, 30));
-        jPanel2.add(tHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 1000, 30));
+        cSatuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gr", "Kg", "Sak", "Liter", "Karung", "Botol", "Buah" }));
+        tambahBarang.add(cSatuan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 1000, 30));
+        tambahBarang.add(tHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 1000, 30));
 
-        jLabel17.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
-        jLabel17.setText("Stok");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, 980, -1));
+        jLabel24.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        jLabel24.setText("Stok");
+        tambahBarang.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, 980, -1));
 
-        jLabel18.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
-        jLabel18.setText("Satuan");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 990, -1));
-        jPanel2.add(tStok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 1000, 30));
+        jLabel25.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        jLabel25.setText("Satuan");
+        tambahBarang.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 990, -1));
+        tambahBarang.add(tStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 1000, 30));
 
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
-        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, -10, 1110, 590));
+        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
+        tambahBarang.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 37, 950, 10));
 
-        tambahBarang.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
+        jLabel5.setText("jLabel3");
+        tambahBarang.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1390, 580));
 
-        mainPanel.add(tambahBarang);
-        tambahBarang.setBounds(0, 0, 0, 0);
+        mainPanel.add(tambahBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -580, 0, -1));
 
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
@@ -472,156 +468,66 @@ public class formBarang extends javax.swing.JPanel {
         cariData();
     }//GEN-LAST:event_tCariKeyReleased
 
-    private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
+    private void btnSimpan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpan1ActionPerformed
         // TODO add your handling code here:
-        showPanel("dataBarang");
-        reset();
-        isEdit = false;
-    }//GEN-LAST:event_btnBatalActionPerformed
+    }//GEN-LAST:event_btnSimpan1ActionPerformed
 
-    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+    private void btnBatal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatal1ActionPerformed
         // TODO add your handling code here:
-        try {
-            if (isEdit) {
-                String sql = "UPDATE barang SET kode_jenis=?, nama_barang=?, satuan=?, harga=?, stok=? WHERE kode_barang=?";
-                PreparedStatement ps = conn.prepareStatement(sql);
-
-                ps.setString(1, tKodeJenisBarang.getText());
-                ps.setString(2, tNamaBarang.getText());
-                ps.setString(3, cSatuan.getSelectedItem().toString());
-                ps.setString(4, tHarga.getText());
-                ps.setString(5, tStok.getText());
-                ps.setString(6, tKodeBarang.getText());
-
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(this, "DATA BERHASIL DIUBAH!");
-            } else {
-                String sql = "INSERT INTO barang (kode_barang, kode_jenis, nama_barang, satuan, harga, stok) VALUES (?, ?, ?, ?, ?, ?)";
-
-                PreparedStatement ps = conn.prepareStatement(sql);
-
-                ps.setString(1, tKodeBarang.getText());
-                ps.setString(2, tKodeJenisBarang.getText());
-                ps.setString(3, tNamaBarang.getText());
-                ps.setString(4, cSatuan.getSelectedItem().toString());
-                ps.setString(5, tHarga.getText());
-                ps.setString(6, tStok.getText());
-
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(this, "DATA BERHASIL DITAMBAHKAN!");
-            }
-
-            loadDataBarang();
-            reset();
-            showPanel("dataBarang");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "ERROR: " + e.getMessage());
-        }
-    }//GEN-LAST:event_btnSimpanActionPerformed
-
-    private void cNamaJnsBrngKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cNamaJnsBrngKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cNamaJnsBrngKeyReleased
-
-    private void cNamaJnsBrngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNamaJnsBrngActionPerformed
-        // TODO add your handling code here:
-        //digunakan untuk isi otomatis kode barang & harga saat nama barang dpilih
-        try {
-            if (cNamaJnsBrng.getSelectedItem() == null) return;
-
-            String namaJenis = cNamaJnsBrng.getSelectedItem().toString();
-
-            String sql = "SELECT kode_jenis FROM jenisbarang WHERE nama_jenis = ?";
-            Connection con = koneksi.configDB();  // ← WAJIB ADA INI!
-            PreparedStatement ps = con.prepareStatement(sql);  // ← GANTI conn → con
-            ps.setString(1, namaJenis);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                tKodeJenisBarang.setText(rs.getString("kode_jenis"));
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }//GEN-LAST:event_cNamaJnsBrngActionPerformed
-
-    private void tKodeJenisBarangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tKodeJenisBarangKeyReleased
-        // TODO add your handling code here:
-        //otomatis terisi saat ketik kode barang
-        try {
-            String sql = "SELECT nama_jenis FROM jenisbarang WHERE kode_jenis = ?";
-            Connection con = koneksi.configDB();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, tKodeJenisBarang.getText());
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                cNamaJnsBrng.setSelectedItem(rs.getString("nama_jenis"));
-            }
-        } catch (Exception e) {
-            // dikosongkan jika tidak ditemukan
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_tKodeJenisBarangKeyReleased
-
-    private void tKodeJenisBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tKodeJenisBarangActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tKodeJenisBarangActionPerformed
+    }//GEN-LAST:event_btnBatal1ActionPerformed
 
     private void tKodeBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tKodeBarangActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tKodeBarangActionPerformed
 
+    private void tKodeJenisBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tKodeJenisBarangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tKodeJenisBarangActionPerformed
+
+    private void tKodeJenisBarangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tKodeJenisBarangKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tKodeJenisBarangKeyReleased
+
+    private void cNamaJnsBrngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNamaJnsBrngActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cNamaJnsBrngActionPerformed
+
+    private void cNamaJnsBrngKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cNamaJnsBrngKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cNamaJnsBrngKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBatal;
+    private javax.swing.JButton btnBatal1;
     private javax.swing.JButton btnHapus;
-    private javax.swing.JButton btnSimpan;
+    private javax.swing.JButton btnSimpan1;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnUbah;
     private javax.swing.JComboBox<String> cNamaJnsBrng;
-    private javax.swing.JComboBox<String> cNamaJnsBrng1;
     private javax.swing.JComboBox<String> cSatuan;
-    private javax.swing.JComboBox<String> cSatuan1;
     private javax.swing.JPanel dataBarang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField tCari;
     private javax.swing.JTextField tHarga;
-    private javax.swing.JTextField tHarga1;
     private javax.swing.JTextField tKodeBarang;
-    private javax.swing.JTextField tKodeBarang1;
     private javax.swing.JTextField tKodeJenisBarang;
-    private javax.swing.JTextField tKodeJenisBarang1;
     private javax.swing.JTextField tNamaBarang;
-    private javax.swing.JTextField tNamaBarang1;
     private javax.swing.JTextField tStok;
-    private javax.swing.JTextField tStok1;
     private javax.swing.JPanel tambahBarang;
     private javax.swing.JTable tblDataBarang;
     // End of variables declaration//GEN-END:variables
