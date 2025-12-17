@@ -46,8 +46,8 @@ public class formLogin extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnLogin = new javax.swing.JButton();
-        username = new custom.teksfield();
-        password = new custom.teksfield();
+        tUsername = new custom.teksfield();
+        tPassword = new custom.teksfield();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,38 +66,38 @@ public class formLogin extends javax.swing.JFrame {
         });
         jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 217, 40));
 
-        username.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        username.setText("username");
-        username.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
-        username.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-user-18.png"))); // NOI18N
-        username.addFocusListener(new java.awt.event.FocusAdapter() {
+        tUsername.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tUsername.setText("username");
+        tUsername.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        tUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-user-18.png"))); // NOI18N
+        tUsername.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                usernameFocusGained(evt);
+                tUsernameFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                usernameFocusLost(evt);
+                tUsernameFocusLost(evt);
             }
         });
-        username.addActionListener(new java.awt.event.ActionListener() {
+        tUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameActionPerformed(evt);
+                tUsernameActionPerformed(evt);
             }
         });
-        jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 217, 39));
+        jPanel1.add(tUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 217, 39));
 
-        password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        password.setText("password");
-        password.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
-        password.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-password-18.png"))); // NOI18N
-        password.addFocusListener(new java.awt.event.FocusAdapter() {
+        tPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tPassword.setText("password");
+        tPassword.setFont(new java.awt.Font("Franklin Gothic Book", 0, 12)); // NOI18N
+        tPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-password-18.png"))); // NOI18N
+        tPassword.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                passwordFocusGained(evt);
+                tPasswordFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                passwordFocusLost(evt);
+                tPasswordFocusLost(evt);
             }
         });
-        jPanel1.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 217, 39));
+        jPanel1.add(tPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 217, 39));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg login.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -122,8 +122,8 @@ public class formLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String username = this.username.getText();
-        String password = this.password.getText();
+        String username = tUsername.getText();
+        String password = tPassword.getText();
         
         String sql = "SELECT * FROM user WHERE username = ? AND password = MD5(?)"; 
         Connection conn = new koneksi().configDB();
@@ -145,25 +145,38 @@ public class formLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+    private void tUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tUsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
+    }//GEN-LAST:event_tUsernameActionPerformed
 
-    private void usernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameFocusGained
- 
-    }//GEN-LAST:event_usernameFocusGained
+    private void tUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tUsernameFocusGained
+         String username = tUsername.getText();
+        if(username.equals("username")){
+            tUsername.setText("");
+        }
 
-    private void passwordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFocusGained
-       
-    }//GEN-LAST:event_passwordFocusGained
+    }//GEN-LAST:event_tUsernameFocusGained
 
-    private void passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFocusLost
-        
-    }//GEN-LAST:event_passwordFocusLost
+    private void tPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPasswordFocusGained
+        String password = tPassword.getText();
+        if(password.equals("password")){
+            tPassword.setText("");
+        }
+    }//GEN-LAST:event_tPasswordFocusGained
 
-    private void usernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameFocusLost
-       
-    }//GEN-LAST:event_usernameFocusLost
+    private void tPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPasswordFocusLost
+         String password = tPassword.getText();
+        if(password.equals("")||password.equals("password")){
+            tPassword.setText("password");
+        }
+    }//GEN-LAST:event_tPasswordFocusLost
+
+    private void tUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tUsernameFocusLost
+        String username = tUsername.getText();
+        if(username.equals("")||username.equals("username")){
+            tUsername.setText("username");
+        }
+    }//GEN-LAST:event_tUsernameFocusLost
 
     /**
      * @param args the command line arguments
@@ -193,7 +206,7 @@ public class formLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private custom.teksfield password;
-    private custom.teksfield username;
+    private custom.teksfield tPassword;
+    private custom.teksfield tUsername;
     // End of variables declaration//GEN-END:variables
 }
