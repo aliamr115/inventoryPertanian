@@ -26,6 +26,8 @@ public class formBarang extends javax.swing.JPanel {
   private Connection conn;
   private DefaultTableModel model;
   private boolean isEdit = false;
+  private int selectedId;
+  
 
     /**
      * Creates new form formBarang
@@ -57,21 +59,23 @@ public class formBarang extends javax.swing.JPanel {
         try {
             model.setRowCount(0); //mengosongkan isi tabel (menghapus semua baris lama, supaya tidak double saat data di load ulang)
             
-        String sql = "SELECT b.kode_barang, b.kode_jenis, j.nama_jenis, b.nama_barang, b.satuan, b.harga, b.stok "
+        String sql = "SELECT b.kode_barang, CONCAT('BR', LPAD(b.kode_barang, 2, '0')) AS kode_br, b.kode_jenis, j.nama_jenis, b.nama_barang, b.satuan, b.harga, b.stok "
                 + "FROM barang b JOIN jenisbarang j ON j.kode_jenis = b.kode_jenis "
-                + "ORDER BY LENGTH(b.kode_barang), b.kode_barang ASC"; //mengurutkan kode barang
+                + "ORDER BY b.kode_barang ASC"; //mengurutkan kode barang
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         
         while (rs.next()) {
-            model.addRow(new Object[]{ 
-                rs.getString("kode_barang"),
-                rs.getString("kode_jenis"),
+            selectedId = rs.getInt("kode_barang");
+            
+            model.addRow(new Object[]{
+                rs.getString("kode_br"),    
+                rs.getInt("kode_jenis"),
                 rs.getString("nama_jenis"),
                 rs.getString("nama_barang"),
                 rs.getString("satuan"),
                 rs.getString("harga"),
-                rs.getString("stok")
+                rs.getInt("stok")
             });
         }
         
@@ -97,28 +101,37 @@ public class formBarang extends javax.swing.JPanel {
     }
     
     private void cariData(){ //mencari data
-        String cari = tCari.getText();
+        String cari = tCari.getText().trim();
         
         DefaultTableModel model = (DefaultTableModel) tblDataBarang.getModel();
         model.setRowCount(0);
         
         try {
-            String sql = "SELECT * FROM barang WHERE kode_barang LIKE ? OR nama_barang LIKE ? OR satuan LIKE ? OR stok LIKE ? OR harga LIKE ?";
+            String sql = "SELECT * FROM barang WHERE nama_barang LIKE ? OR satuan LIKE ? OR CAST(stok AS CHAR) LIKE ? OR CAST(harga AS CHAR) LIKE ? OR kode_barang = ?";
             PreparedStatement ps = koneksi.configDB().prepareStatement(sql);
             ps.setString(1, "%" + cari + "%");
             ps.setString(2, "%" + cari + "%");
             ps.setString(3, "%" + cari + "%");
             ps.setString(4, "%" + cari + "%");
-            ps.setString(5, "%" + cari + "%");
+            
+            int id = 0;
+            if (cari.startsWith("BR")) {
+                id = Integer.parseInt(cari.replace("BR", ""));
+            } else if (cari.matches("\\d+")) {
+                id = Integer.parseInt(cari);
+            }
+            
+            ps.setInt(5, id);
             
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 model.addRow(new Object[]{
-                    rs.getString("kode_barang"),
+                    "BR" + String.format("%02d", rs.getInt("kode_barang")),
+                    rs.getInt("kode_jenis"),
                     rs.getString("nama_barang"),
                     rs.getString("satuan"),
                     rs.getString("harga"),
-                    rs.getString("stok")
+                    rs.getInt("stok")
                 });
             }
         } catch (Exception e) {
@@ -145,7 +158,7 @@ public class formBarang extends javax.swing.JPanel {
 }
     
 
-    
+  
     
     
 
@@ -493,13 +506,14 @@ public class formBarang extends javax.swing.JPanel {
         int konfirmasi = JOptionPane.showConfirmDialog(
                 this, "Yakin ingin menghapus data ini?", "Hapus", JOptionPane.YES_NO_OPTION);
         
-        if (konfirmasi == JOptionPane.YES_NO_OPTION) {
+        if (konfirmasi == JOptionPane.YES_OPTION) {
             try {
-                String kode = model.getValueAt(row, 0).toString();
+                int id = selectedId;
+
                 String sql = "DELETE FROM barang WHERE kode_barang=?";
-                
                 PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, kode);
+                ps.setInt(1, id);
+                
                 ps.executeUpdate();
                 
                 JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
@@ -522,15 +536,16 @@ public class formBarang extends javax.swing.JPanel {
         // TODO add your handling code here:
         try {
         if (isEdit) {
+
             String sql = "UPDATE barang SET kode_jenis=?, nama_barang=?, satuan=?, harga=?, stok=? WHERE kode_barang=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            
-            ps.setString(1, tKodeJenisBarang.getText());
+
+            ps.setInt(1, Integer.parseInt(tKodeJenisBarang.getText()));
             ps.setString(2, tNamaBarang.getText());
             ps.setString(3, cSatuan.getSelectedItem().toString());
             ps.setString(4, tHarga.getText());
-            ps.setString(5, tStok.getText());
-            ps.setString(6, tKodeBarang.getText());
+            ps.setInt(5, Integer.parseInt(tStok.getText()));
+            ps.setInt(6, selectedId);
             
             ps.executeUpdate();
             JOptionPane.showMessageDialog(this, "DATA BERHASIL DIUBAH!");
@@ -552,6 +567,7 @@ public class formBarang extends javax.swing.JPanel {
             loadDataBarang();
             reset();
             showPanel("dataBarang");
+            isEdit = false;
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "ERROR: " + e.getMessage());
@@ -569,34 +585,41 @@ public class formBarang extends javax.swing.JPanel {
         
         isEdit = true;
         
-            tKodeBarang.setText(model.getValueAt(row, 0).toString());
-            tKodeJenisBarang.setText(model.getValueAt(row, 1).toString());
-            cNamaJnsBrng.setSelectedItem(model.getValueAt(row, 2).toString());
-            tNamaBarang.setText(model.getValueAt(row, 3).toString());
-            cSatuan.setSelectedItem(model.getValueAt(row, 4).toString());
-            tHarga.setText(model.getValueAt(row, 5).toString());
-            tStok.setText(model.getValueAt(row, 6).toString());
+        String br = model.getValueAt(row, 0).toString();
+        selectedId = Integer.parseInt(br.replace("BR", ""));
         
-            tKodeBarang.setEditable(false);
+        tKodeBarang.setText(br);
+        tKodeJenisBarang.setText(model.getValueAt(row, 1).toString());
+        cNamaJnsBrng.setSelectedItem(model.getValueAt(row, 2).toString());
+        tNamaBarang.setText(model.getValueAt(row, 3).toString());
+        cSatuan.setSelectedItem(model.getValueAt(row, 4).toString());
+        tHarga.setText(model.getValueAt(row, 5).toString());
+        tStok.setText(model.getValueAt(row, 6).toString());
+        
+        tKodeBarang.setEditable(false);
         showPanel("tambahBarang");
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void tblDataBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDataBarangMouseClicked
         // TODO add your handling code here:
         int row = tblDataBarang.getSelectedRow();
+        
+        String br = model.getValueAt(row, 0).toString();
+        selectedId = Integer.parseInt(br.replace("BR", ""));
             
-            tKodeBarang.setText(model.getValueAt(row, 0).toString());
-            tKodeJenisBarang.setText(model.getValueAt(row, 1).toString());
-            cNamaJnsBrng.setSelectedItem(model.getValueAt(row, 2).toString());
-            tNamaBarang.setText(model.getValueAt(row, 3).toString());
-            cSatuan.setSelectedItem(model.getValueAt(row, 4).toString());
-            tHarga.setText(model.getValueAt(row, 5).toString());
-            tStok.setText(model.getValueAt(row, 6).toString());
+        tKodeBarang.setText(br);
+        tKodeJenisBarang.setText(model.getValueAt(row, 1).toString());
+        cNamaJnsBrng.setSelectedItem(model.getValueAt(row, 2).toString());
+        tNamaBarang.setText(model.getValueAt(row, 3).toString());
+        cSatuan.setSelectedItem(model.getValueAt(row, 4).toString());
+        tHarga.setText(model.getValueAt(row, 5).toString());
+        tStok.setText(model.getValueAt(row, 6).toString());
         
     }//GEN-LAST:event_tblDataBarangMouseClicked
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
+        tKodeBarang.setEditable(false);
         reset();
         showPanel("tambahBarang");
     }//GEN-LAST:event_btnTambahActionPerformed
