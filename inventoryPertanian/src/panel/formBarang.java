@@ -144,28 +144,7 @@ public class formBarang extends javax.swing.JPanel {
     }
 }
     
-    private void autoKodeBarang() { //membuat kode barang otomatis
-        try {
-            String sql = "SELECT kode_barang FROM barang ORDER BY kode_barang DESC LIMIT 1";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                String kodeLama = rs.getString("kode_barang").trim(); //Hapus spasi
-                kodeLama = kodeLama.replace("BR", "").trim(); 
-                int angka = Integer.parseInt(kodeLama) + 1;
-                tKodeBarang.setText("BR" + angka);
-            } else {
-                //jika tabel masii kosong
-                tKodeBarang.setText("BR01");
-            }
-            
-            tKodeBarang.setEditable(false);
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-}
+
     
     
     
@@ -391,7 +370,12 @@ public class formBarang extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI Historic", 1, 12)); // NOI18N
         jLabel7.setText("Harga");
 
-        cSatuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gr", "Kg", "Sak", "Liter", "Karung", "Botol", "Buah" }));
+        cSatuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gr", "Kg", "Sak", "Liter", "Karung", "Botol", "Buah", "Unit", "Gram", "Hg", "Kwintal", "Ons", "Ton", "Pcs", " " }));
+        cSatuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cSatuanActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Historic", 1, 12)); // NOI18N
         jLabel8.setText("Stok");
@@ -551,16 +535,15 @@ public class formBarang extends javax.swing.JPanel {
             ps.executeUpdate();
             JOptionPane.showMessageDialog(this, "DATA BERHASIL DIUBAH!");
         } else {
-            String sql = "INSERT INTO barang (kode_barang, kode_jenis, nama_barang, satuan, harga, stok) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO barang (kode_jenis, nama_barang, satuan, harga, stok) VALUES (?, ?, ?, ?, ?)";
             
             PreparedStatement ps = conn.prepareStatement(sql);
             
-            ps.setString(1, tKodeBarang.getText());
-            ps.setString(2, tKodeJenisBarang.getText());
-            ps.setString(3, tNamaBarang.getText());
-            ps.setString(4, cSatuan.getSelectedItem().toString());
-            ps.setString(5, tHarga.getText());
-            ps.setString(6, tStok.getText());
+            ps.setInt(1, Integer.parseInt(tKodeJenisBarang.getText()));
+            ps.setString(2, tNamaBarang.getText());
+            ps.setString(3, cSatuan.getSelectedItem().toString());
+            ps.setString(4, tHarga.getText());
+            ps.setInt(5, Integer.parseInt(tStok.getText()));
             
             ps.executeUpdate();
             JOptionPane.showMessageDialog(this, "DATA BERHASIL DITAMBAHKAN!");
@@ -615,7 +598,6 @@ public class formBarang extends javax.swing.JPanel {
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
         reset();
-        autoKodeBarang();
         showPanel("tambahBarang");
     }//GEN-LAST:event_btnTambahActionPerformed
 
@@ -676,6 +658,10 @@ public class formBarang extends javax.swing.JPanel {
     private void tKodeBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tKodeBarangActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tKodeBarangActionPerformed
+
+    private void cSatuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cSatuanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cSatuanActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
