@@ -46,7 +46,8 @@ public class jenis_Barang extends javax.swing.JPanel {
         
         
         showDataJenis();
-        eventTableClick();
+        load_table_jenis();
+
     }
     
     private void showDataJenis() { //menampilkan panel utama dengan button TAMBAH
@@ -81,13 +82,15 @@ public class jenis_Barang extends javax.swing.JPanel {
         try {
             //membuat objek user dan mengambil data dari database
             Model_JenisBarang jns = new Model_JenisBarang();
-            ResultSet result =  jns.TampilJenis();
+            ResultSet rs =  jns.TampilJenis();
             //loop data baris per baris
-            while (result.next()){
+            while (rs.next()){
+                int kode = rs.getInt("kode_jenis");
+                String kodeTampil = "JN" + String.format("%02d", kode);
                 //Tambahkan baris ke dalam tabel model
             model.addRow(new Object[]{
-                 result.getString("kode_jenis"),
-                 result.getString("nama_jenis"),
+                 kodeTampil,
+                 rs.getString("nama_jenis"),
                   });
         }
            //set model ke JTable
@@ -128,38 +131,21 @@ public class jenis_Barang extends javax.swing.JPanel {
     }
      
     
-    public void autoID(){
+    public void autoKodeJenis(){
+        Model_JenisBarang jns = new Model_JenisBarang();
+        ResultSet rs = jns.autoKodeJenis();
         try {
-            Connection mysqlConfig = koneksi.configDB();
-            Statement st = mysqlConfig.createStatement();
-            ResultSet rs = st.executeQuery("SELECT MAX(kode_jenis) AS max_id FROM jenisbarang");
-            
-            if (rs.next()){
-                String maxID = rs.getString("max_id");
-                
-                if(maxID == null){
-                    tKodeJenis.setText("JN001");
-                } else {
-                    int nomor = Integer.parseInt(maxID.substring(2));
-                    nomor ++;
-                    
-                    String kodeBaru = String.format("JN%03d", nomor);
-                    tKodeJenis.setText(kodeBaru);
-                }
+            if(rs.next()){
+                int kode = rs.getInt("kode_jenis") + 1; // cukup +1
+                tKodeJenis.setText("JN" + String.format("%02d", kode));
+            } else {
+                tKodeJenis.setText("JN01");
             }
-            
-            rs.close();
-            st.close();
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
         }
-    }
-     
-       
-     
-     
-     
-   
+    
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is \always
@@ -367,22 +353,43 @@ public class jenis_Barang extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        autoID();
         showTambahJenis();
+        autoKodeJenis();
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-       Model_JenisBarang jns = new Model_JenisBarang();
-       jns.setKode_jenis(tKodeJenis.getText());
-       jns.setNama_jenis(tNamaJenis.getText());
-       
-       if(btnSimpan.getText().equals("Ubah")){
-           jns.UbahJenis(); //proses ubah
-       } else {
-           jns.TambahJenis();
-       }
-       showDataJenis(); //kembali ke panel tampilJenis
-       load_table_jenis();
+        Model_JenisBarang jns = new Model_JenisBarang();
+        String kodeInput = tKodeJenis.getText();
+        String namaInput = tNamaJenis.getText();
+
+        // Validasi input kosong
+        if (namaInput.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama Jenis tidak boleh kosong!");
+            return;
+        }
+
+        if (btnSimpan.getText().equals("Ubah")) {
+            // Logika UBAH: Gunakan kodeEdit (kode asli dari database)
+            // Jika kodeEdit berisi "JN03", ambil angka "03" atau sesuai kebutuhan DB
+            String kodeUntukDB = kodeEdit.replace("JN", ""); 
+            jns.setKode_jenis(kodeUntukDB);
+            jns.setNama_jenis(namaInput);
+            jns.UbahJenis();
+        } else {
+            // Logika SIMPAN BARU: Ambil angka saja dari "JN01"
+            if (kodeInput.length() >= 2) {
+                String kodeAngka = kodeInput.substring(2);
+                jns.setKode_jenis(kodeAngka);
+                jns.setNama_jenis(namaInput);
+                jns.TambahJenis();
+            } else {
+                JOptionPane.showMessageDialog(this, "Format Kode Salah!");
+                return;
+            }
+        }
+        load_table_jenis();
+        showDataJenis(); //kembali ke panel tampilJenis
+           
        
     }//GEN-LAST:event_btnSimpanActionPerformed
 
@@ -419,10 +426,13 @@ public class jenis_Barang extends javax.swing.JPanel {
             
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getString("kode_jenis"),
-                    rs.getString("nama_jenis")
-                });
+            int kode = rs.getInt("kode_jenis"); // AMBIL INT
+            String kodeTampil = "JN" + String.format("%02d", kode); // FORMAT
+
+            model.addRow(new Object[]{
+                kodeTampil,
+                rs.getString("nama_jenis")
+            });
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
@@ -434,24 +444,31 @@ public class jenis_Barang extends javax.swing.JPanel {
     }//GEN-LAST:event_tCariActionPerformed
 
     private void tKodeJenisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tKodeJenisMouseClicked
-        autoID();
+        autoKodeJenis();
     }//GEN-LAST:event_tKodeJenisMouseClicked
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
-        eventTableClick();
-        showTambahJenis(); 
-               
-        //isi form dari variabel
-        tKodeJenis.setText(kodeEdit);
-        tKodeJenis.setEditable(false);
-        tNamaJenis.setText(namaEdit);
-        
-        btnSimpan.setText("Ubah"); 
+         // pastikan ada baris yang dipilih
+    int row = tblDataJenis.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Pilih data yang akan diubah!");
+        return;
+    }
+    // ambil data dari tabel
+    eventTableClick();
+    showTambahJenis();
+
+    tKodeJenis.setText(kodeEdit);
+    tKodeJenis.setEditable(false);
+    tNamaJenis.setText(namaEdit);
+
+    btnSimpan.setText("Ubah");
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
        Model_JenisBarang jns = new Model_JenisBarang();
-       jns.setKode_jenis(tKodeJenis.getText());
+       String kodeAngka = tKodeJenis.getText().substring(2);
+       jns.setKode_jenis(kodeAngka);
        
        jns.HapusJenis();
        load_table_jenis();

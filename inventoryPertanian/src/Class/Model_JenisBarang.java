@@ -104,4 +104,15 @@ public class Model_JenisBarang extends koneksi{
         }
         return rs;
     }
+    
+    public ResultSet autoKodeJenis() {
+    try {
+        String sql = "SELECT MAX(kode_jenis) AS kode_jenis FROM jenisbarang";
+        st = koneksi.createStatement();
+        rs = st.executeQuery(sql);
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Gagal generate kode: " + e.getMessage());
+    }
+    return rs;
+}
 }
