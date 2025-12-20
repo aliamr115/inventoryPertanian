@@ -85,8 +85,7 @@ public class formBarang extends javax.swing.JPanel {
     }
     
     
-    //untuk ganti panel 
-    private void showPanel(String name) {
+    private void showPanel(String name) { //untuk ganti panel 
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.show(mainPanel, name);
     }
@@ -126,7 +125,7 @@ public class formBarang extends javax.swing.JPanel {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 model.addRow(new Object[]{
-                    "BR" + String.format("%02d", rs.getInt("kode_barang")),
+                    "BR" + String.format("%02d", rs.getInt("kode_barang")), 
                     rs.getInt("kode_jenis"),
                     rs.getString("nama_barang"),
                     rs.getString("satuan"),
