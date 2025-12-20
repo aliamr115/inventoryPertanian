@@ -270,7 +270,7 @@ public class jenis_Barang extends javax.swing.JPanel {
             }
         });
         dataJenis.add(btnHapus);
-        btnHapus.setBounds(270, 100, 72, 30);
+        btnHapus.setBounds(350, 110, 72, 30);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
         dataJenis.add(jLabel4);
