@@ -158,7 +158,6 @@ public class jenis_Barang extends javax.swing.JPanel {
         mainPanel = new javax.swing.JPanel();
         dataJenis = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jSeparator5 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblDataJenis = new javax.swing.JTable();
@@ -186,14 +185,10 @@ public class jenis_Barang extends javax.swing.JPanel {
 
         dataJenis.setLayout(null);
 
-        jLabel5.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Franklin Gothic Book", 0, 24)); // NOI18N
         jLabel5.setText("Data Jenis Barang");
         dataJenis.add(jLabel5);
-        jLabel5.setBounds(30, 30, 142, 21);
-
-        jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        dataJenis.add(jSeparator5);
-        jSeparator5.setBounds(31, 56, 970, 3);
+        jLabel5.setBounds(60, 30, 220, 28);
         dataJenis.add(jLabel6);
         jLabel6.setBounds(997, 108, 0, 0);
 
@@ -270,9 +265,9 @@ public class jenis_Barang extends javax.swing.JPanel {
             }
         });
         dataJenis.add(btnHapus);
-        btnHapus.setBounds(350, 110, 72, 30);
+        btnHapus.setBounds(270, 100, 72, 30);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PANEL.png"))); // NOI18N
         dataJenis.add(jLabel4);
         jLabel4.setBounds(0, 0, 1050, 580);
 
@@ -341,9 +336,9 @@ public class jenis_Barang extends javax.swing.JPanel {
         tambahJenis.add(tNamaJenis);
         tNamaJenis.setBounds(100, 340, 840, 40);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PANEL.png"))); // NOI18N
         tambahJenis.add(jLabel3);
-        jLabel3.setBounds(0, 0, 1050, 580);
+        jLabel3.setBounds(0, 0, 1050, 600);
 
         mainPanel.add(tambahJenis);
         tambahJenis.setBounds(0, 0, 1050, 580);
@@ -497,7 +492,6 @@ public class jenis_Barang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator17;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField tCari;
     private javax.swing.JTextField tKodeJenis;

@@ -185,7 +185,6 @@ public class formBarang extends javax.swing.JPanel {
         tblDataBarang = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btnHapus = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         btnUbah = new javax.swing.JButton();
         btnTambah = new javax.swing.JButton();
@@ -236,7 +235,7 @@ public class formBarang extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblDataBarang);
 
-        dataBarang.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 140, 1021, 270));
+        dataBarang.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 140, 950, 270));
 
         jLabel1.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
         jLabel1.setText("Data Barang");
@@ -250,11 +249,10 @@ public class formBarang extends javax.swing.JPanel {
                 btnHapusActionPerformed(evt);
             }
         });
-        dataBarang.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, -1, -1));
-        dataBarang.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 33, 1079, 10));
+        dataBarang.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, 30));
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-search-20.png"))); // NOI18N
-        dataBarang.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 64, -1, 22));
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-search-22.png"))); // NOI18N
+        dataBarang.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 90, 30, 30));
 
         btnUbah.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         btnUbah.setText("Ubah");
@@ -264,7 +262,7 @@ public class formBarang extends javax.swing.JPanel {
                 btnUbahActionPerformed(evt);
             }
         });
-        dataBarang.add(btnUbah, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, -1, -1));
+        dataBarang.add(btnUbah, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, -1, 30));
 
         btnTambah.setFont(new java.awt.Font("Franklin Gothic Book", 1, 13)); // NOI18N
         btnTambah.setText("Tambah");
@@ -274,16 +272,16 @@ public class formBarang extends javax.swing.JPanel {
                 btnTambahActionPerformed(evt);
             }
         });
-        dataBarang.add(btnTambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 100, 90, -1));
+        dataBarang.add(btnTambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 90, 30));
 
         tCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tCariKeyReleased(evt);
             }
         });
-        dataBarang.add(tCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(776, 64, 186, -1));
+        dataBarang.add(tCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, 240, 30));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PANEL.png"))); // NOI18N
         dataBarang.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 600));
 
         mainPanel.add(dataBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 1050, 440));
@@ -382,7 +380,7 @@ public class formBarang extends javax.swing.JPanel {
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         tambahBarang.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 37, 950, 10));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bg_panel (1).png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PANEL.png"))); // NOI18N
         jLabel5.setText("jLabel3");
         tambahBarang.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1390, 580));
 
@@ -519,7 +517,6 @@ public class formBarang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField tCari;

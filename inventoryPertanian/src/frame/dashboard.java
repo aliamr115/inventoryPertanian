@@ -19,6 +19,7 @@ import panel.formBarang;
 import panel.hasil_Panen;
 import panel.jenis_Barang;
 import panel.laporan;
+import panel.logout;
 
 /**
  *
@@ -317,14 +318,30 @@ private javax.swing.JLabel jLabel1;
             }
         });
         
+         MenuItem menuLogout = new MenuItem(iconLogout, false, null, "Logout", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 1. Tampilkan konfirmasi (Opsional tapi disarankan)
+                int confirm = javax.swing.JOptionPane.showConfirmDialog(null, 
+                        "Apakah Anda yakin ingin logout?", "Konfirmasi Logout", 
+                        javax.swing.JOptionPane.YES_NO_OPTION);
+
+                if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                   dispose();
+                    new formLogin().setVisible(true); 
+                }
+    }
+});
+        
+
+        
         // Menu utama memamnggil sub menu
         
         MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBarang1,menuBarang2);
         MenuItem menuKelola = new MenuItem(iconKelola, false, null, "Kelola", null, menuKelola1,menuKelola2);
         MenuItem menuLaporan = new MenuItem(iconLaporan, false, null, "Laporan", null, menuLaporan1, menuLaporan2, menuLaporan3);
   
-        MenuItem menuLogout = new MenuItem(iconLogout, false, null, "Logout", null);
-
+        
         addMenu(menuDasbor, menuData, menuKelola, menuLaporan, menuAbout, menuLogout);     
     }
     
