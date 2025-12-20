@@ -236,7 +236,7 @@ public class formBarang extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblDataBarang);
 
-        dataBarang.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 140, 1021, 210));
+        dataBarang.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 140, 1021, 270));
 
         jLabel1.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
         jLabel1.setText("Data Barang");
