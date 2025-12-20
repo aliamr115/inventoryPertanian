@@ -100,7 +100,7 @@ public class formBarang extends javax.swing.JPanel {
         tStok.setText("");
     }
     
-    private void cariData(){ //mencari data
+    private void cariData(){ //text field pencarian data
         String cari = tCari.getText().trim();
         
         DefaultTableModel model = (DefaultTableModel) tblDataBarang.getModel();
@@ -647,10 +647,10 @@ public class formBarang extends javax.swing.JPanel {
         if (rs.next()) {
             cNamaJnsBrng.setSelectedItem(rs.getString("nama_jenis"));
         }
-    } catch (Exception e) {
-        // dikosongkan jika tidak ditemukan
+        } catch (Exception e) {
+            // dikosongkan jika tidak ditemukan
             System.out.println(e);
-    }
+        }
     }//GEN-LAST:event_tKodeJenisBarangKeyReleased
 
     private void cNamaJnsBrngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNamaJnsBrngActionPerformed
