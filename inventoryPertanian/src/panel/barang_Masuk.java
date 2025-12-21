@@ -47,7 +47,7 @@ public class barang_Masuk extends javax.swing.JPanel {
         tSubtotal.setEditable(false);
         tHarga.setEditable(false);
         tKodeBarang.setEditable(false);
-        tNoMasuk.setEditable(true);
+        tNoMasuk.setText("AUTO");
         tIdUser.setEditable(false);
         tTotalMasuk.setEditable(true);
         
@@ -55,7 +55,6 @@ public class barang_Masuk extends javax.swing.JPanel {
         tampilkanTabelAtas(noEdit);
         tampilkanTabelBawah(noEdit);
         loadComboBarang();
-        IDno_masuk();
         autoIdUser();
         load_table_dataBarangMasuk();
         eventTableClick();
@@ -98,10 +97,10 @@ public class barang_Masuk extends javax.swing.JPanel {
     
     void load_table_dataBarangMasuk(){
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("No Masuk");
-        model.addColumn("ID User");
-        model.addColumn("Tanggal Masuk");
-        model.addColumn("Total Masuk");
+        model.addColumn("no_masuk");
+        model.addColumn("id_user");
+        model.addColumn("tgl_masuk");
+        model.addColumn("total_masuk");
         
         try {
             //membuat objek user dan mengambil data dari database
@@ -111,8 +110,8 @@ public class barang_Masuk extends javax.swing.JPanel {
             while (result.next()){
                 //Tambahkan baris ke dalam tabel model
             model.addRow(new Object[]{
-                 result.getString("no_masuk"),
-                 result.getString("id_user"),
+                 result.getInt("no_masuk"),
+                 result.getInt("id_user"),
                  result.getDate("tgl_masuk"),
                  result.getBigDecimal("total_masuk")
             });
@@ -127,13 +126,13 @@ public class barang_Masuk extends javax.swing.JPanel {
     
     void load_table_detailBarangMasuk(String noMasuk){
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("no_msuk");
+        model.addColumn("no_masuk");
         model.addColumn("kode_barang");
         model.addColumn("jml_masuk");
         model.addColumn("subtotal_masuk");
         
         try {
-            String sql = "SELECT * FROM barangmasuk";
+            String sql = "SELECT no_masuk, id_user, tgl_masuk, total_masuk FROM barangmasuk";
             Statement st = koneksi.configDB().createStatement();
             ResultSet result =  st.executeQuery(sql);
             //loop data baris per baris
@@ -208,27 +207,6 @@ public class barang_Masuk extends javax.swing.JPanel {
         }
     }
     
-    private void IDno_masuk(){//id otomatis
-        try {
-            String sql = "SELECT MAX(no_masuk) FROM barangmasuk";
-            Statement st = koneksi.configDB().createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            
-            if (rs.next()){
-                String maxID = rs.getString(1);
-
-                if (maxID == null) {
-                    tNoMasuk.setText("BM001");
-                } else {
-                    int no = Integer.parseInt(maxID.substring(2)) + 1;
-                    tNoMasuk.setText(String.format("BM%03d", no));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
     public void autoIdUser(){// id otomatis angka 1-seterusnya
         try {
             Connection mysqlConfig = koneksi.configDB();
@@ -274,48 +252,52 @@ public class barang_Masuk extends javax.swing.JPanel {
         Connection conn = null;
         PreparedStatement psHeader = null;
         PreparedStatement psDetail = null;
+        ResultSet rs = null;
         
         try {
             conn = koneksi.configDB();
             conn.setAutoCommit(false);
             
-            //simpan ke barangmasuk
-            String sqlHeader = "INSERT INTO barangmasuk (no_masuk, id_user, tgl_masuk, total_masuk) VALUES (?,?,?,?)";
-            psHeader = conn.prepareStatement(sqlHeader);
-            psHeader.setString(1, tNoMasuk.getText());
-            psHeader.setString(2, tIdUser.getText());
-            psHeader.setDate(3, new java.sql.Date(jcTanggal.getDate().getTime()));
-            psHeader.setString(4, tNoMasuk.getText());
+            //simpan header tanpa no masuk
+            String sqlHeader = "INSERT INTO barangmasuk (id_user, tgl_masuk, total_masuk) VALUES (?,?,?)";
+            psHeader = conn.prepareStatement(sqlHeader, Statement.RETURN_GENERATED_KEYS);
+            psHeader.setInt(1, Integer.parseInt(tIdUser.getText()));
+            psHeader.setDate(2, new java.sql.Date(jcTanggal.getDate().getTime()));
+            psHeader.setBigDecimal(3, new BigDecimal(tTotalMasuk.getText()));
             psHeader.executeUpdate();
             
+            //ambil no masuk auto increment
+            rs = psHeader.getGeneratedKeys();
+            int noMasuk = 0;
+            if (rs.next()) {
+                noMasuk = rs.getInt(1);
+            }
+            
+            //tampil ke from
+            tNoMasuk.setText(String.valueOf(noMasuk));
+            
             //simpan ke detail
-            String sqlDetail = "INSERT INTO detail_barangmasuk (no_masuk, kode_barang, jml_masuk, subtotal) VALUES (?,?,?,?)";
+            String sqlDetail = "INSERT INTO detail_barangmasuk (no_masuk, kode_barang, jml_masuk, subtotal_masuk) VALUES (?,?,?,?)";
             psDetail = conn.prepareStatement(sqlDetail);
             
             for (int i = 0; i < tblDetailBawah.getRowCount(); i++) {
-                psDetail.setString(1, tNoMasuk.getText());
-                psDetail.setString(2, tblDetailBawah.getValueAt(i, 0).toString());//kode barang
+                psDetail.setInt(1, noMasuk);
+                psDetail.setInt(2, Integer.parseInt(tblDetailBawah.getValueAt(i, 1).toString()));//kode barang
                 psDetail.setInt(3, Integer.parseInt(tblDetailBawah.getValueAt(i, 2).toString()));//jumlah masuk
                 psDetail.setBigDecimal(4, new BigDecimal(tblDetailBawah.getValueAt(i, 3).toString()));//subtotal
                 psDetail.executeUpdate();
             }
             conn.commit();
-            JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+            JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan");
+            
+            load_table_dataBarangMasuk();
+            reset();
+            
         } catch (Exception e) {
             try {
                 if (conn != null) conn.rollback();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        JOptionPane.showMessageDialog(null, "Gagal Menyimpan: " + e.getMessage());
-    } finally {
-            try {
-                if (psHeader != null) psHeader.close();
-                if (psDetail != null) psDetail.close();
-                if (conn != null) conn.setAutoCommit(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            } catch (Exception ex) {}
+            JOptionPane.showMessageDialog(this, "Gagal Menyimpan: " + e.getMessage());
         }
     }
     
@@ -330,6 +312,7 @@ public class barang_Masuk extends javax.swing.JPanel {
             tSubtotal.setText("0");
         }
     }
+    
     private void reset(){
         tNoMasuk.setText(null);
         tIdUser.setText(null);
@@ -339,13 +322,19 @@ public class barang_Masuk extends javax.swing.JPanel {
         btnSimpan.setText("Simpan");
     }
     
-    public void hapusBarangMasuk(String noMasuk){
+    public void hapusBarangMasuk(int noMasuk){
         try {
             Connection con = koneksi.configDB();
             con.setAutoCommit(false);
-            PreparedStatement ps = con.prepareStatement("DELETE FROM detail_barangmasuk WHERE no_masuk = ?");
-            ps.setString(1, noMasuk);
-            ps.executeUpdate();
+            
+            PreparedStatement psDetail = con.prepareStatement("DELETE FROM detail_barangmasuk WHERE no_masuk = ?");
+            psDetail.setInt(1, noMasuk);
+            psDetail.executeUpdate();
+            
+            PreparedStatement psHeader = con.prepareStatement("DELETE FROM barangmasuk WHERE no_masuk = ?");
+            psHeader.setInt(1, noMasuk);
+            psHeader.executeUpdate();
+            
             con.commit();
             JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
         } catch (Exception e) {
@@ -994,7 +983,6 @@ public class barang_Masuk extends javax.swing.JPanel {
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
-        IDno_masuk();
         tampilTambahBarangMasuk();
     }//GEN-LAST:event_btnTambahActionPerformed
 
@@ -1005,7 +993,6 @@ public class barang_Masuk extends javax.swing.JPanel {
     private void tNoMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNoMasukActionPerformed
         // TODO add your handling code here:
         Model_BarangMasuk bm = new Model_BarangMasuk();
-        IDno_masuk();
     }//GEN-LAST:event_tNoMasukActionPerformed
 
     private void tKodeBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tKodeBarangActionPerformed
@@ -1037,7 +1024,6 @@ public class barang_Masuk extends javax.swing.JPanel {
     private void tIdUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tIdUserActionPerformed
         // TODO add your handling code here:
         Model_User usr = new Model_User();
-        IDno_masuk();
     }//GEN-LAST:event_tIdUserActionPerformed
 
     private void tTotalMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tTotalMasukActionPerformed
@@ -1055,7 +1041,6 @@ public class barang_Masuk extends javax.swing.JPanel {
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         // TODO add your handling code here:
-        IDno_masuk();
         eventTableClick();
         tampilTambahBarangMasuk();
         
