@@ -15,7 +15,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import panel.About;
 import panel.barang_Keluar;
 import panel.barang_Masuk;
-import panel.formBarang;
+//import panel.formBarang;
 import panel.hasil_Panen;
 import panel.jenis_Barang;
 import panel.laporan;
@@ -226,7 +226,7 @@ private javax.swing.JLabel jLabel1;
             @Override
             public void actionPerformed(ActionEvent e) {
                 pn_utama.removeAll();
-                pn_utama.add(new formBarang());
+                //.add(new formBarang());
                 pn_utama.repaint();
                 pn_utama.revalidate();
             }

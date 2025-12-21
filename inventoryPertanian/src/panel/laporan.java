@@ -20,28 +20,34 @@ import Class.Model_Laporan;
 
 
 public class laporan extends javax.swing.JPanel {
+    
+    
 private void loadTabelLaporan(String pilihan){
     String query = "";
     
-    switch (pilihan) {
-        case "Laporan barang masuk":
+    switch (pilihan.toLowerCase()) {
+        case "laporan barang masuk":
             query = "SELECT * FROM barangmasuk";
             break;
-        case "Laporan barang keluar":
+        case "laporan barang keluar":
             query = "SELECT * FROM barangkeluar";
             break;
         case "laporan hasil panen":
+            query = "SELECT * FROM hasil_panen";
             break;
     }
+    if (query.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Query kosong! +" + pilihan);
+        return;
+    }
+    
     try{
         koneksi konek = new koneksi();
         Connection conn = koneksi.configDB();
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
         
-        DefaultTableModel model = 
-       (DefaultTableModel) 
-        tblLaporan.getModel();
+        DefaultTableModel model = (DefaultTableModel)tblLaporan.getModel();
         model.setRowCount(0);
         while (rs.next()){
             model.addRow(new Object[]{
@@ -56,8 +62,14 @@ private void loadTabelLaporan(String pilihan){
     }
 }
     public laporan() {
-      
-        initComponents();
+    initComponents();
+
+    // EVENT SAAT PILIH JENIS LAPORAN
+    CBlaporan.addActionListener(e -> {
+        String pilihan = CBlaporan.getSelectedItem().toString();
+        lblMain.setText(pilihan);
+        loadTabelLaporan(pilihan);
+    }); 
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
