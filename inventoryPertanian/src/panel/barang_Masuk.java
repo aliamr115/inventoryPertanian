@@ -55,7 +55,6 @@ public class barang_Masuk extends javax.swing.JPanel {
         tampilkanTabelAtas(noEdit);
         tampilkanTabelBawah(noEdit);
         loadComboBarang();
-        autoIdUser();
         load_table_dataBarangMasuk();
         eventTableClick();
     }
@@ -97,10 +96,10 @@ public class barang_Masuk extends javax.swing.JPanel {
     
     void load_table_dataBarangMasuk(){
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("no_masuk");
-        model.addColumn("id_user");
-        model.addColumn("tgl_masuk");
-        model.addColumn("total_masuk");
+        model.addColumn("No Masuk");
+        model.addColumn("ID User");
+        model.addColumn("Tanggal Masuk");
+        model.addColumn("Total Masuk");
         
         try {
             //membuat objek user dan mengambil data dari database
@@ -204,29 +203,6 @@ public class barang_Masuk extends javax.swing.JPanel {
             tblDetailBawah.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-    
-    public void autoIdUser(){// id otomatis angka 1-seterusnya
-        try {
-            Connection mysqlConfig = koneksi.configDB();
-            Statement st = mysqlConfig.createStatement();
-            ResultSet rs = st.executeQuery("SELECT MAX(CAST(id_user AS UNSIGNED)) AS mx_id FROM user");
-            
-            if (rs.next()) {
-                String maxID = rs.getString("max_id");
-                
-                if (maxID == null) {
-                    tIdUser.setText("1");
-                } else {
-                    int no = Integer.parseInt(maxID);
-                    no ++;
-                    
-                    tIdUser.setText(String.valueOf(no));
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error auto ID: " + e.getMessage());
         }
     }
     
