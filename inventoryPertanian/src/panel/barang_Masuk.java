@@ -67,7 +67,7 @@ public class barang_Masuk extends javax.swing.JPanel {
         
         btnTambah.setVisible(true);
         btnHapus.setVisible(true);
-        btnHapus.setVisible(true);
+        btnUbah.setVisible(true);
         
         load_table_dataBarangMasuk();
     }
